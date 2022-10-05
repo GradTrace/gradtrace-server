@@ -1,0 +1,16 @@
+{
+  "courses": [
+    {
+      "name": "Mathematics",
+      "icon": "https://cdn-icons-png.flaticon.com/512/1739/1739515.png"
+    },
+    {
+      "name": "Biology",
+      "icon": "https://cdn-icons-png.flaticon.com/512/2941/2941552.png"
+    },
+    {
+      "name": "English",
+      "icon": "https://cdn-icons-png.flaticon.com/512/5486/5486259.png"
+    }
+  ]
+}

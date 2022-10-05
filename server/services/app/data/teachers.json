@@ -1,0 +1,25 @@
+{
+  "teachers": [
+    {
+      "fullName": "Mr Tony Stark",
+      "CourseId": 1,
+      "email": "tonystark@mail.com",
+      "password": "tonystark",
+      "photo": "https://toppng.com/uploads/preview/ironman-tony-stark-11530959556ekoield6ad.png"
+    },
+    {
+      "fullName": "Mr Bruce Banner",
+      "CourseId": 2,
+      "email": "brucebanner@mail.com",
+      "password": "brucebanner",
+      "photo": "https://toppng.com/uploads/preview/transparent-bruce-banner-the-hulk-bruce-banner-mark-ruffalo-11563150279qu6ty1rmsu.png"
+    },
+    {
+      "fullName": "Ms Natasha Romanoff",
+      "CourseId": 3,
+      "email": "natasharomanoff@mail.com",
+      "password": "natasharomanoff",
+      "photo": "https://toppng.com//public/uploads/preview/black-widow-natasha-romanoff-infinity-war-11563164367lbcfuwdyt2.png"
+    }
+  ]
+}
