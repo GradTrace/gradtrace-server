@@ -1,6 +1,6 @@
 const { comparePassword } = require("../helpers/bcrypt");
 const { signToken } = require("../helpers/jwt");
-const { Teacher } = require("../models");
+const { Teacher, Exam, ExamGrades } = require("../models");
 
 class TeacherController {
   static async register(req, res, next) {
@@ -44,6 +44,26 @@ class TeacherController {
       // nanti tambahin photo, untuk di set di web
       res.status(200).json({ access_token, loggedInName });
     } catch (err) {
+      next(err);
+    }
+  }
+  static async addExam(req, res, next) {
+    try {
+      let { name, CourseId, className } = req.body;
+      await Exam.create({ name, CourseId, className });
+      res.status(201).json({ message: "success Add Exam" });
+    } catch (err) {
+      console.log(err);
+      next(err);
+    }
+  }
+  static async addScore(req, res, next) {
+    try {
+      let { score, StudentId, ExamId } = req.body;
+      await ExamGrades.create({ score, StudentId, ExamId });
+      res.status(201).json({ message: "success Add score" });
+    } catch (err) {
+      console.log(err);
       next(err);
     }
   }
