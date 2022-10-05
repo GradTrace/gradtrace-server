@@ -1,0 +1,34 @@
+{
+  "students": [
+    {
+      "fullName": "John Doe",
+      "className": "9",
+      "email": "johndoe@mail.com",
+      "password": "johndoe",
+      "photo": "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png",
+      "address": "Home sweet home",
+      "phoneNumber": "0812345678",
+      "gender": "Male"
+    },
+    {
+      "fullName": "Jane Doe",
+      "className": "9",
+      "email": "janedoe@mail.com",
+      "password": "janedoe",
+      "photo": "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png",
+      "address": "Sesame street",
+      "phoneNumber": "081298765",
+      "gender": "Female"
+    },
+    {
+      "fullName": "Vegeta",
+      "className": "9",
+      "email": "vegeta@mail.com",
+      "password": "vegeta",
+      "photo": "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png",
+      "address": "Outer planet",
+      "phoneNumber": "081111111",
+      "gender": "Male"
+    }
+  ]
+}
