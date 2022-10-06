@@ -1,6 +1,6 @@
 const { comparePassword } = require("../helpers/bcrypt");
 const { signToken } = require("../helpers/jwt");
-const { Teacher, Exam, ExamGrades } = require("../models");
+const { Teacher, Exam, ExamGrades, FinalGrades } = require("../models");
 
 class TeacherController {
   static async register(req, res, next) {
@@ -67,6 +67,19 @@ class TeacherController {
       next(err);
     }
   }
+  static async addFinalGrades(req, res, next) {
+    try {
+      let { StudentId, CourseId } = req.body;
+      let nilai = await ExamGrades.findOne({ where: { StudentId } });
+      console.log(nilai, "<<<");
+      await FinalGrades.create({ score: nilai, StudentId, CourseId });
+      res.status(201).json({ message: "success Add score FinalGrades" });
+    } catch (err) {
+      console.log(err);
+      next(err);
+    }
+  }
+  //! UNTUK SEMENTARA NILAI AKHIR DI INPUT MANNNUAL DULU NDANN ... MASIH BELOM NEMU FORMULA NYA UNTUK KALKULASIIN
 }
 
 module.exports = TeacherController;
