@@ -7,5 +7,6 @@ router.post("/register", StudentController.register);
 router.post("/login", StudentController.login);
 router.use(authc);
 router.get("/profile", studentAuthz, StudentController.showProfile);
+router.post("/attendance", studentAuthz, StudentController.newAttendance);
 
 module.exports = router;

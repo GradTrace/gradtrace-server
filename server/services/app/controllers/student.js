@@ -1,6 +1,6 @@
 const { comparePassword } = require("../helpers/bcrypt");
 const { signToken } = require("../helpers/jwt");
-const { Student } = require("../models");
+const { Student, Attendance } = require("../models");
 
 class StudentController {
   static async register(req, res, next) {
@@ -76,6 +76,28 @@ class StudentController {
       });
       if (!student) throw { name: "Student not found" };
       res.status(200).json(student);
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  static async newAttendance(req, res, next) {
+    try {
+      const StudentId = +req.user.id;
+      // const dateAndTime = new Date();
+
+      const { lon, lat, dateAndTime } = req.body;
+      console.log(lon, lat, " <<< ini coyy");
+      console.log(StudentId, dateAndTime, "data dari server");
+
+      const newAttendance = await Attendance.create({
+        StudentId,
+        dateAndTime,
+        status: true,
+        lon,
+        lat,
+      });
+      res.status(200).json(newAttendance);
     } catch (err) {
       next(err);
     }
