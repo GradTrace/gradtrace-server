@@ -5,5 +5,6 @@ router.post("/register", TeacherController.register);
 router.post("/login", TeacherController.login);
 router.post("/exams", TeacherController.addExam);
 router.post("/scores", TeacherController.addScore);
+router.post("/scores/final", TeacherController.addFinalGrades);
 
 module.exports = router;
