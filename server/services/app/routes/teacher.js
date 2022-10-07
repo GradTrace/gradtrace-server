@@ -10,5 +10,7 @@ router.get("/assignment", TeacherController.getAssignment)
 router.get("/assignment/grade/:id", TeacherController.getGradeAssignment)
 router.post("/assignment", TeacherController.postAssignment)
 router.get("/courses", TeacherController.getCourses)
+router.post("/scores/final", TeacherController.addFinalGrades);
+
 
 module.exports = router;
