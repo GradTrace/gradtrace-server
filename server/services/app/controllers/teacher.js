@@ -8,6 +8,7 @@ const {
   AssignmentGrades,
   Assignment,
   Course,
+  Student,
 } = require("../models");
 
 class TeacherController {
@@ -150,6 +151,42 @@ class TeacherController {
   static async getCourses(req, res, next) {
     try {
       const data = await Course.findAll();
+      return res.status(201).json(data);
+    } catch (err) {
+      console.log(err);
+      next(err);
+    }
+  }
+
+  static async examScoreBySubject(req, res, next) {
+    try {
+      let { name } = req.query;
+      console.log(name, "<<");
+      const data = await ExamGrades.findAll({
+        include: [
+          {
+            model: Exam,
+            include: [
+              {
+                model: Course,
+              },
+            ],
+          },
+          {
+            model: Student,
+          },
+        ],
+      });
+      return res.status(201).json(data);
+    } catch (err) {
+      console.log(err);
+      next(err);
+    }
+  }
+  static async assignmetScoreBySubject(req, res, next) {
+    try {
+      let subject = req.query.subject;
+      const data = await AssignmentGrades.findAll();
       return res.status(201).json(data);
     } catch (err) {
       console.log(err);
