@@ -52,6 +52,14 @@ module.exports = (sequelize, DataTypes) => {
           notEmpty: { msg: "Class name is required" },
         },
       },
+      createById : {
+        type : DataTypes.INTEGER,
+        allowNull: false,
+        validate : {
+          notNull: { msg: "CreateById is required" },
+          notEmpty: { msg: "CreateById is required" },
+        }
+      }
     },
     {
       sequelize,

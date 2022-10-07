@@ -167,12 +167,15 @@ class TeacherController {
       const { name } = req.query;
 
       const option = {
-        where: {},
+        where: {
+          createById: `${req.user.id}`,
+        },
         order: [["createdAt", "DESC"]],
       };
 
       if (!!name) {
         option.where = {
+          ...option.where,
           name: { [Op.iLike]: `%${name}%` },
         };
       }
@@ -206,7 +209,24 @@ class TeacherController {
 
   static async postAssignment(req, res, next) {
     try {
-      const data = await Assignment.create(req.body);
+      const { description, CourseId, deadline, name, className } = req.body;
+      if (!description) throw { name: "description is required" };
+      if (!CourseId) throw { name: "CourseId is required" };
+      if (!deadline) throw { name: "deadline is required" };
+      if (!name) throw { name: "name is required" };
+      if (!className) throw { name: "className is required" };
+
+      const createById = +req.user.id;
+
+      const data = await Assignment.create({
+        description,
+        CourseId,
+        deadline,
+        name,
+        className,
+        createById,
+      });
+
       return res.status(201).json(data);
     } catch (err) {
       console.log(err);
