@@ -1,6 +1,17 @@
+const { Op } = require("sequelize");
 const { comparePassword } = require("../helpers/bcrypt");
 const { signToken } = require("../helpers/jwt");
-const { Teacher, Exam, ExamGrades, FinalGrades } = require("../models");
+
+const {
+  Teacher,
+  Exam,
+  ExamGrades,
+  AssignmentGrades,
+  Assignment,
+  Course,
+  FinalGrades
+} = require("../models");
+
 
 class TeacherController {
   static async register(req, res, next) {
@@ -44,6 +55,7 @@ class TeacherController {
       // nanti tambahin photo, untuk di set di web
       res.status(200).json({ access_token, loggedInName });
     } catch (err) {
+      console.log(err);
       next(err);
     }
   }
@@ -67,6 +79,88 @@ class TeacherController {
       next(err);
     }
   }
+
+  static async assignmentScore(req, res, next) {
+    try {
+      const { id, score } = req.body;
+      await AssignmentGrades.update(
+        {
+          score,
+        },
+        {
+          where: { id },
+        }
+      );
+      res.status(201).json({ message: "success input assignment score" });
+    } catch (err) {
+      console.log(err);
+      next(err);
+    }
+  }
+
+  static async getAssignment(req, res, next) {
+    try {
+      //filter by name
+      const { name } = req.query;
+
+      const option = {
+        where: {},
+        order: [["createdAt", "DESC"]],
+      };
+
+      if (!!name) {
+        option.where = {
+          name: { [Op.iLike]: `%${name}%` },
+        };
+      }
+
+      const data = await Assignment.findAll(option);
+
+      return res.status(201).json(data);
+    } catch (err) {
+      console.log(err);
+      next(err);
+    }
+  }
+
+  static async getGradeAssignment(req, res, next) {
+    try {
+      const { id } = req.params;
+      const option = {
+        where: {
+          AssignmentId: id,
+        },
+      };
+
+      const data = await AssignmentGrades.findAll(option);
+
+      return res.status(201).json(data);
+    } catch (err) {
+      console.log(err);
+      next(err);
+    }
+  }
+
+  static async postAssignment(req, res, next) {
+    try {
+      const data = await Assignment.create(req.body);
+      return res.status(201).json(data);
+    } catch (err) {
+      console.log(err);
+      next(err);
+    }
+  }
+
+  static async getCourses(req, res, next) {
+    try {
+      const data = await Course.findAll();
+      return res.status(201).json(data);
+    } catch (err) {
+      console.log(err);
+      next(err);
+    }
+  }
+
   static async addFinalGrades(req, res, next) {
     try {
       let { StudentId, CourseId } = req.body;
@@ -79,7 +173,9 @@ class TeacherController {
       next(err);
     }
   }
+
   //! UNTUK SEMENTARA NILAI AKHIR DI INPUT MANNNUAL DULU NDANN ... MASIH BELOM NEMU FORMULA NYA UNTUK KALKULASIIN
+
 }
 
 module.exports = TeacherController;
