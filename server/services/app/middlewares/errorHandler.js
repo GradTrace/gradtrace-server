@@ -14,8 +14,21 @@ function errorHandler(err, req, res, next) {
     errCode = 400;
     message = "Full name is required";
   } else if (err.name === "Class name is required") {
+  } else if (err.name === "Score is required") {
+    errCode = 400;
+    message = "Score name is required";
+  } else if (err.name === "Class name is required") {
     errCode = 400;
     message = "Class name is required";
+  } else if (err.name === "StudentId name is required") {
+    errCode = 400;
+    message = "StudentId name is required";
+  } else if (err.name === "CourseId is required") {
+    errCode = 400;
+    message = "CourseId is required";
+  } else if (err.name === "ExamId is required") {
+    errCode = 400;
+    message = "ExamId is required";
   } else if (err.name === "Email is required") {
     errCode = 400;
     message = "Email is required";

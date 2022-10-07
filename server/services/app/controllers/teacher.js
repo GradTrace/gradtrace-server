@@ -10,6 +10,8 @@ const {
   Assignment,
   Course,
   FinalGrades,
+  Attendance,
+  Student,
 } = require("../models");
 
 class TeacherController {
@@ -61,8 +63,38 @@ class TeacherController {
   static async addExam(req, res, next) {
     try {
       let { name, CourseId, className } = req.body;
+      if (!name) {
+        throw { name: "Fullname is required" };
+      }
+      if (!CourseId) {
+        throw { name: "CourseId is required" };
+      }
+      if (!className) {
+        throw { name: "Class name is required" };
+      }
       await Exam.create({ name, CourseId, className });
       res.status(201).json({ message: "success Add Exam" });
+    } catch (err) {
+      console.log(err);
+      next(err);
+    }
+  }
+  static async editExam(req, res, next) {
+    try {
+      let { name, CourseId, className } = req.body;
+      if (!name) {
+        throw { name: "Fullname is required" };
+      }
+      if (!CourseId) {
+        throw { name: "CourseId is required" };
+      }
+      if (!className) {
+        throw { name: "Class name is required" };
+      }
+      let { id } = req.params;
+      console.log(id);
+      await Exam.update({ name, CourseId, className }, { where: { id } });
+      res.status(200).json({ message: "success Edit Exam" });
     } catch (err) {
       console.log(err);
       next(err);
@@ -71,8 +103,40 @@ class TeacherController {
   static async addScore(req, res, next) {
     try {
       let { score, StudentId, ExamId } = req.body;
+      if (!score) {
+        throw { name: "Score is required" };
+      }
+      if (!StudentId) {
+        throw { name: "StudentId name is required" };
+      }
+      if (!ExamId) {
+        throw { name: "ExamId is required" };
+      }
+      console.log(req.body, "<<<<");
       await ExamGrades.create({ score, StudentId, ExamId });
       res.status(201).json({ message: "success Add score" });
+    } catch (err) {
+      console.log(err);
+      next(err);
+    }
+  }
+  static async editScore(req, res, next) {
+    try {
+      let { score, StudentId, ExamId } = req.body;
+      if (!score) {
+        throw { name: "Score is required" };
+      }
+      if (!StudentId) {
+        throw { name: "StudentId name is required" };
+      }
+      if (!ExamId) {
+        throw { name: "ExamId is required" };
+      }
+      let { id } = req.params;
+      console.log(id, "<<<<");
+      console.log(req.body, "<<<<");
+      await ExamGrades.update({ score, StudentId, ExamId }, { where: { id } });
+      res.status(200).json({ message: "success Edit score" });
     } catch (err) {
       console.log(err);
       next(err);
@@ -194,6 +258,36 @@ class TeacherController {
   }
 
   //! UNTUK SEMENTARA NILAI AKHIR DI INPUT MANNNUAL DULU NDANN ... MASIH BELOM NEMU FORMULA NYA UNTUK KALKULASIIN
+
+  static async getStudentAttendance(req, res, next) {
+    try {
+      const { className } = req.params;
+
+      const result = await Attendance.findAll({
+        include: [
+          {
+            model: Student,
+            where: { className },
+            attributes: {
+              exclude: [
+                "password",
+                "email",
+                "photo",
+                "address",
+                "phoneNumber",
+                "gender",
+                "createdAt",
+                "updatedAt",
+              ],
+            },
+          },
+        ],
+      });
+      res.status(200).json(result);
+    } catch (err) {
+      next(err);
+    }
+  }
 }
 
 module.exports = TeacherController;
