@@ -8,5 +8,6 @@ router.post("/login", StudentController.login);
 router.use(authc);
 router.get("/profile", studentAuthz, StudentController.showProfile);
 router.post("/attendance", studentAuthz, StudentController.newAttendance);
+router.get("/attendance", studentAuthz, StudentController.getAttendances);
 
 module.exports = router;

@@ -102,6 +102,20 @@ class StudentController {
       next(err);
     }
   }
+
+  static async getAttendances(req, res, next) {
+    try {
+      const StudentId = +req.user.id;
+
+      const result = await Attendance.findAll({
+        where: { StudentId },
+      });
+
+      res.status(200).json(result);
+    } catch (err) {
+      next(err);
+    }
+  }
 }
 
 module.exports = StudentController;
