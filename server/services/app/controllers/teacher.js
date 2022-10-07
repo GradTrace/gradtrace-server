@@ -10,6 +10,8 @@ const {
   Assignment,
   Course,
   FinalGrades,
+  Attendance,
+  Student,
 } = require("../models");
 
 class TeacherController {
@@ -236,6 +238,36 @@ class TeacherController {
   }
 
   //! UNTUK SEMENTARA NILAI AKHIR DI INPUT MANNNUAL DULU NDANN ... MASIH BELOM NEMU FORMULA NYA UNTUK KALKULASIIN
+
+  static async getStudentAttendance(req, res, next) {
+    try {
+      const { className } = req.params;
+
+      const result = await Attendance.findAll({
+        include: [
+          {
+            model: Student,
+            where: { className },
+            attributes: {
+              exclude: [
+                "password",
+                "email",
+                "photo",
+                "address",
+                "phoneNumber",
+                "gender",
+                "createdAt",
+                "updatedAt",
+              ],
+            },
+          },
+        ],
+      });
+      res.status(200).json(result);
+    } catch (err) {
+      next(err);
+    }
+  }
 }
 
 module.exports = TeacherController;
