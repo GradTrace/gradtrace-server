@@ -59,9 +59,12 @@ function errorHandler(err, req, res, next) {
   } else if (err.name === "Student not found") {
     errCode = 404;
     message = "Student not found";
-  }else{
-    errCode = 400
-    message = err.name
+  } else if (err.name === "not found") {
+    errCode = 404;
+    message = "not found";
+  } else {
+    errCode = 400;
+    message = err.name;
   }
 
   // else if (err.name === "Category name must be unique") {
