@@ -186,7 +186,21 @@ class TeacherController {
   static async assignmetScoreBySubject(req, res, next) {
     try {
       let subject = req.query.subject;
-      const data = await AssignmentGrades.findAll();
+      const data = await AssignmentGrades.findAll({
+        include: [
+          {
+            model: Assignment,
+            include: [
+              {
+                model: Course,
+              },
+            ],
+          },
+          {
+            model: Student,
+          },
+        ],
+      });
       return res.status(201).json(data);
     } catch (err) {
       console.log(err);
