@@ -44,6 +44,9 @@ function errorHandler(err, req, res, next) {
   } else if (err.name === "Email must be unique") {
     errCode = 400;
     message = "Email must be unique";
+  } else if (err.name === "location required") {
+    errCode = 400;
+    message = "Please activate your device location!";
   } else if (err.name === "Invalid email/password") {
     errCode = 401;
     message = "Invalid email/password";
