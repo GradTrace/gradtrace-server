@@ -15,6 +15,7 @@ router.get("/assignment/grade/:id", TeacherController.getGradeAssignment);
 router.post("/assignment", TeacherController.postAssignment);
 router.delete("/assignment/:id", TeacherController.deleteAssignment);
 router.put("/assignment/:id", TeacherController.editAssignment);
+router.get("/assignment/:id", TeacherController.getAssignmentById);
 router.put("/scores/:id", TeacherController.editScore);
 router.put("/assignment/score", TeacherController.assignmentScore);
 router.get("/assignment", TeacherController.getAssignment);

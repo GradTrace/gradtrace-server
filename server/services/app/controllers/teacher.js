@@ -161,6 +161,20 @@ class TeacherController {
     }
   }
 
+  static async getAssignmentById(req, res, next) {
+    try {
+      //filter by name
+
+      let { id } = req.params;
+      console.log(id);
+      const data = await Assignment.findByPk(id);
+
+      return res.status(200).json(data);
+    } catch (err) {
+      console.log(err);
+      next(err);
+    }
+  }
   static async getAssignment(req, res, next) {
     try {
       //filter by name
@@ -209,15 +223,15 @@ class TeacherController {
 
   static async postAssignment(req, res, next) {
     try {
-      const { description, CourseId, deadline, name, className } = req.body;
+      const { description, deadline, name, className } = req.body;
       if (!description) throw { name: "description is required" };
-      if (!CourseId) throw { name: "CourseId is required" };
+      // if (!CourseId) throw { name: "CourseId is required" };
       if (!deadline) throw { name: "deadline is required" };
       if (!name) throw { name: "name is required" };
       if (!className) throw { name: "className is required" };
 
       const createById = +req.user.id;
-
+      const CourseId = +req.user.CourseId;
       const data = await Assignment.create({
         description,
         CourseId,
@@ -235,14 +249,15 @@ class TeacherController {
   }
   static async editAssignment(req, res, next) {
     try {
-      const { description, CourseId, deadline, name, className } = req.body;
+      const { description, deadline, name, className } = req.body;
       if (!description) throw { name: "description is required" };
-      if (!CourseId) throw { name: "CourseId is required" };
+      // if (!CourseId) throw { name: "CourseId is required" };
       if (!deadline) throw { name: "deadline is required" };
       if (!name) throw { name: "name is required" };
       if (!className) throw { name: "className is required" };
 
       const createById = +req.user.id;
+      const CourseId = +req.user.CourseId;
       let { id } = req.params;
       const data = await Assignment.update(
         {
