@@ -1,6 +1,6 @@
 const { comparePassword } = require("../helpers/bcrypt");
 const { signToken } = require("../helpers/jwt");
-const { Student, Attendance } = require("../models");
+const { Student, Attendance, Assignment, Course } = require("../models");
 
 class StudentController {
   static async register(req, res, next) {
@@ -56,7 +56,7 @@ class StudentController {
       const validatePassword = comparePassword(password, findStudent.password);
       if (!validatePassword) throw { name: "Invalid email/password" };
 
-      const payload = { id: findStudent.id };
+      const payload = { id: findStudent.id, className: findStudent.className };
       const access_token = signToken(payload);
       const loggedInName = findStudent.fullName;
 
@@ -112,6 +112,19 @@ class StudentController {
       });
 
       res.status(200).json(result);
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  static async getTasks(req, res, next) {
+    try {
+      const className = req.user.className;
+      const data = await Assignment.findAll({
+        where: { className },
+        include: [{ model: Course }],
+      });
+      res.status(200).json(data);
     } catch (err) {
       next(err);
     }

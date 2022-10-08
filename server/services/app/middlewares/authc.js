@@ -13,6 +13,7 @@ async function authc(req, res, next) {
     } else {
       req.user = {
         id: findUser ? findUser.id : findTeacher.id,
+        className: findUser ? findUser.className : null,
       };
     }
     next();
