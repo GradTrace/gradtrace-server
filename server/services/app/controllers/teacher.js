@@ -233,6 +233,48 @@ class TeacherController {
       next(err);
     }
   }
+  static async editAssignment(req, res, next) {
+    try {
+      const { description, CourseId, deadline, name, className } = req.body;
+      if (!description) throw { name: "description is required" };
+      if (!CourseId) throw { name: "CourseId is required" };
+      if (!deadline) throw { name: "deadline is required" };
+      if (!name) throw { name: "name is required" };
+      if (!className) throw { name: "className is required" };
+
+      const createById = +req.user.id;
+      let { id } = req.params;
+      const data = await Assignment.update(
+        {
+          description,
+          CourseId,
+          deadline,
+          name,
+          className,
+          createById,
+        },
+        { where: { id } }
+      );
+
+      return res.status(201).json(data);
+    } catch (err) {
+      console.log(err);
+      next(err);
+    }
+  }
+  static async deleteAssignment(req, res, next) {
+    try {
+      let { id } = req.params;
+      const data = await Assignment.destroy({ where: { id } });
+      if (!data) {
+        throw { name: "not found" };
+      }
+      return res.status(200).json({ message: "success deleted" });
+    } catch (err) {
+      console.log(err);
+      next(err);
+    }
+  }
 
   static async getCourses(req, res, next) {
     try {
