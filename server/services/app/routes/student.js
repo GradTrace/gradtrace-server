@@ -9,5 +9,6 @@ router.use(authc);
 router.get("/profile", studentAuthz, StudentController.showProfile);
 router.post("/attendance", studentAuthz, StudentController.newAttendance);
 router.get("/attendance", studentAuthz, StudentController.getAttendances);
+router.get("/tasks", studentAuthz, StudentController.getTasks);
 
 module.exports = router;
