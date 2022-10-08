@@ -44,6 +44,9 @@ function errorHandler(err, req, res, next) {
   } else if (err.name === "Email must be unique") {
     errCode = 400;
     message = "Email must be unique";
+  } else if (err.name === "location required") {
+    errCode = 400;
+    message = "Please activate your device location!";
   } else if (err.name === "Invalid email/password") {
     errCode = 401;
     message = "Invalid email/password";
@@ -59,9 +62,9 @@ function errorHandler(err, req, res, next) {
   } else if (err.name === "Student not found") {
     errCode = 404;
     message = "Student not found";
-  }else{
-    errCode = 400
-    message = err.name
+  } else {
+    errCode = 400;
+    message = err.name;
   }
 
   // else if (err.name === "Category name must be unique") {

@@ -1,6 +1,12 @@
 const { comparePassword } = require("../helpers/bcrypt");
 const { signToken } = require("../helpers/jwt");
-const { Student, Attendance, Assignment, Course } = require("../models");
+const {
+  Student,
+  Attendance,
+  Assignment,
+  Course,
+  AssignmentGrades,
+} = require("../models");
 
 class StudentController {
   static async register(req, res, next) {
@@ -90,6 +96,8 @@ class StudentController {
       console.log(lon, lat, " <<< ini coyy");
       console.log(StudentId, dateAndTime, "data dari server");
 
+      if (!lon || !lat) throw { name: "location required" };
+
       const newAttendance = await Attendance.create({
         StudentId,
         dateAndTime,
@@ -109,6 +117,7 @@ class StudentController {
 
       const result = await Attendance.findAll({
         where: { StudentId },
+        order: [["id", "DESC"]],
       });
 
       res.status(200).json(result);
@@ -122,7 +131,10 @@ class StudentController {
       const className = req.user.className;
       const data = await Assignment.findAll({
         where: { className },
-        include: [{ model: Course }],
+        include: [
+          { model: Course, attributes: ["name", "icon"] },
+          { model: AssignmentGrades, attributes: ["url"] },
+        ],
       });
       res.status(200).json(data);
     } catch (err) {
