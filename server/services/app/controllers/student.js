@@ -28,8 +28,9 @@ class StudentController {
       if (!password) throw { name: "Password is required" };
       if (!gender) throw { name: "Gender is required" };
 
-      const emailCheck = await Student.findOne({ where: { email } });
-      if (emailCheck) throw { name: "Email must be unique" };
+      // sudah dihandle di model
+      // const emailCheck = await Student.findOne({ where: { email } });
+      // if (emailCheck) throw { name: "Email must be unique" };
 
       await Student.create({
         fullName,
@@ -43,7 +44,13 @@ class StudentController {
       });
 
       const findStudent = await Student.findOne({ where: { email } });
-      res.status(201).json({ id: findStudent.id, email: findStudent.email });
+
+      // login
+      const payload = { id: findStudent.id, className: findStudent.className };
+      res.status(200).json({
+        access_token: signToken(payload),
+        loggedInName: findStudent.fullName,
+      });
     } catch (err) {
       next(err);
     }

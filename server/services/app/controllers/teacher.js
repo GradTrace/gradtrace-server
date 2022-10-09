@@ -61,6 +61,7 @@ class TeacherController {
       next(err);
     }
   }
+
   static async addExam(req, res, next) {
     try {
       let { name, CourseId, className } = req.body;
@@ -80,6 +81,7 @@ class TeacherController {
       next(err);
     }
   }
+
   static async editExam(req, res, next) {
     try {
       let { name, CourseId, className } = req.body;
@@ -101,6 +103,7 @@ class TeacherController {
       next(err);
     }
   }
+
   static async addScore(req, res, next) {
     try {
       let { score, StudentId, ExamId } = req.body;
@@ -121,6 +124,7 @@ class TeacherController {
       next(err);
     }
   }
+
   static async editScore(req, res, next) {
     try {
       let { score, StudentId, ExamId } = req.body;
@@ -176,6 +180,7 @@ class TeacherController {
       next(err);
     }
   }
+
   static async getAssignment(req, res, next) {
     try {
       //filter by name
@@ -283,6 +288,7 @@ class TeacherController {
       next(err);
     }
   }
+
   static async editAssignment(req, res, next) {
     try {
       const { description, deadline, name, className } = req.body;
@@ -313,6 +319,7 @@ class TeacherController {
       next(err);
     }
   }
+
   static async deleteAssignment(req, res, next) {
     try {
       let { id } = req.params;
