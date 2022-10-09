@@ -7,7 +7,7 @@ const {
   Course,
   AssignmentGrades,
   sequelize,
-  Sequelize
+  Sequelize,
 } = require("../models");
 
 class StudentController {
@@ -97,7 +97,7 @@ class StudentController {
   }
 
   static async newAttendance(req, res, next) {
-    // bikin dolo variabel utk cek cekan 
+    // bikin dolo variabel utk cek cekan
     const transaction = await sequelize.transaction();
     const Op = Sequelize.Op;
     const TODAY_START = new Date().setHours(0, 0, 0, 0);
@@ -107,34 +107,39 @@ class StudentController {
       // const dateAndTime = new Date();
 
       const { lon, lat, dateAndTime } = req.body;
-      console.log(lon, lat, " <<< ini coyy");
-      console.log(StudentId, dateAndTime, "data dari server");
+      // console.log(lon, lat, " <<< ini coyy");
+      // console.log(StudentId, dateAndTime, "data dari server");
 
-      // checking if student had already present today : 
-      const checkAttendanceDayStud = await Attendance.findOne({
-        where: {
-          StudentId,
-          createdAt: {
-            [Op.gt]: TODAY_START,
-            [Op.lt]: NOW
+      // checking if student had already present today :
+      const checkAttendanceDayStud = await Attendance.findOne(
+        {
+          where: {
+            StudentId,
+            createdAt: {
+              [Op.gt]: TODAY_START,
+              [Op.lt]: NOW,
+            },
           },
         },
-      }, { transaction })
+        { transaction }
+      );
 
       if (checkAttendanceDayStud) {
-        throw { name: 'already_present_today' }
+        throw { name: "already_present_today" };
       }
-
 
       if (!lon || !lat) throw { name: "location required" };
 
-      const newAttendance = await Attendance.create({
-        StudentId,
-        dateAndTime,
-        status: true,
-        lon,
-        lat,
-      }, { transaction });
+      const newAttendance = await Attendance.create(
+        {
+          StudentId,
+          dateAndTime,
+          status: true,
+          lon,
+          lat,
+        },
+        { transaction }
+      );
 
       await transaction.commit();
       res.status(200).json(newAttendance);
@@ -166,10 +171,35 @@ class StudentController {
         where: { className },
         include: [
           { model: Course, attributes: ["name", "icon"] },
-          { model: AssignmentGrades, attributes: ["url"] },
+          { model: AssignmentGrades, attributes: ["score", "url"] },
         ],
       });
       res.status(200).json(data);
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  static async submitTaskUrl(req, res, next) {
+    try {
+      const { taskId } = req.params;
+      const StudentId = req.user.id;
+      const { url } = req.body;
+
+      if (!taskId) throw { name: "Assignment ID is required" };
+      if (!url) throw { name: "url is required" };
+
+      const findAssignment = await AssignmentGrades.findOne({
+        where: { StudentId, AssignmentId: taskId },
+      });
+      if (!findAssignment) throw { name: "Assignment not found" };
+
+      await AssignmentGrades.update(
+        { url },
+        { where: { StudentId, AssignmentId: taskId } }
+      );
+
+      res.status(200).json({ message: `Assignment url collected: ${url}` });
     } catch (err) {
       next(err);
     }
