@@ -10,5 +10,6 @@ router.get("/profile", studentAuthz, StudentController.showProfile);
 router.post("/attendance", studentAuthz, StudentController.newAttendance);
 router.get("/attendance", studentAuthz, StudentController.getAttendances);
 router.get("/tasks", studentAuthz, StudentController.getTasks);
+router.patch("/tasks/:taskId", studentAuthz, StudentController.submitTaskUrl);
 
 module.exports = router;

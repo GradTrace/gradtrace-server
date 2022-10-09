@@ -40,18 +40,22 @@ function errorHandler(err, req, res, next) {
   } else if (err.name === "Course ID is required") {
     errCode = 400;
     message = "Course ID is required";
+  } else if (err.name === "Assignment ID is required") {
+    errCode = 400;
+    message = "Assignment ID is required";
+  } else if (err.name === "url is required") {
+    errCode = 400;
+    message = "Assignment url is required";
   } else if (err.name === "Email must be unique") {
     errCode = 400;
     message = "Email must be unique";
   } else if (err.name === "location required") {
     errCode = 400;
     message = "Please activate your device location!";
-  }
-  else if (err.name === "already_present_today") {
+  } else if (err.name === "already_present_today") {
     errCode = 400;
-    message = "You Have Already Recorded Present Today!";
-  }
-  else if (err.name === "Failed to add new assignment") {
+    message = "You have already recorded present today";
+  } else if (err.name === "Failed to add new assignment") {
     errCode = 400;
     message = "Failed to add new assignment";
   } else if (err.name === "Invalid email/password") {
@@ -72,6 +76,9 @@ function errorHandler(err, req, res, next) {
   } else if (err.name === "not found") {
     errCode = 404;
     message = "not found";
+  } else if (err.name === "Assignment not found") {
+    errCode = 404;
+    message = "Assignment not found";
   } else {
     errCode = 400;
     message = err.name;
