@@ -6,6 +6,8 @@ const {
   Assignment,
   Course,
   AssignmentGrades,
+  sequelize,
+  Sequelize
 } = require("../models");
 
 class StudentController {
@@ -95,6 +97,11 @@ class StudentController {
   }
 
   static async newAttendance(req, res, next) {
+    // bikin dolo variabel utk cek cekan 
+    const transaction = await sequelize.transaction();
+    const Op = Sequelize.Op;
+    const TODAY_START = new Date().setHours(0, 0, 0, 0);
+    const NOW = new Date();
     try {
       const StudentId = +req.user.id;
       // const dateAndTime = new Date();
@@ -102,6 +109,22 @@ class StudentController {
       const { lon, lat, dateAndTime } = req.body;
       console.log(lon, lat, " <<< ini coyy");
       console.log(StudentId, dateAndTime, "data dari server");
+
+      // checking if student had already present today : 
+      const checkAttendanceDayStud = await Attendance.findOne({
+        where: {
+          StudentId,
+          createdAt: {
+            [Op.gt]: TODAY_START,
+            [Op.lt]: NOW
+          },
+        },
+      }, { transaction })
+
+      if (checkAttendanceDayStud) {
+        throw { name: 'already_present_today' }
+      }
+
 
       if (!lon || !lat) throw { name: "location required" };
 
@@ -111,9 +134,12 @@ class StudentController {
         status: true,
         lon,
         lat,
-      });
+      }, { transaction });
+
+      await transaction.commit();
       res.status(200).json(newAttendance);
     } catch (err) {
+      await transaction.rollback();
       next(err);
     }
   }
