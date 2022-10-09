@@ -47,6 +47,9 @@ function errorHandler(err, req, res, next) {
   } else if (err.name === "location required") {
     errCode = 400;
     message = "Please activate your device location!";
+  } else if (err.name === "Failed to add new assignment") {
+    errCode = 400;
+    message = "Failed to add new assignment";
   } else if (err.name === "Invalid email/password") {
     errCode = 401;
     message = "Invalid email/password";
