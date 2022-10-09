@@ -344,7 +344,7 @@ class TeacherController {
     }
   }
 
-static async examScoreBySubject(req, res, next) {
+  static async examScoreBySubject(req, res, next) {
     try {
       let { name } = req.query;
       console.log(name, "<<");
@@ -382,7 +382,7 @@ static async examScoreBySubject(req, res, next) {
       next(err);
     }
   }
-  
+
   static async assignmetScoreBySubject(req, res, next) {
     try {
       let subject = req.query.subject;
@@ -404,7 +404,8 @@ static async examScoreBySubject(req, res, next) {
       return res.status(201).json(data);
     } catch (err) {
       console.log(err);
-
+    }
+  }
 
   //! UNTUK SEMENTARA NILAI AKHIR DI INPUT MANNNUAL DULU NDANN ... MASIH BELOM NEMU FORMULA NYA UNTUK KALKULASIIN
 
