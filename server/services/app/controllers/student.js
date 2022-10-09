@@ -1,6 +1,14 @@
 const { comparePassword } = require("../helpers/bcrypt");
 const { signToken } = require("../helpers/jwt");
-const { Student } = require("../models");
+const {
+  Student,
+  Attendance,
+  Assignment,
+  Course,
+  AssignmentGrades,
+  sequelize,
+  Sequelize
+} = require("../models");
 
 class StudentController {
   static async register(req, res, next) {
@@ -22,8 +30,9 @@ class StudentController {
       if (!password) throw { name: "Password is required" };
       if (!gender) throw { name: "Gender is required" };
 
-      const emailCheck = await Student.findOne({ where: { email } });
-      if (emailCheck) throw { name: "Email must be unique" };
+      // sudah dihandle di model
+      // const emailCheck = await Student.findOne({ where: { email } });
+      // if (emailCheck) throw { name: "Email must be unique" };
 
       await Student.create({
         fullName,
@@ -37,7 +46,13 @@ class StudentController {
       });
 
       const findStudent = await Student.findOne({ where: { email } });
-      res.status(201).json({ id: findStudent.id, email: findStudent.email });
+
+      // login
+      const payload = { id: findStudent.id, className: findStudent.className };
+      res.status(200).json({
+        access_token: signToken(payload),
+        loggedInName: findStudent.fullName,
+      });
     } catch (err) {
       next(err);
     }
@@ -56,7 +71,7 @@ class StudentController {
       const validatePassword = comparePassword(password, findStudent.password);
       if (!validatePassword) throw { name: "Invalid email/password" };
 
-      const payload = { id: findStudent.id };
+      const payload = { id: findStudent.id, className: findStudent.className };
       const access_token = signToken(payload);
       const loggedInName = findStudent.fullName;
 
@@ -76,6 +91,85 @@ class StudentController {
       });
       if (!student) throw { name: "Student not found" };
       res.status(200).json(student);
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  static async newAttendance(req, res, next) {
+    // bikin dolo variabel utk cek cekan 
+    const transaction = await sequelize.transaction();
+    const Op = Sequelize.Op;
+    const TODAY_START = new Date().setHours(0, 0, 0, 0);
+    const NOW = new Date();
+    try {
+      const StudentId = +req.user.id;
+      // const dateAndTime = new Date();
+
+      const { lon, lat, dateAndTime } = req.body;
+      console.log(lon, lat, " <<< ini coyy");
+      console.log(StudentId, dateAndTime, "data dari server");
+
+      // checking if student had already present today : 
+      const checkAttendanceDayStud = await Attendance.findOne({
+        where: {
+          StudentId,
+          createdAt: {
+            [Op.gt]: TODAY_START,
+            [Op.lt]: NOW
+          },
+        },
+      }, { transaction })
+
+      if (checkAttendanceDayStud) {
+        throw { name: 'already_present_today' }
+      }
+
+
+      if (!lon || !lat) throw { name: "location required" };
+
+      const newAttendance = await Attendance.create({
+        StudentId,
+        dateAndTime,
+        status: true,
+        lon,
+        lat,
+      }, { transaction });
+
+      await transaction.commit();
+      res.status(200).json(newAttendance);
+    } catch (err) {
+      await transaction.rollback();
+      next(err);
+    }
+  }
+
+  static async getAttendances(req, res, next) {
+    try {
+      const StudentId = +req.user.id;
+
+      const result = await Attendance.findAll({
+        where: { StudentId },
+        order: [["id", "DESC"]],
+      });
+
+      res.status(200).json(result);
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  static async getTasks(req, res, next) {
+    try {
+      const className = req.user.className;
+      const data = await Assignment.findAll({
+        where: { className },
+        include: [
+          { model: Course, attributes: ["name", "icon"] },
+          { model: AssignmentGrades, attributes: ["url"] },
+        ],
+      });
+      res.status(200).json(data);
     } catch (err) {
       next(err);
     }
