@@ -12,6 +12,7 @@ const {
   FinalGrades,
   Attendance,
   Student,
+  sequelize,
 } = require("../models");
 
 class TeacherController {
@@ -222,6 +223,8 @@ class TeacherController {
   }
 
   static async postAssignment(req, res, next) {
+    const transaction = await sequelize.transaction();
+
     try {
       const { description, deadline, name, className } = req.body;
       if (!description) throw { name: "description is required" };
@@ -232,17 +235,50 @@ class TeacherController {
 
       const createById = +req.user.id;
       const CourseId = +req.user.CourseId;
-      const data = await Assignment.create({
-        description,
-        CourseId,
-        deadline,
-        name,
-        className,
-        createById,
+
+      // Add assignment
+      const data = await Assignment.create(
+        {
+          description,
+          CourseId,
+          deadline,
+          name,
+          className,
+          createById,
+        },
+        { transaction }
+      );
+
+      if (!data) throw { name: "Failed to add new assignment" };
+
+      // Add assignmentGrades
+      const students = await Student.findAll({ where: { className } });
+
+      const studentData = students.map((el) => {
+        return el.id;
       });
 
-      return res.status(201).json(data);
+      const dataAssignmentGrades = studentData.map((el) => {
+        return {
+          score: 0,
+          StudentId: el,
+          AssignmentId: data.id,
+          url: "none",
+        };
+      });
+
+      // Add assignment grades
+      const assignmentGrades = await AssignmentGrades.bulkCreate(
+        dataAssignmentGrades,
+        { transaction, dataAssignmentGrades }
+      );
+
+      await transaction.commit();
+      return res
+        .status(201)
+        .json({ message: `Success create new ${data.name} assignment` });
     } catch (err) {
+      await transaction.rollback();
       console.log(err);
       next(err);
     }
