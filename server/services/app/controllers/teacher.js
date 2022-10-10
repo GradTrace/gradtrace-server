@@ -227,13 +227,73 @@ class TeacherController {
     }
   }
 
-  static async postAssignment(req, res, next) {
-    const transaction = await sequelize.transaction();
+  // static async postAssignment(req, res, next) {
+  //   const transaction = await sequelize.transaction();
 
+  //   try {
+  //     const { description, deadline, name, className } = req.body;
+  //     if (!description) throw { name: "description is required" };
+  //     // if (!CourseId) throw { name: "CourseId is required" };
+  //     if (!deadline) throw { name: "deadline is required" };
+  //     if (!name) throw { name: "name is required" };
+  //     if (!className) throw { name: "className is required" };
+
+  //     const createById = +req.user.id;
+  //     const CourseId = +req.user.CourseId;
+
+  //     // Add assignment
+  //     const data = await Assignment.create(
+  //       {
+  //         description,
+  //         CourseId,
+  //         deadline,
+  //         name,
+  //         className,
+  //         createById,
+  //       },
+  //       { transaction }
+  //     );
+
+  //     if (!data) throw { name: "Failed to add new assignment" };
+
+  //     // Add assignmentGrades
+  //     const students = await Student.findAll({ where: { className } });
+
+  //     const studentData = students.map((el) => {
+  //       return el.id;
+  //     });
+
+  //     const dataAssignmentGrades = studentData.map((el) => {
+  //       return {
+  //         score: 0,
+  //         StudentId: el,
+  //         AssignmentId: data.id,
+  //         url: "none",
+  //       };
+  //     });
+
+  //     // Add assignment grades
+  //     //! dibuat saat murid submit tugas saja
+  //     const assignmentGrades = await AssignmentGrades.bulkCreate(
+  //       dataAssignmentGrades,
+  //       { transaction, dataAssignmentGrades }
+  //     );
+
+  //     await transaction.commit();
+  //     return res
+  //       .status(201)
+  //       .json({ message: `Success create new ${data.name} assignment` });
+  //   } catch (err) {
+  //     await transaction.rollback();
+  //     console.log(err);
+  //     next(err);
+  //   }
+  // }
+
+  static async postAssignment(req, res, next) {
     try {
       const { description, deadline, name, className } = req.body;
       if (!description) throw { name: "description is required" };
-      // if (!CourseId) throw { name: "CourseId is required" };
       if (!deadline) throw { name: "deadline is required" };
       if (!name) throw { name: "name is required" };
       if (!className) throw { name: "className is required" };
@@ -250,41 +310,16 @@ class TeacherController {
           name,
           className,
           createById,
-        },
-        { transaction }
+        }
+        // { transaction }
       );
 
       if (!data) throw { name: "Failed to add new assignment" };
 
-      // Add assignmentGrades
-      const students = await Student.findAll({ where: { className } });
-
-      const studentData = students.map((el) => {
-        return el.id;
-      });
-
-      const dataAssignmentGrades = studentData.map((el) => {
-        return {
-          score: 0,
-          StudentId: el,
-          AssignmentId: data.id,
-          url: "none",
-        };
-      });
-
-      // Add assignment grades
-      const assignmentGrades = await AssignmentGrades.bulkCreate(
-        dataAssignmentGrades,
-        { transaction, dataAssignmentGrades }
-      );
-
-      await transaction.commit();
-      return res
+      res
         .status(201)
         .json({ message: `Success create new ${data.name} assignment` });
     } catch (err) {
-      await transaction.rollback();
-      console.log(err);
       next(err);
     }
   }
