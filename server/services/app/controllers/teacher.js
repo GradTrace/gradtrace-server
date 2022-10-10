@@ -200,7 +200,18 @@ class TeacherController {
         };
       }
 
-      const data = await Assignment.findAll(option);
+      const data = await Student.findAll({
+        include: [
+          {
+            model: AssignmentGrades,
+            include: [
+              {
+                model: Assignment,
+              },
+            ],
+          },
+        ],
+      });
 
       return res.status(201).json(data);
     } catch (err) {
