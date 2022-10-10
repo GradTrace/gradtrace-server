@@ -184,23 +184,12 @@ class TeacherController {
   static async getAssignment(req, res, next) {
     try {
       //filter by name
-      const { name } = req.query;
+      const { name, className} = req.query;
 
       const option = {
         where: {
           createById: `${req.user.id}`,
         },
-        order: [["createdAt", "DESC"]],
-      };
-
-      if (!!name) {
-        option.where = {
-          ...option.where,
-          name: { [Op.iLike]: `%${name}%` },
-        };
-      }
-
-      const data = await Assignment.findAll({
         include: [
           {
             model: AssignmentGrades,
@@ -211,7 +200,24 @@ class TeacherController {
             ],
           },
         ],
-      });
+        order: [["createdAt", "DESC"]],
+      };
+
+      if (!!name) {
+        option.where = {
+          ...option.where,
+          name: { [Op.iLike]: `%${name}%` },
+        };
+      }
+
+      if(!!className){
+        option.where = {
+          ...option.where,
+          className: { [Op.iLike]: `%${className}%` },
+        };
+      }
+
+      const data = await Assignment.findAll(option);
 
       return res.status(201).json(data);
     } catch (err) {
