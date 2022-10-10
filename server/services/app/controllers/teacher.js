@@ -479,6 +479,16 @@ class TeacherController {
       next(err);
     }
   }
+  static async getAssignmentGradesById(req, res, next) {
+    try {
+      let { id } = req.params;
+      const data = await AssignmentGrades.findByPk(id);
+      return res.status(200).json(data);
+    } catch (err) {
+      console.log(err);
+      next(err);
+    }
+  }
 }
 
 module.exports = TeacherController;
