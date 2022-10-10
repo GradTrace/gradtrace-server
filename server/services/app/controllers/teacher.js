@@ -200,13 +200,13 @@ class TeacherController {
         };
       }
 
-      const data = await Student.findAll({
+      const data = await Assignment.findAll({
         include: [
           {
             model: AssignmentGrades,
             include: [
               {
-                model: Assignment,
+                model: Student,
               },
             ],
           },
@@ -446,6 +446,36 @@ class TeacherController {
       });
       res.status(200).json(result);
     } catch (err) {
+      next(err);
+    }
+  }
+
+  static async editAssignmentGrades(req, res, next) {
+    try {
+      const { score } = req.body;
+
+      // const createById = +req.user.id;
+      // const CourseId = +req.user.CourseId;
+      let { id } = req.params;
+      const data = await AssignmentGrades.update(
+        {
+          score,
+        },
+        { where: { id } }
+      );
+
+      return res.status(200).json({ message: "success edit score" });
+    } catch (err) {
+      console.log(err);
+      next(err);
+    }
+  }
+  static async getAssignmentGrades(req, res, next) {
+    try {
+      const data = await AssignmentGrades.findAll();
+      return res.status(200).json(data);
+    } catch (err) {
+      console.log(err);
       next(err);
     }
   }
