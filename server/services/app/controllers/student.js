@@ -76,7 +76,9 @@ class StudentController {
       const loggedInName = findStudent.fullName;
 
       // nanti tambahin photo, untuk di set di web
-      res.status(200).json({ access_token, loggedInName });
+      res
+        .status(200)
+        .json({ access_token, loggedInName, StudentId: findStudent.id });
     } catch (err) {
       next(err);
     }
@@ -174,11 +176,12 @@ class StudentController {
           { model: Course, attributes: ["name", "icon"] },
           {
             model: AssignmentGrades,
-            attributes: ["StudentId", "score", "url"],
-            where: { StudentId },
+            // attributes: ["StudentId", "score", "url"],
+            // where: { StudentId },
           },
         ],
       });
+
       res.status(200).json(data);
     } catch (err) {
       next(err);
@@ -197,12 +200,27 @@ class StudentController {
       const findAssignment = await AssignmentGrades.findOne({
         where: { StudentId, AssignmentId: taskId },
       });
-      if (!findAssignment) throw { name: "Assignment not found" };
+      // if (!findAssignment) throw { name: "Assignment not found" }; // bisa create
 
-      await AssignmentGrades.update(
-        { url },
-        { where: { StudentId, AssignmentId: taskId } }
-      );
+      if (findAssignment) {
+        await AssignmentGrades.update(
+          { url },
+          { where: { StudentId, AssignmentId: taskId } }
+        );
+      } else if (!findAssignment) {
+        await AssignmentGrades.create({
+          score: 0,
+          StudentId,
+          AssignmentId: taskId,
+          url: url,
+        });
+      }
+
+      //! bikin jadi create atau createOrUpdate, dibuat saat murid submit
+      // await AssignmentGrades.update(
+      //   { url },
+      //   { where: { StudentId, AssignmentId: taskId } }
+      // )
 
       res.status(200).json({ message: `Assignment url collected: ${url}` });
     } catch (err) {
