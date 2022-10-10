@@ -184,7 +184,7 @@ class TeacherController {
   static async getAssignment(req, res, next) {
     try {
       //filter by name
-      const { name, className} = req.query;
+      const { name, className } = req.query;
 
       const option = {
         where: {
@@ -210,7 +210,7 @@ class TeacherController {
         };
       }
 
-      if(!!className){
+      if (!!className) {
         option.where = {
           ...option.where,
           className: { [Op.iLike]: `%${className}%` },
@@ -220,6 +220,18 @@ class TeacherController {
       const data = await Assignment.findAll(option);
 
       return res.status(201).json(data);
+    } catch (err) {
+      console.log(err);
+      next(err);
+    }
+  }
+  static async getAssignmented(req, res, next) {
+    try {
+      //filter by name
+
+      const data = await Assignment.findAll();
+
+      return res.status(200).json(data);
     } catch (err) {
       console.log(err);
       next(err);
