@@ -168,10 +168,11 @@ class StudentController {
 
   static async getTasks(req, res, next) {
     try {
-      const StudentId = req.user.id;
+      // const StudentId = req.user.id;
       const className = req.user.className;
       const data = await Assignment.findAll({
         where: { className },
+        order: [["deadline", "asc"]],
         include: [
           { model: Course, attributes: ["name", "icon"] },
           {

@@ -344,7 +344,15 @@ class TeacherController {
       );
 
       if (!data) throw { name: "Failed to add new assignment" };
+      // kalo mau pake socket (opsional) kerjain di akhir, kelarin dulu main function
+      // jalanin fungsi send notification ke mobile (emit)
+      // server
+      // - emit("kelas-9", data)
 
+      // client
+      // - on("kelas-9", (data) => {
+      //   logic
+      // })
       res
         .status(201)
         .json({ message: `Success create new ${data.name} assignment` });
