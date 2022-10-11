@@ -1,0 +1,302 @@
+[
+  {
+    "name": "UAS",
+    "CourseId": 1,
+    "className": 7
+  },
+  {
+    "name": "UTS",
+    "CourseId": 1,
+    "className": 7
+  },
+  {
+    "name": "Ulangan 1",
+    "CourseId": 1,
+    "className": 7
+  },
+  {
+    "name": "Ulangan 2",
+    "CourseId": 1,
+    "className": 7
+  },
+  {
+    "name": "UAS",
+    "CourseId": 2,
+    "className": 7
+  },
+  {
+    "name": "UTS",
+    "CourseId": 2,
+    "className": 7
+  },
+  {
+    "name": "Ulangan 1",
+    "CourseId": 2,
+    "className": 7
+  },
+  {
+    "name": "Ulangan 2",
+    "CourseId": 2,
+    "className": 7
+  },
+  {
+    "name": "UAS",
+    "CourseId": 3,
+    "className": 7
+  },
+  {
+    "name": "UTS",
+    "CourseId": 3,
+    "className": 7
+  },
+  {
+    "name": "Ulangan 3",
+    "CourseId": 3,
+    "className": 7
+  },
+  {
+    "name": "Ulangan 4",
+    "CourseId": 3,
+    "className": 7
+  },
+  {
+    "name": "UAS",
+    "CourseId": 4,
+    "className": 7
+  },
+  {
+    "name": "UTS",
+    "CourseId": 4,
+    "className": 7
+  },
+  {
+    "name": "Ulangan 5",
+    "CourseId": 4,
+    "className": 7
+  },
+  {
+    "name": "Ulangan 6",
+    "CourseId": 4,
+    "className": 7
+  },
+  {
+    "name": "UAS",
+    "CourseId": 5,
+    "className": 7
+  },
+  {
+    "name": "UTS",
+    "CourseId": 5,
+    "className": 7
+  },
+  {
+    "name": "Ulangan 7",
+    "CourseId": 5,
+    "className": 7
+  },
+  {
+    "name": "Ulangan 8",
+    "CourseId": 5,
+    "className": 7
+  },
+  {
+    "name": "UAS",
+    "CourseId": 1,
+    "className": 8
+  },
+  {
+    "name": "UTS",
+    "CourseId": 1,
+    "className": 8
+  },
+  {
+    "name": "Ulangan 1",
+    "CourseId": 1,
+    "className": 8
+  },
+  {
+    "name": "Ulangan 2",
+    "CourseId": 1,
+    "className": 8
+  },
+  {
+    "name": "UAS",
+    "CourseId": 2,
+    "className": 8
+  },
+  {
+    "name": "UTS",
+    "CourseId": 2,
+    "className": 8
+  },
+  {
+    "name": "Ulangan 1",
+    "CourseId": 2,
+    "className": 8
+  },
+  {
+    "name": "Ulangan 2",
+    "CourseId": 2,
+    "className": 8
+  },
+  {
+    "name": "UAS",
+    "CourseId": 3,
+    "className": 8
+  },
+  {
+    "name": "UTS",
+    "CourseId": 3,
+    "className": 8
+  },
+  {
+    "name": "Ulangan 3",
+    "CourseId": 3,
+    "className": 8
+  },
+  {
+    "name": "Ulangan 4",
+    "CourseId": 3,
+    "className": 8
+  },
+  {
+    "name": "UAS",
+    "CourseId": 4,
+    "className": 8
+  },
+  {
+    "name": "UTS",
+    "CourseId": 4,
+    "className": 8
+  },
+  {
+    "name": "Ulangan 5",
+    "CourseId": 4,
+    "className": 8
+  },
+  {
+    "name": "Ulangan 6",
+    "CourseId": 4,
+    "className": 8
+  },
+  {
+    "name": "UAS",
+    "CourseId": 5,
+    "className": 8
+  },
+  {
+    "name": "UTS",
+    "CourseId": 5,
+    "className": 8
+  },
+  {
+    "name": "Ulangan 7",
+    "CourseId": 5,
+    "className": 8
+  },
+  {
+    "name": "Ulangan 8",
+    "CourseId": 5,
+    "className": 8
+  },
+  {
+    "name": "UAS",
+    "CourseId": 1,
+    "className": 9
+  },
+  {
+    "name": "UTS",
+    "CourseId": 1,
+    "className": 9
+  },
+  {
+    "name": "Ulangan 1",
+    "CourseId": 1,
+    "className": 9
+  },
+  {
+    "name": "Ulangan 2",
+    "CourseId": 1,
+    "className": 9
+  },
+  {
+    "name": "UAS",
+    "CourseId": 2,
+    "className": 9
+  },
+  {
+    "name": "UTS",
+    "CourseId": 2,
+    "className": 9
+  },
+  {
+    "name": "Ulangan 1",
+    "CourseId": 2,
+    "className": 9
+  },
+  {
+    "name": "Ulangan 2",
+    "CourseId": 2,
+    "className": 9
+  },
+  {
+    "name": "UAS",
+    "CourseId": 3,
+    "className": 9
+  },
+  {
+    "name": "UTS",
+    "CourseId": 3,
+    "className": 9
+  },
+  {
+    "name": "Ulangan 3",
+    "CourseId": 3,
+    "className": 9
+  },
+  {
+    "name": "Ulangan 4",
+    "CourseId": 3,
+    "className": 9
+  },
+  {
+    "name": "UAS",
+    "CourseId": 4,
+    "className": 9
+  },
+  {
+    "name": "UTS",
+    "CourseId": 4,
+    "className": 9
+  },
+  {
+    "name": "Ulangan 5",
+    "CourseId": 4,
+    "className": 9
+  },
+  {
+    "name": "Ulangan 6",
+    "CourseId": 4,
+    "className": 9
+  },
+  {
+    "name": "UAS",
+    "CourseId": 5,
+    "className": 9
+  },
+  {
+    "name": "UTS",
+    "CourseId": 5,
+    "className": 9
+  },
+  {
+    "name": "Ulangan 7",
+    "CourseId": 5,
+    "className": 9
+  },
+  {
+    "name": "Ulangan 8",
+    "CourseId": 5,
+    "className": 9
+  }
+]

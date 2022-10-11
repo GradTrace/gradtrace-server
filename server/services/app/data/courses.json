@@ -11,6 +11,14 @@
     {
       "name": "English",
       "icon": "https://cdn-icons-png.flaticon.com/512/5486/5486259.png"
+    },
+    {
+      "name": "Physics",
+      "icon": "https://cdn-icons-png.flaticon.com/512/1962/1962617.png"
+    },
+    {
+      "name": "Physical Education",
+      "icon": "https://cdn-icons-png.flaticon.com/512/857/857455.png"
     }
   ]
 }

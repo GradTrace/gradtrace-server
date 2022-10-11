@@ -1,0 +1,244 @@
+{
+  "Assignments": [
+    {
+      "description": "Text book page 1-10",
+      "CourseId": 1,
+      "deadline": "2022-10-11T00:00:00.000Z",
+      "name": "Math assignment 1",
+      "className": "7",
+      "createById": 1
+    },
+    {
+      "description": "Exercise book page 12-25",
+      "CourseId": 1,
+      "deadline": "2022-11-13T00:00:00.000Z",
+      "name": "Math assignment 2",
+      "className": "7",
+      "createById": 1
+    },
+    {
+      "description": "Exercise book page 1-13",
+      "CourseId": 2,
+      "deadline": "2022-11-13T00:00:00.000Z",
+      "name": "Biology assignment 1",
+      "className": "7",
+      "createById": 2
+    },
+    {
+      "description": "Workbook book page 23-33",
+      "CourseId": 2,
+      "deadline": "2022-11-13T00:00:00.000Z",
+      "name": "Biology assignment 2",
+      "className": "7",
+      "createById": 2
+    },
+    {
+      "description": "Exercise book page 1-13",
+      "CourseId": 3,
+      "deadline": "2022-11-13T00:00:00.000Z",
+      "name": "English assignment 1",
+      "className": "7",
+      "createById": 3
+    },
+    {
+      "description": "Workbook book page 23-33",
+      "CourseId": 3,
+      "deadline": "2022-11-13T00:00:00.000Z",
+      "name": "English assignment 2",
+      "className": "7",
+      "createById": 3
+    },
+    {
+      "description": "Exercise book page 1-13",
+      "CourseId": 4,
+      "deadline": "2022-11-13T00:00:00.000Z",
+      "name": "Physics assignment 1",
+      "className": "7",
+      "createById": 4
+    },
+    {
+      "description": "Workbook book page 23-33",
+      "CourseId": 4,
+      "deadline": "2022-11-13T00:00:00.000Z",
+      "name": "Physics assignment 2",
+      "className": "7",
+      "createById": 4
+    },
+    {
+      "description": "Exercise book page 1-13",
+      "CourseId": 5,
+      "deadline": "2022-11-13T00:00:00.000Z",
+      "name": "Physical Education assignment 1",
+      "className": "7",
+      "createById": 5
+    },
+    {
+      "description": "Workbook book page 23-33",
+      "CourseId": 5,
+      "deadline": "2022-11-13T00:00:00.000Z",
+      "name": "Physical Education assignment 2",
+      "className": "7",
+      "createById": 5
+    },
+    {
+      "description": "Text book page 1-10",
+      "CourseId": 1,
+      "deadline": "2022-10-11T00:00:00.000Z",
+      "name": "Math assignment 1",
+      "className": "8",
+      "createById": 1
+    },
+    {
+      "description": "Exercise book page 12-25",
+      "CourseId": 1,
+      "deadline": "2022-11-13T00:00:00.000Z",
+      "name": "Math assignment 2",
+      "className": "8",
+      "createById": 1
+    },
+    {
+      "description": "Exercise book page 1-13",
+      "CourseId": 2,
+      "deadline": "2022-11-13T00:00:00.000Z",
+      "name": "Biology assignment 1",
+      "className": "8",
+      "createById": 2
+    },
+    {
+      "description": "Workbook book page 23-33",
+      "CourseId": 2,
+      "deadline": "2022-11-13T00:00:00.000Z",
+      "name": "Biology assignment 2",
+      "className": "8",
+      "createById": 2
+    },
+    {
+      "description": "Exercise book page 1-13",
+      "CourseId": 3,
+      "deadline": "2022-11-13T00:00:00.000Z",
+      "name": "English assignment 1",
+      "className": "8",
+      "createById": 3
+    },
+    {
+      "description": "Workbook book page 23-33",
+      "CourseId": 3,
+      "deadline": "2022-11-13T00:00:00.000Z",
+      "name": "English assignment 2",
+      "className": "8",
+      "createById": 3
+    },
+    {
+      "description": "Exercise book page 1-13",
+      "CourseId": 4,
+      "deadline": "2022-11-13T00:00:00.000Z",
+      "name": "Physics assignment 1",
+      "className": "8",
+      "createById": 4
+    },
+    {
+      "description": "Workbook book page 23-33",
+      "CourseId": 4,
+      "deadline": "2022-11-13T00:00:00.000Z",
+      "name": "Physics assignment 2",
+      "className": "8",
+      "createById": 4
+    },
+    {
+      "description": "Exercise book page 1-13",
+      "CourseId": 5,
+      "deadline": "2022-11-13T00:00:00.000Z",
+      "name": "Physical Education assignment 1",
+      "className": "8",
+      "createById": 5
+    },
+    {
+      "description": "Workbook book page 23-33",
+      "CourseId": 5,
+      "deadline": "2022-11-13T00:00:00.000Z",
+      "name": "Physical Education assignment 2",
+      "className": "8",
+      "createById": 5
+    },
+    {
+      "description": "Text book page 1-10",
+      "CourseId": 1,
+      "deadline": "2022-10-11T00:00:00.000Z",
+      "name": "Math assignment 1",
+      "className": "9",
+      "createById": 1
+    },
+    {
+      "description": "Exercise book page 12-25",
+      "CourseId": 1,
+      "deadline": "2022-11-13T00:00:00.000Z",
+      "name": "Math assignment 2",
+      "className": "9",
+      "createById": 1
+    },
+    {
+      "description": "Exercise book page 1-13",
+      "CourseId": 2,
+      "deadline": "2022-11-13T00:00:00.000Z",
+      "name": "Biology assignment 1",
+      "className": "9",
+      "createById": 2
+    },
+    {
+      "description": "Workbook book page 23-33",
+      "CourseId": 2,
+      "deadline": "2022-11-13T00:00:00.000Z",
+      "name": "Biology assignment 2",
+      "className": "9",
+      "createById": 2
+    },
+    {
+      "description": "Exercise book page 1-13",
+      "CourseId": 3,
+      "deadline": "2022-11-13T00:00:00.000Z",
+      "name": "English assignment 1",
+      "className": "9",
+      "createById": 3
+    },
+    {
+      "description": "Workbook book page 23-33",
+      "CourseId": 3,
+      "deadline": "2022-11-13T00:00:00.000Z",
+      "name": "English assignment 2",
+      "className": "9",
+      "createById": 3
+    },
+    {
+      "description": "Exercise book page 1-13",
+      "CourseId": 4,
+      "deadline": "2022-11-13T00:00:00.000Z",
+      "name": "Physics assignment 1",
+      "className": "9",
+      "createById": 4
+    },
+    {
+      "description": "Workbook book page 23-33",
+      "CourseId": 4,
+      "deadline": "2022-11-13T00:00:00.000Z",
+      "name": "Physics assignment 2",
+      "className": "9",
+      "createById": 4
+    },
+    {
+      "description": "Exercise book page 1-13",
+      "CourseId": 5,
+      "deadline": "2022-11-13T00:00:00.000Z",
+      "name": "Physical Education assignment 1",
+      "className": "9",
+      "createById": 5
+    },
+    {
+      "description": "Workbook book page 23-33",
+      "CourseId": 5,
+      "deadline": "2022-11-13T00:00:00.000Z",
+      "name": "Physical Education assignment 2",
+      "className": "9",
+      "createById": 5
+    }
+  ]
+}
