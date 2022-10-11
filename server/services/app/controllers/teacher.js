@@ -420,22 +420,54 @@ class TeacherController {
     }
   }
 
- static async examScoreBySubject(req, res, next) {
+  static async examScoreBySubject(req, res, next) {
     try {
       // let { name } = req.query;
       let CourseId = req.user.CourseId;
 
-      const result = await Course.findAll({
-        where: { id: CourseId },
+      // const result = await Course.findAll({
+      //   where: { id: CourseId },
+      //   include: [
+      //     {
+      //       model: Exam,
+      //       include: [
+      //         {
+      //           model: ExamGrades,
+      //           include: [
+      //             { model: Student, attributes: { exclude: ["password"] } },
+      //           ],
+      //         },
+      //       ],
+      //     },
+      //   ],
+      // });
+
+      // const result = await Exam.findAll({
+      //   where: { CourseId },
+      //   include: [
+      //     {
+      //       model: ExamGrades,
+      //       include: [
+      //         {
+      //           model: Student,
+      //           attributes: { exclude: ["password"] },
+      //         },
+      //       ],
+      //     },
+      //   ],
+      // });
+
+      const result = await Student.findAll({
+        attributes: { exclude: ["password"] },
         include: [
           {
-            model: Exam,
+            model: ExamGrades,
             include: [
               {
-                model: ExamGrades,
-                include: [
-                  { model: Student, attributes: { exclude: ["password"] } },
-                ],
+                model: Exam,
+                where: {
+                  CourseId,
+                },
               },
             ],
           },
