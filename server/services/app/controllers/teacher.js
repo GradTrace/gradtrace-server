@@ -426,6 +426,7 @@ class TeacherController {
             ],
           },
         ],
+        order: [["fullName", "ASC"]],
       });
       return res.status(201).json(data);
     } catch (err) {
@@ -588,7 +589,6 @@ class TeacherController {
     try {
       //filter by name
 
-
       const { name, className, page, size } = req.query;
 
       const { limit, offset } = getPagination(page - 1, size);
@@ -626,9 +626,7 @@ class TeacherController {
         };
       }
 
-
       const data = await Assignment.findAndCountAll(option);
-      
 
       return res.status(201).json(data);
     } catch (err) {
