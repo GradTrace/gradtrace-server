@@ -421,6 +421,8 @@ class TeacherController {
   static async examScoreBySubject(req, res, next) {
     try {
       let { name } = req.query;
+      let courseTeacher = req.user.CourseId;
+      console.log(courseTeacher, "?????");
       // console.log(name, "<<");
       const data = await Student.findAll({
         include: [
@@ -429,7 +431,7 @@ class TeacherController {
             include: [
               {
                 model: Exam,
-                include: Course,
+                include: { model: Course, where: { id: courseTeacher } },
               },
             ],
           },
