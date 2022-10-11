@@ -16,6 +16,7 @@ async function authc(req, res, next) {
         className: findUser ? findUser.className : null,
         CourseId: findTeacher ? findTeacher.CourseId : null,
       };
+      console.log(req.user,"<<")
     }
     next();
   } catch (err) {
