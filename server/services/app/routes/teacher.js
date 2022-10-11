@@ -8,6 +8,10 @@ router.get("/courses", TeacherController.getCourses);
 router.use(authc);
 router.post("/exams", TeacherController.addExam);
 router.get("/exams/score", TeacherController.examScoreBySubject);
+router.get("/exams/score/:id", TeacherController.examScoreById);
+
+router.put("/exams/score", TeacherController.editScoreById);
+
 router.post("/scores", TeacherController.addScore);
 router.put("/assignment/score", TeacherController.assignmentScore);
 router.get("/assignment/score", TeacherController.assignmetScoreBySubject);

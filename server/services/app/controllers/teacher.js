@@ -139,8 +139,8 @@ class TeacherController {
         throw { name: "ExamId is required" };
       }
       let { id } = req.params;
-      console.log(id, "<<<<");
-      console.log(req.body, "<<<<");
+      // console.log(id, "<<<<");
+      // console.log(req.body, "<<<<");
       await ExamGrades.update({ score, StudentId, ExamId }, { where: { id } });
       res.status(200).json({ message: "success Edit score" });
     } catch (err) {
@@ -413,23 +413,62 @@ class TeacherController {
   static async examScoreBySubject(req, res, next) {
     try {
       let { name } = req.query;
-      console.log(name, "<<");
-      const data = await ExamGrades.findAll({
+      // console.log(name, "<<");
+      const data = await Student.findAll({
         include: [
           {
-            model: Exam,
+            model: ExamGrades,
             include: [
               {
-                model: Course,
+                model: Exam,
+                include: Course,
               },
             ],
-          },
-          {
-            model: Student,
           },
         ],
       });
       return res.status(201).json(data);
+    } catch (err) {
+      console.log(err);
+      next(err);
+    }
+  }
+
+  static async examScoreById(req, res, next) {
+    try {
+      let id = req.params.id;
+      const data = await Student.findAll({
+        include: [
+          {
+            model: ExamGrades,
+            include: [
+              {
+                model: Exam,
+                include: Course,
+              },
+            ],
+          },
+        ],
+        where: { id },
+      });
+      return res.status(201).json(data);
+    } catch (err) {
+      console.log(err);
+      next(err);
+    }
+  }
+
+  static async editScoreById(req, res, next) {
+    let data = req.body.data;
+
+    console.log(data, "data hoho 2");
+    try {
+      const dataInput = await ExamGrades.bulkCreate(data, {
+        updateOnDuplicate: ["score"],
+      });
+      console.log(dataInput, "ini data input");
+
+      return res.status(201).json(dataInput);
     } catch (err) {
       console.log(err);
       next(err);
