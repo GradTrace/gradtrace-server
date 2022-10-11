@@ -420,7 +420,7 @@ class TeacherController {
     }
   }
 
-  static async examScoreBySubject(req, res, next) {
+ static async examScoreBySubject(req, res, next) {
     try {
       // let { name } = req.query;
       let CourseId = req.user.CourseId;
