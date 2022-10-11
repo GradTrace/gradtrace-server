@@ -16,6 +16,7 @@ router.post("/scores", TeacherController.addScore);
 router.put("/assignment/score", TeacherController.assignmentScore);
 router.get("/assignment", TeacherController.getAssignment);
 router.get("/assignments", TeacherController.getAssignmented);
+router.get("/assignment/paginate", TeacherController.getAssignmentPagination);
 router.patch("/assignmentGrades/:id", TeacherController.editAssignmentGrades);
 router.get("/assignmentGrades/:id", TeacherController.getAssignmentGradesById);
 router.get("/assignmentGrades", TeacherController.getAssignmentGrades);
@@ -32,5 +33,6 @@ router.post("/assignment", TeacherController.postAssignment);
 router.get("/courses", TeacherController.getCourses);
 router.post("/scores/final", TeacherController.addFinalGrades);
 router.get("/attendances/:className", TeacherController.getStudentAttendance);
+
 
 module.exports = router;
