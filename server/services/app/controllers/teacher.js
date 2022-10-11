@@ -420,7 +420,7 @@ class TeacherController {
     }
   }
 
- static async examScoreBySubject(req, res, next) {
+  static async examScoreBySubject(req, res, next) {
     try {
       // let { name } = req.query;
       let CourseId = req.user.CourseId;
@@ -613,8 +613,36 @@ class TeacherController {
   }
   static async getAssignmentGrades(req, res, next) {
     try {
-      const data = await AssignmentGrades.findAll();
-      return res.status(200).json(data);
+      const CourseId = req.user.CourseId;
+      // const data = await AssignmentGrades.findAll({
+      //   include: [
+      //     {
+      //       model: Student,
+      //       attributes: { exclude: ["password"] },
+      //     },
+      //   ],
+      // });
+
+      // const data = await Assignment.findAll({
+      //   where: { CourseId },
+      //   include: { model: AssignmentGrades, include: { model: Student } },
+      // });
+
+      const data = await Student.findAll({
+        attributes: { exclude: ["password"] },
+        include: {
+          model: AssignmentGrades,
+          include: { model: Assignment, where: { CourseId } },
+        },
+      });
+
+      // Untuk filtering student yang sudah upload tugas
+      const result = [];
+      data.map((el) => {
+        if (el.AssignmentGrades.length !== 0) result.push(el);
+      });
+
+      return res.status(200).json(result);
     } catch (err) {
       console.log(err);
       next(err);

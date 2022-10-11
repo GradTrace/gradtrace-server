@@ -239,11 +239,8 @@ class StudentController {
     try {
       const StudentId = req.user.id;
       const className = req.user.className;
-      let uas = 0;
-      let uts = 0;
-      let ulangan = [];
-      let tugas = [];
 
+      //! Belum handle nilai tugas
       let resultExam = await Course.findAll({
         include: [
           {
@@ -256,20 +253,48 @@ class StudentController {
         ],
       });
 
+      // let resultTask = await Course.findAll({
+      //   include: [
+      //     {
+      //       model: Assignment,
+      //       where: {
+      //         className,
+      //       },
+      //       include: [{ model: AssignmentGrades, where: { StudentId } }],
+      //     },
+      //   ],
+      // });
 
-      let resultTask = await Course.findAll({
-        include: [
-          {
-            model: Assignment,
-            where: {
-              className,
-            },
-            include: [{ model: AssignmentGrades, where: { StudentId } }],
-          },
-        ],
+      const hasilAkhir = [];
+      resultExam.map((course) => {
+        let scores = [];
+        course.Exams.map((score) => {
+          let x = "";
+          score.ExamGrades.map((el) => {
+            x = el.score;
+          });
+          scores.push({
+            course: course.name,
+            name: score.name,
+            score: +x,
+          });
+        });
+        hasilAkhir.push(scores);
       });
 
-      res.status(200).json({ resultExam, resultTask });
+      //! Baru memperhitungkan nilai ulangan aja
+      hasilAkhir.map((el) => {
+        el.push({
+          course: el[0].course,
+          name: "Final Score",
+          score: (
+            0.4 * el[0].score +
+            0.3 * el[1].score +
+            0.3 * el[2].score
+          ).toFixed(2),
+        });
+      });
+      res.status(200).json(hasilAkhir);
     } catch (err) {
       console.log(err);
       next(err);
