@@ -7,6 +7,8 @@ const {
   Assignment,
   Course,
   AssignmentGrades,
+  Exam,
+  ExamGrades,
   sequelize,
   Sequelize,
 } = require("../models");
@@ -77,9 +79,12 @@ class StudentController {
       const loggedInName = findStudent.fullName;
 
       // nanti tambahin photo, untuk di set di web
-      res
-        .status(200)
-        .json({ access_token, loggedInName, StudentId: findStudent.id });
+      res.status(200).json({
+        access_token,
+        loggedInName,
+        StudentId: findStudent.id,
+        className: findStudent.className,
+      });
     } catch (err) {
       next(err);
     }
@@ -169,10 +174,11 @@ class StudentController {
 
   static async getTasks(req, res, next) {
     try {
-      const StudentId = req.user.id;
+      // const StudentId = req.user.id;
       const className = req.user.className;
       const data = await Assignment.findAll({
         where: { className },
+        order: [["deadline", "asc"]],
         include: [
           { model: Course, attributes: ["name", "icon"] },
           {
@@ -232,32 +238,39 @@ class StudentController {
   static async showStudentScore(req, res, next) {
     try {
       const StudentId = req.user.id;
+      const className = req.user.className;
       let uas = 0;
       let uts = 0;
       let ulangan = [];
       let tugas = [];
 
       // TODO: 1. Find List of nilai tugas
-      let resultTugas = await AssignmentGrades.findAll({ where: StudentId })
-      tugas = resultTugas.map(item => { return item.score })
+      let resultTugas = await Course.findAll({
+        include: [
+          {
+            model: Exam,
+            where: {
+              className,
+            },
+            // include: [{ model: ExamGrades, where: { StudentId } }],
+          },
+        ],
+      });
+      // tugas = resultTugas.map(item => { return item.score })
 
       // TODO: 2. Find list of nilai ulangan harian doang. Asumsi isi exam grade , cmn ulangan harian doang
 
       // let resultExam = await ExamGrades.findAll({ where: StudentId })
       // ulangan = resultExam.map(item => { return item.score })
 
-
       // TODO: 3. Find kumulatif skor.
-
-
 
       // TODO : 4. MASOKIN SEMUA 1 1 DALAM OBJEK, BIAR GA BINGUNG BOS
 
-
-      res.status(200).json({ message: `masih beloman nih` })
+      res.status(200).json(resultTugas);
     } catch (err) {
-      console.log(err)
-      next(err)
+      console.log(err);
+      next(err);
     }
   }
 }

@@ -201,402 +201,2802 @@
   },
   {
     "score": 0,
+    "StudentId": 1,
+    "ExamId": 5
+  },
+  {
+    "score": 0,
+    "StudentId": 2,
+    "ExamId": 5
+  },
+  {
+    "score": 0,
+    "StudentId": 3,
+    "ExamId": 5
+  },
+  {
+    "score": 0,
+    "StudentId": 4,
+    "ExamId": 5
+  },
+  {
+    "score": 0,
+    "StudentId": 5,
+    "ExamId": 5
+  },
+  {
+    "score": 0,
+    "StudentId": 6,
+    "ExamId": 5
+  },
+  {
+    "score": 0,
+    "StudentId": 7,
+    "ExamId": 5
+  },
+  {
+    "score": 0,
+    "StudentId": 8,
+    "ExamId": 5
+  },
+  {
+    "score": 0,
+    "StudentId": 9,
+    "ExamId": 5
+  },
+  {
+    "score": 0,
+    "StudentId": 10,
+    "ExamId": 5
+  },
+  {
+    "score": 0,
+    "StudentId": 1,
+    "ExamId": 6
+  },
+  {
+    "score": 0,
+    "StudentId": 2,
+    "ExamId": 6
+  },
+  {
+    "score": 0,
+    "StudentId": 3,
+    "ExamId": 6
+  },
+  {
+    "score": 0,
+    "StudentId": 4,
+    "ExamId": 6
+  },
+  {
+    "score": 0,
+    "StudentId": 5,
+    "ExamId": 6
+  },
+  {
+    "score": 0,
+    "StudentId": 6,
+    "ExamId": 6
+  },
+  {
+    "score": 0,
+    "StudentId": 7,
+    "ExamId": 6
+  },
+  {
+    "score": 0,
+    "StudentId": 8,
+    "ExamId": 6
+  },
+  {
+    "score": 0,
+    "StudentId": 9,
+    "ExamId": 6
+  },
+  {
+    "score": 0,
+    "StudentId": 10,
+    "ExamId": 6
+  },
+  {
+    "score": 0,
+    "StudentId": 1,
+    "ExamId": 7
+  },
+  {
+    "score": 0,
+    "StudentId": 2,
+    "ExamId": 7
+  },
+  {
+    "score": 0,
+    "StudentId": 3,
+    "ExamId": 7
+  },
+  {
+    "score": 0,
+    "StudentId": 4,
+    "ExamId": 7
+  },
+  {
+    "score": 0,
+    "StudentId": 5,
+    "ExamId": 7
+  },
+  {
+    "score": 0,
+    "StudentId": 6,
+    "ExamId": 7
+  },
+  {
+    "score": 0,
+    "StudentId": 7,
+    "ExamId": 7
+  },
+  {
+    "score": 0,
+    "StudentId": 8,
+    "ExamId": 7
+  },
+  {
+    "score": 0,
+    "StudentId": 9,
+    "ExamId": 7
+  },
+  {
+    "score": 0,
+    "StudentId": 10,
+    "ExamId": 7
+  },
+  {
+    "score": 0,
+    "StudentId": 1,
+    "ExamId": 8
+  },
+  {
+    "score": 0,
+    "StudentId": 2,
+    "ExamId": 8
+  },
+  {
+    "score": 0,
+    "StudentId": 3,
+    "ExamId": 8
+  },
+  {
+    "score": 0,
+    "StudentId": 4,
+    "ExamId": 8
+  },
+  {
+    "score": 0,
+    "StudentId": 5,
+    "ExamId": 8
+  },
+  {
+    "score": 0,
+    "StudentId": 6,
+    "ExamId": 8
+  },
+  {
+    "score": 0,
+    "StudentId": 7,
+    "ExamId": 8
+  },
+  {
+    "score": 0,
+    "StudentId": 8,
+    "ExamId": 8
+  },
+  {
+    "score": 0,
+    "StudentId": 9,
+    "ExamId": 8
+  },
+  {
+    "score": 0,
+    "StudentId": 10,
+    "ExamId": 8
+  },
+  {
+    "score": 0,
+    "StudentId": 1,
+    "ExamId": 9
+  },
+  {
+    "score": 0,
+    "StudentId": 2,
+    "ExamId": 9
+  },
+  {
+    "score": 0,
+    "StudentId": 3,
+    "ExamId": 9
+  },
+  {
+    "score": 0,
+    "StudentId": 4,
+    "ExamId": 9
+  },
+  {
+    "score": 0,
+    "StudentId": 5,
+    "ExamId": 9
+  },
+  {
+    "score": 0,
+    "StudentId": 6,
+    "ExamId": 9
+  },
+  {
+    "score": 0,
+    "StudentId": 7,
+    "ExamId": 9
+  },
+  {
+    "score": 0,
+    "StudentId": 8,
+    "ExamId": 9
+  },
+  {
+    "score": 0,
+    "StudentId": 9,
+    "ExamId": 9
+  },
+  {
+    "score": 0,
+    "StudentId": 10,
+    "ExamId": 9
+  },
+  {
+    "score": 0,
+    "StudentId": 1,
+    "ExamId": 10
+  },
+  {
+    "score": 0,
+    "StudentId": 2,
+    "ExamId": 10
+  },
+  {
+    "score": 0,
+    "StudentId": 3,
+    "ExamId": 10
+  },
+  {
+    "score": 0,
+    "StudentId": 4,
+    "ExamId": 10
+  },
+  {
+    "score": 0,
+    "StudentId": 5,
+    "ExamId": 10
+  },
+  {
+    "score": 0,
+    "StudentId": 6,
+    "ExamId": 10
+  },
+  {
+    "score": 0,
+    "StudentId": 7,
+    "ExamId": 10
+  },
+  {
+    "score": 0,
+    "StudentId": 8,
+    "ExamId": 10
+  },
+  {
+    "score": 0,
+    "StudentId": 9,
+    "ExamId": 10
+  },
+  {
+    "score": 0,
+    "StudentId": 10,
+    "ExamId": 10
+  },
+  {
+    "score": 0,
+    "StudentId": 1,
+    "ExamId": 11
+  },
+  {
+    "score": 0,
+    "StudentId": 2,
+    "ExamId": 11
+  },
+  {
+    "score": 0,
+    "StudentId": 3,
+    "ExamId": 11
+  },
+  {
+    "score": 0,
+    "StudentId": 4,
+    "ExamId": 11
+  },
+  {
+    "score": 0,
+    "StudentId": 5,
+    "ExamId": 11
+  },
+  {
+    "score": 0,
+    "StudentId": 6,
+    "ExamId": 11
+  },
+  {
+    "score": 0,
+    "StudentId": 7,
+    "ExamId": 11
+  },
+  {
+    "score": 0,
+    "StudentId": 8,
+    "ExamId": 11
+  },
+  {
+    "score": 0,
+    "StudentId": 9,
+    "ExamId": 11
+  },
+  {
+    "score": 0,
+    "StudentId": 10,
+    "ExamId": 11
+  },
+  {
+    "score": 0,
+    "StudentId": 1,
+    "ExamId": 12
+  },
+  {
+    "score": 0,
+    "StudentId": 2,
+    "ExamId": 12
+  },
+  {
+    "score": 0,
+    "StudentId": 3,
+    "ExamId": 12
+  },
+  {
+    "score": 0,
+    "StudentId": 4,
+    "ExamId": 12
+  },
+  {
+    "score": 0,
+    "StudentId": 5,
+    "ExamId": 12
+  },
+  {
+    "score": 0,
+    "StudentId": 6,
+    "ExamId": 12
+  },
+  {
+    "score": 0,
+    "StudentId": 7,
+    "ExamId": 12
+  },
+  {
+    "score": 0,
+    "StudentId": 8,
+    "ExamId": 12
+  },
+  {
+    "score": 0,
+    "StudentId": 9,
+    "ExamId": 12
+  },
+  {
+    "score": 0,
+    "StudentId": 10,
+    "ExamId": 12
+  },
+  {
+    "score": 0,
+    "StudentId": 1,
+    "ExamId": 13
+  },
+  {
+    "score": 0,
+    "StudentId": 2,
+    "ExamId": 13
+  },
+  {
+    "score": 0,
+    "StudentId": 3,
+    "ExamId": 13
+  },
+  {
+    "score": 0,
+    "StudentId": 4,
+    "ExamId": 13
+  },
+  {
+    "score": 0,
+    "StudentId": 5,
+    "ExamId": 13
+  },
+  {
+    "score": 0,
+    "StudentId": 6,
+    "ExamId": 13
+  },
+  {
+    "score": 0,
+    "StudentId": 7,
+    "ExamId": 13
+  },
+  {
+    "score": 0,
+    "StudentId": 8,
+    "ExamId": 13
+  },
+  {
+    "score": 0,
+    "StudentId": 9,
+    "ExamId": 13
+  },
+  {
+    "score": 0,
+    "StudentId": 10,
+    "ExamId": 13
+  },
+  {
+    "score": 0,
+    "StudentId": 1,
+    "ExamId": 14
+  },
+  {
+    "score": 0,
+    "StudentId": 2,
+    "ExamId": 14
+  },
+  {
+    "score": 0,
+    "StudentId": 3,
+    "ExamId": 14
+  },
+  {
+    "score": 0,
+    "StudentId": 4,
+    "ExamId": 14
+  },
+  {
+    "score": 0,
+    "StudentId": 5,
+    "ExamId": 14
+  },
+  {
+    "score": 0,
+    "StudentId": 6,
+    "ExamId": 14
+  },
+  {
+    "score": 0,
+    "StudentId": 7,
+    "ExamId": 14
+  },
+  {
+    "score": 0,
+    "StudentId": 8,
+    "ExamId": 14
+  },
+  {
+    "score": 0,
+    "StudentId": 9,
+    "ExamId": 14
+  },
+  {
+    "score": 0,
+    "StudentId": 10,
+    "ExamId": 14
+  },
+  {
+    "score": 0,
+    "StudentId": 1,
+    "ExamId": 15
+  },
+  {
+    "score": 0,
+    "StudentId": 2,
+    "ExamId": 15
+  },
+  {
+    "score": 0,
+    "StudentId": 3,
+    "ExamId": 15
+  },
+  {
+    "score": 0,
+    "StudentId": 4,
+    "ExamId": 15
+  },
+  {
+    "score": 0,
+    "StudentId": 5,
+    "ExamId": 15
+  },
+  {
+    "score": 0,
+    "StudentId": 6,
+    "ExamId": 15
+  },
+  {
+    "score": 0,
+    "StudentId": 7,
+    "ExamId": 15
+  },
+  {
+    "score": 0,
+    "StudentId": 8,
+    "ExamId": 15
+  },
+  {
+    "score": 0,
+    "StudentId": 9,
+    "ExamId": 15
+  },
+  {
+    "score": 0,
+    "StudentId": 10,
+    "ExamId": 15
+  },
+  {
+    "score": 0,
+    "StudentId": 1,
+    "ExamId": 16
+  },
+  {
+    "score": 0,
+    "StudentId": 2,
+    "ExamId": 16
+  },
+  {
+    "score": 0,
+    "StudentId": 3,
+    "ExamId": 16
+  },
+  {
+    "score": 0,
+    "StudentId": 4,
+    "ExamId": 16
+  },
+  {
+    "score": 0,
+    "StudentId": 5,
+    "ExamId": 16
+  },
+  {
+    "score": 0,
+    "StudentId": 6,
+    "ExamId": 16
+  },
+  {
+    "score": 0,
+    "StudentId": 7,
+    "ExamId": 16
+  },
+  {
+    "score": 0,
+    "StudentId": 8,
+    "ExamId": 16
+  },
+  {
+    "score": 0,
+    "StudentId": 9,
+    "ExamId": 16
+  },
+  {
+    "score": 0,
+    "StudentId": 10,
+    "ExamId": 16
+  },
+  {
+    "score": 0,
+    "StudentId": 1,
+    "ExamId": 17
+  },
+  {
+    "score": 0,
+    "StudentId": 2,
+    "ExamId": 17
+  },
+  {
+    "score": 0,
+    "StudentId": 3,
+    "ExamId": 17
+  },
+  {
+    "score": 0,
+    "StudentId": 4,
+    "ExamId": 17
+  },
+  {
+    "score": 0,
+    "StudentId": 5,
+    "ExamId": 17
+  },
+  {
+    "score": 0,
+    "StudentId": 6,
+    "ExamId": 17
+  },
+  {
+    "score": 0,
+    "StudentId": 7,
+    "ExamId": 17
+  },
+  {
+    "score": 0,
+    "StudentId": 8,
+    "ExamId": 17
+  },
+  {
+    "score": 0,
+    "StudentId": 9,
+    "ExamId": 17
+  },
+  {
+    "score": 0,
+    "StudentId": 10,
+    "ExamId": 17
+  },
+  {
+    "score": 0,
+    "StudentId": 1,
+    "ExamId": 18
+  },
+  {
+    "score": 0,
+    "StudentId": 2,
+    "ExamId": 18
+  },
+  {
+    "score": 0,
+    "StudentId": 3,
+    "ExamId": 18
+  },
+  {
+    "score": 0,
+    "StudentId": 4,
+    "ExamId": 18
+  },
+  {
+    "score": 0,
+    "StudentId": 5,
+    "ExamId": 18
+  },
+  {
+    "score": 0,
+    "StudentId": 6,
+    "ExamId": 18
+  },
+  {
+    "score": 0,
+    "StudentId": 7,
+    "ExamId": 18
+  },
+  {
+    "score": 0,
+    "StudentId": 8,
+    "ExamId": 18
+  },
+  {
+    "score": 0,
+    "StudentId": 9,
+    "ExamId": 18
+  },
+  {
+    "score": 0,
+    "StudentId": 10,
+    "ExamId": 18
+  },
+  {
+    "score": 0,
+    "StudentId": 1,
+    "ExamId": 19
+  },
+  {
+    "score": 0,
+    "StudentId": 2,
+    "ExamId": 19
+  },
+  {
+    "score": 0,
+    "StudentId": 3,
+    "ExamId": 19
+  },
+  {
+    "score": 0,
+    "StudentId": 4,
+    "ExamId": 19
+  },
+  {
+    "score": 0,
+    "StudentId": 5,
+    "ExamId": 19
+  },
+  {
+    "score": 0,
+    "StudentId": 6,
+    "ExamId": 19
+  },
+  {
+    "score": 0,
+    "StudentId": 7,
+    "ExamId": 19
+  },
+  {
+    "score": 0,
+    "StudentId": 8,
+    "ExamId": 19
+  },
+  {
+    "score": 0,
+    "StudentId": 9,
+    "ExamId": 19
+  },
+  {
+    "score": 0,
+    "StudentId": 10,
+    "ExamId": 19
+  },
+  {
+    "score": 0,
+    "StudentId": 1,
+    "ExamId": 20
+  },
+  {
+    "score": 0,
+    "StudentId": 2,
+    "ExamId": 20
+  },
+  {
+    "score": 0,
+    "StudentId": 3,
+    "ExamId": 20
+  },
+  {
+    "score": 0,
+    "StudentId": 4,
+    "ExamId": 20
+  },
+  {
+    "score": 0,
+    "StudentId": 5,
+    "ExamId": 20
+  },
+  {
+    "score": 0,
+    "StudentId": 6,
+    "ExamId": 20
+  },
+  {
+    "score": 0,
+    "StudentId": 7,
+    "ExamId": 20
+  },
+  {
+    "score": 0,
+    "StudentId": 8,
+    "ExamId": 20
+  },
+  {
+    "score": 0,
+    "StudentId": 9,
+    "ExamId": 20
+  },
+  {
+    "score": 0,
+    "StudentId": 10,
+    "ExamId": 20
+  },
+  {
+    "score": 0,
     "StudentId": 11,
-    "ExamId": 1
+    "ExamId": 21
   },
   {
     "score": 0,
     "StudentId": 12,
-    "ExamId": 1
+    "ExamId": 21
   },
   {
     "score": 0,
     "StudentId": 13,
-    "ExamId": 1
+    "ExamId": 21
   },
   {
     "score": 0,
     "StudentId": 14,
-    "ExamId": 1
+    "ExamId": 21
   },
   {
     "score": 0,
     "StudentId": 15,
-    "ExamId": 1
+    "ExamId": 21
   },
   {
     "score": 0,
     "StudentId": 16,
-    "ExamId": 1
+    "ExamId": 21
   },
   {
     "score": 0,
     "StudentId": 17,
-    "ExamId": 1
+    "ExamId": 21
   },
   {
     "score": 0,
     "StudentId": 18,
-    "ExamId": 1
+    "ExamId": 21
   },
   {
     "score": 0,
     "StudentId": 19,
-    "ExamId": 1
+    "ExamId": 21
   },
   {
     "score": 0,
     "StudentId": 20,
-    "ExamId": 1
+    "ExamId": 21
   },
   {
     "score": 0,
     "StudentId": 11,
-    "ExamId": 2
+    "ExamId": 22
   },
   {
     "score": 0,
     "StudentId": 12,
-    "ExamId": 2
+    "ExamId": 22
   },
   {
     "score": 0,
     "StudentId": 13,
-    "ExamId": 2
+    "ExamId": 22
   },
   {
     "score": 0,
     "StudentId": 14,
-    "ExamId": 2
+    "ExamId": 22
   },
   {
     "score": 0,
     "StudentId": 15,
-    "ExamId": 2
+    "ExamId": 22
   },
   {
     "score": 0,
     "StudentId": 16,
-    "ExamId": 2
+    "ExamId": 22
   },
   {
     "score": 0,
     "StudentId": 17,
-    "ExamId": 2
+    "ExamId": 22
   },
   {
     "score": 0,
     "StudentId": 18,
-    "ExamId": 2
+    "ExamId": 22
   },
   {
     "score": 0,
     "StudentId": 19,
-    "ExamId": 2
+    "ExamId": 22
   },
   {
     "score": 0,
     "StudentId": 20,
-    "ExamId": 2
+    "ExamId": 22
   },
   {
     "score": 0,
     "StudentId": 11,
-    "ExamId": 3
+    "ExamId": 23
   },
   {
     "score": 0,
     "StudentId": 12,
-    "ExamId": 3
+    "ExamId": 23
   },
   {
     "score": 0,
     "StudentId": 13,
-    "ExamId": 3
+    "ExamId": 23
   },
   {
     "score": 0,
     "StudentId": 14,
-    "ExamId": 3
+    "ExamId": 23
   },
   {
     "score": 0,
     "StudentId": 15,
-    "ExamId": 3
+    "ExamId": 23
   },
   {
     "score": 0,
     "StudentId": 16,
-    "ExamId": 3
+    "ExamId": 23
   },
   {
     "score": 0,
     "StudentId": 17,
-    "ExamId": 3
+    "ExamId": 23
   },
   {
     "score": 0,
     "StudentId": 18,
-    "ExamId": 3
+    "ExamId": 23
   },
   {
     "score": 0,
     "StudentId": 19,
-    "ExamId": 3
+    "ExamId": 23
   },
   {
     "score": 0,
     "StudentId": 20,
-    "ExamId": 3
+    "ExamId": 23
   },
   {
     "score": 0,
     "StudentId": 11,
-    "ExamId": 4
+    "ExamId": 24
   },
   {
     "score": 0,
     "StudentId": 12,
-    "ExamId": 4
+    "ExamId": 24
   },
   {
     "score": 0,
     "StudentId": 13,
-    "ExamId": 4
+    "ExamId": 24
   },
   {
     "score": 0,
     "StudentId": 14,
-    "ExamId": 4
+    "ExamId": 24
   },
   {
     "score": 0,
     "StudentId": 15,
-    "ExamId": 4
+    "ExamId": 24
   },
   {
     "score": 0,
     "StudentId": 16,
-    "ExamId": 4
+    "ExamId": 24
   },
   {
     "score": 0,
     "StudentId": 17,
-    "ExamId": 4
+    "ExamId": 24
   },
   {
     "score": 0,
     "StudentId": 18,
-    "ExamId": 4
+    "ExamId": 24
   },
   {
     "score": 0,
     "StudentId": 19,
-    "ExamId": 4
+    "ExamId": 24
   },
   {
     "score": 0,
     "StudentId": 20,
-    "ExamId": 4
+    "ExamId": 24
+  },
+  {
+    "score": 0,
+    "StudentId": 11,
+    "ExamId": 25
+  },
+  {
+    "score": 0,
+    "StudentId": 12,
+    "ExamId": 25
+  },
+  {
+    "score": 0,
+    "StudentId": 13,
+    "ExamId": 25
+  },
+  {
+    "score": 0,
+    "StudentId": 14,
+    "ExamId": 25
+  },
+  {
+    "score": 0,
+    "StudentId": 15,
+    "ExamId": 25
+  },
+  {
+    "score": 0,
+    "StudentId": 16,
+    "ExamId": 25
+  },
+  {
+    "score": 0,
+    "StudentId": 17,
+    "ExamId": 25
+  },
+  {
+    "score": 0,
+    "StudentId": 18,
+    "ExamId": 25
+  },
+  {
+    "score": 0,
+    "StudentId": 19,
+    "ExamId": 25
+  },
+  {
+    "score": 0,
+    "StudentId": 20,
+    "ExamId": 25
+  },
+  {
+    "score": 0,
+    "StudentId": 11,
+    "ExamId": 26
+  },
+  {
+    "score": 0,
+    "StudentId": 12,
+    "ExamId": 26
+  },
+  {
+    "score": 0,
+    "StudentId": 13,
+    "ExamId": 26
+  },
+  {
+    "score": 0,
+    "StudentId": 14,
+    "ExamId": 26
+  },
+  {
+    "score": 0,
+    "StudentId": 15,
+    "ExamId": 26
+  },
+  {
+    "score": 0,
+    "StudentId": 16,
+    "ExamId": 26
+  },
+  {
+    "score": 0,
+    "StudentId": 17,
+    "ExamId": 26
+  },
+  {
+    "score": 0,
+    "StudentId": 18,
+    "ExamId": 26
+  },
+  {
+    "score": 0,
+    "StudentId": 19,
+    "ExamId": 26
+  },
+  {
+    "score": 0,
+    "StudentId": 20,
+    "ExamId": 26
+  },
+  {
+    "score": 0,
+    "StudentId": 11,
+    "ExamId": 27
+  },
+  {
+    "score": 0,
+    "StudentId": 12,
+    "ExamId": 27
+  },
+  {
+    "score": 0,
+    "StudentId": 13,
+    "ExamId": 27
+  },
+  {
+    "score": 0,
+    "StudentId": 14,
+    "ExamId": 27
+  },
+  {
+    "score": 0,
+    "StudentId": 15,
+    "ExamId": 27
+  },
+  {
+    "score": 0,
+    "StudentId": 16,
+    "ExamId": 27
+  },
+  {
+    "score": 0,
+    "StudentId": 17,
+    "ExamId": 27
+  },
+  {
+    "score": 0,
+    "StudentId": 18,
+    "ExamId": 27
+  },
+  {
+    "score": 0,
+    "StudentId": 19,
+    "ExamId": 27
+  },
+  {
+    "score": 0,
+    "StudentId": 20,
+    "ExamId": 27
+  },
+  {
+    "score": 0,
+    "StudentId": 11,
+    "ExamId": 28
+  },
+  {
+    "score": 0,
+    "StudentId": 12,
+    "ExamId": 28
+  },
+  {
+    "score": 0,
+    "StudentId": 13,
+    "ExamId": 28
+  },
+  {
+    "score": 0,
+    "StudentId": 14,
+    "ExamId": 28
+  },
+  {
+    "score": 0,
+    "StudentId": 15,
+    "ExamId": 28
+  },
+  {
+    "score": 0,
+    "StudentId": 16,
+    "ExamId": 28
+  },
+  {
+    "score": 0,
+    "StudentId": 17,
+    "ExamId": 28
+  },
+  {
+    "score": 0,
+    "StudentId": 18,
+    "ExamId": 28
+  },
+  {
+    "score": 0,
+    "StudentId": 19,
+    "ExamId": 28
+  },
+  {
+    "score": 0,
+    "StudentId": 20,
+    "ExamId": 28
+  },
+  {
+    "score": 0,
+    "StudentId": 11,
+    "ExamId": 29
+  },
+  {
+    "score": 0,
+    "StudentId": 12,
+    "ExamId": 29
+  },
+  {
+    "score": 0,
+    "StudentId": 13,
+    "ExamId": 29
+  },
+  {
+    "score": 0,
+    "StudentId": 14,
+    "ExamId": 29
+  },
+  {
+    "score": 0,
+    "StudentId": 15,
+    "ExamId": 29
+  },
+  {
+    "score": 0,
+    "StudentId": 16,
+    "ExamId": 29
+  },
+  {
+    "score": 0,
+    "StudentId": 17,
+    "ExamId": 29
+  },
+  {
+    "score": 0,
+    "StudentId": 18,
+    "ExamId": 29
+  },
+  {
+    "score": 0,
+    "StudentId": 19,
+    "ExamId": 29
+  },
+  {
+    "score": 0,
+    "StudentId": 20,
+    "ExamId": 29
+  },
+  {
+    "score": 0,
+    "StudentId": 11,
+    "ExamId": 30
+  },
+  {
+    "score": 0,
+    "StudentId": 12,
+    "ExamId": 30
+  },
+  {
+    "score": 0,
+    "StudentId": 13,
+    "ExamId": 30
+  },
+  {
+    "score": 0,
+    "StudentId": 14,
+    "ExamId": 30
+  },
+  {
+    "score": 0,
+    "StudentId": 15,
+    "ExamId": 30
+  },
+  {
+    "score": 0,
+    "StudentId": 16,
+    "ExamId": 30
+  },
+  {
+    "score": 0,
+    "StudentId": 17,
+    "ExamId": 30
+  },
+  {
+    "score": 0,
+    "StudentId": 18,
+    "ExamId": 30
+  },
+  {
+    "score": 0,
+    "StudentId": 19,
+    "ExamId": 30
+  },
+  {
+    "score": 0,
+    "StudentId": 20,
+    "ExamId": 30
+  },
+  {
+    "score": 0,
+    "StudentId": 11,
+    "ExamId": 31
+  },
+  {
+    "score": 0,
+    "StudentId": 12,
+    "ExamId": 31
+  },
+  {
+    "score": 0,
+    "StudentId": 13,
+    "ExamId": 31
+  },
+  {
+    "score": 0,
+    "StudentId": 14,
+    "ExamId": 31
+  },
+  {
+    "score": 0,
+    "StudentId": 15,
+    "ExamId": 31
+  },
+  {
+    "score": 0,
+    "StudentId": 16,
+    "ExamId": 31
+  },
+  {
+    "score": 0,
+    "StudentId": 17,
+    "ExamId": 31
+  },
+  {
+    "score": 0,
+    "StudentId": 18,
+    "ExamId": 31
+  },
+  {
+    "score": 0,
+    "StudentId": 19,
+    "ExamId": 31
+  },
+  {
+    "score": 0,
+    "StudentId": 20,
+    "ExamId": 31
+  },
+  {
+    "score": 0,
+    "StudentId": 11,
+    "ExamId": 32
+  },
+  {
+    "score": 0,
+    "StudentId": 12,
+    "ExamId": 32
+  },
+  {
+    "score": 0,
+    "StudentId": 13,
+    "ExamId": 32
+  },
+  {
+    "score": 0,
+    "StudentId": 14,
+    "ExamId": 32
+  },
+  {
+    "score": 0,
+    "StudentId": 15,
+    "ExamId": 32
+  },
+  {
+    "score": 0,
+    "StudentId": 16,
+    "ExamId": 32
+  },
+  {
+    "score": 0,
+    "StudentId": 17,
+    "ExamId": 32
+  },
+  {
+    "score": 0,
+    "StudentId": 18,
+    "ExamId": 32
+  },
+  {
+    "score": 0,
+    "StudentId": 19,
+    "ExamId": 32
+  },
+  {
+    "score": 0,
+    "StudentId": 20,
+    "ExamId": 32
+  },
+  {
+    "score": 0,
+    "StudentId": 11,
+    "ExamId": 33
+  },
+  {
+    "score": 0,
+    "StudentId": 12,
+    "ExamId": 33
+  },
+  {
+    "score": 0,
+    "StudentId": 13,
+    "ExamId": 33
+  },
+  {
+    "score": 0,
+    "StudentId": 14,
+    "ExamId": 33
+  },
+  {
+    "score": 0,
+    "StudentId": 15,
+    "ExamId": 33
+  },
+  {
+    "score": 0,
+    "StudentId": 16,
+    "ExamId": 33
+  },
+  {
+    "score": 0,
+    "StudentId": 17,
+    "ExamId": 33
+  },
+  {
+    "score": 0,
+    "StudentId": 18,
+    "ExamId": 33
+  },
+  {
+    "score": 0,
+    "StudentId": 19,
+    "ExamId": 33
+  },
+  {
+    "score": 0,
+    "StudentId": 20,
+    "ExamId": 33
+  },
+  {
+    "score": 0,
+    "StudentId": 11,
+    "ExamId": 34
+  },
+  {
+    "score": 0,
+    "StudentId": 12,
+    "ExamId": 34
+  },
+  {
+    "score": 0,
+    "StudentId": 13,
+    "ExamId": 34
+  },
+  {
+    "score": 0,
+    "StudentId": 14,
+    "ExamId": 34
+  },
+  {
+    "score": 0,
+    "StudentId": 15,
+    "ExamId": 34
+  },
+  {
+    "score": 0,
+    "StudentId": 16,
+    "ExamId": 34
+  },
+  {
+    "score": 0,
+    "StudentId": 17,
+    "ExamId": 34
+  },
+  {
+    "score": 0,
+    "StudentId": 18,
+    "ExamId": 34
+  },
+  {
+    "score": 0,
+    "StudentId": 19,
+    "ExamId": 34
+  },
+  {
+    "score": 0,
+    "StudentId": 20,
+    "ExamId": 34
+  },
+  {
+    "score": 0,
+    "StudentId": 11,
+    "ExamId": 35
+  },
+  {
+    "score": 0,
+    "StudentId": 12,
+    "ExamId": 35
+  },
+  {
+    "score": 0,
+    "StudentId": 13,
+    "ExamId": 35
+  },
+  {
+    "score": 0,
+    "StudentId": 14,
+    "ExamId": 35
+  },
+  {
+    "score": 0,
+    "StudentId": 15,
+    "ExamId": 35
+  },
+  {
+    "score": 0,
+    "StudentId": 16,
+    "ExamId": 35
+  },
+  {
+    "score": 0,
+    "StudentId": 17,
+    "ExamId": 35
+  },
+  {
+    "score": 0,
+    "StudentId": 18,
+    "ExamId": 35
+  },
+  {
+    "score": 0,
+    "StudentId": 19,
+    "ExamId": 35
+  },
+  {
+    "score": 0,
+    "StudentId": 20,
+    "ExamId": 35
+  },
+  {
+    "score": 0,
+    "StudentId": 11,
+    "ExamId": 36
+  },
+  {
+    "score": 0,
+    "StudentId": 12,
+    "ExamId": 36
+  },
+  {
+    "score": 0,
+    "StudentId": 13,
+    "ExamId": 36
+  },
+  {
+    "score": 0,
+    "StudentId": 14,
+    "ExamId": 36
+  },
+  {
+    "score": 0,
+    "StudentId": 15,
+    "ExamId": 36
+  },
+  {
+    "score": 0,
+    "StudentId": 16,
+    "ExamId": 36
+  },
+  {
+    "score": 0,
+    "StudentId": 17,
+    "ExamId": 36
+  },
+  {
+    "score": 0,
+    "StudentId": 18,
+    "ExamId": 36
+  },
+  {
+    "score": 0,
+    "StudentId": 19,
+    "ExamId": 36
+  },
+  {
+    "score": 0,
+    "StudentId": 20,
+    "ExamId": 36
+  },
+  {
+    "score": 0,
+    "StudentId": 11,
+    "ExamId": 37
+  },
+  {
+    "score": 0,
+    "StudentId": 12,
+    "ExamId": 37
+  },
+  {
+    "score": 0,
+    "StudentId": 13,
+    "ExamId": 37
+  },
+  {
+    "score": 0,
+    "StudentId": 14,
+    "ExamId": 37
+  },
+  {
+    "score": 0,
+    "StudentId": 15,
+    "ExamId": 37
+  },
+  {
+    "score": 0,
+    "StudentId": 16,
+    "ExamId": 37
+  },
+  {
+    "score": 0,
+    "StudentId": 17,
+    "ExamId": 37
+  },
+  {
+    "score": 0,
+    "StudentId": 18,
+    "ExamId": 37
+  },
+  {
+    "score": 0,
+    "StudentId": 19,
+    "ExamId": 37
+  },
+  {
+    "score": 0,
+    "StudentId": 20,
+    "ExamId": 37
+  },
+  {
+    "score": 0,
+    "StudentId": 11,
+    "ExamId": 38
+  },
+  {
+    "score": 0,
+    "StudentId": 12,
+    "ExamId": 38
+  },
+  {
+    "score": 0,
+    "StudentId": 13,
+    "ExamId": 38
+  },
+  {
+    "score": 0,
+    "StudentId": 14,
+    "ExamId": 38
+  },
+  {
+    "score": 0,
+    "StudentId": 15,
+    "ExamId": 38
+  },
+  {
+    "score": 0,
+    "StudentId": 16,
+    "ExamId": 38
+  },
+  {
+    "score": 0,
+    "StudentId": 17,
+    "ExamId": 38
+  },
+  {
+    "score": 0,
+    "StudentId": 18,
+    "ExamId": 38
+  },
+  {
+    "score": 0,
+    "StudentId": 19,
+    "ExamId": 38
+  },
+  {
+    "score": 0,
+    "StudentId": 20,
+    "ExamId": 38
+  },
+  {
+    "score": 0,
+    "StudentId": 11,
+    "ExamId": 39
+  },
+  {
+    "score": 0,
+    "StudentId": 12,
+    "ExamId": 39
+  },
+  {
+    "score": 0,
+    "StudentId": 13,
+    "ExamId": 39
+  },
+  {
+    "score": 0,
+    "StudentId": 14,
+    "ExamId": 39
+  },
+  {
+    "score": 0,
+    "StudentId": 15,
+    "ExamId": 39
+  },
+  {
+    "score": 0,
+    "StudentId": 16,
+    "ExamId": 39
+  },
+  {
+    "score": 0,
+    "StudentId": 17,
+    "ExamId": 39
+  },
+  {
+    "score": 0,
+    "StudentId": 18,
+    "ExamId": 39
+  },
+  {
+    "score": 0,
+    "StudentId": 19,
+    "ExamId": 39
+  },
+  {
+    "score": 0,
+    "StudentId": 20,
+    "ExamId": 39
+  },
+  {
+    "score": 0,
+    "StudentId": 11,
+    "ExamId": 40
+  },
+  {
+    "score": 0,
+    "StudentId": 12,
+    "ExamId": 40
+  },
+  {
+    "score": 0,
+    "StudentId": 13,
+    "ExamId": 40
+  },
+  {
+    "score": 0,
+    "StudentId": 14,
+    "ExamId": 40
+  },
+  {
+    "score": 0,
+    "StudentId": 15,
+    "ExamId": 40
+  },
+  {
+    "score": 0,
+    "StudentId": 16,
+    "ExamId": 40
+  },
+  {
+    "score": 0,
+    "StudentId": 17,
+    "ExamId": 40
+  },
+  {
+    "score": 0,
+    "StudentId": 18,
+    "ExamId": 40
+  },
+  {
+    "score": 0,
+    "StudentId": 19,
+    "ExamId": 40
+  },
+  {
+    "score": 0,
+    "StudentId": 20,
+    "ExamId": 40
   },
   {
     "score": 0,
     "StudentId": 21,
-    "ExamId": 1
+    "ExamId": 41
   },
   {
     "score": 0,
     "StudentId": 22,
-    "ExamId": 1
+    "ExamId": 41
   },
   {
     "score": 0,
     "StudentId": 23,
-    "ExamId": 1
+    "ExamId": 41
   },
   {
     "score": 0,
     "StudentId": 24,
-    "ExamId": 1
+    "ExamId": 41
   },
   {
     "score": 0,
     "StudentId": 25,
-    "ExamId": 1
+    "ExamId": 41
   },
   {
     "score": 0,
     "StudentId": 26,
-    "ExamId": 1
+    "ExamId": 41
   },
   {
     "score": 0,
     "StudentId": 27,
-    "ExamId": 1
+    "ExamId": 41
   },
   {
     "score": 0,
     "StudentId": 28,
-    "ExamId": 1
+    "ExamId": 41
   },
   {
     "score": 0,
     "StudentId": 29,
-    "ExamId": 1
+    "ExamId": 41
   },
   {
     "score": 0,
     "StudentId": 30,
-    "ExamId": 1
+    "ExamId": 41
   },
   {
     "score": 0,
     "StudentId": 21,
-    "ExamId": 2
+    "ExamId": 42
   },
   {
     "score": 0,
     "StudentId": 22,
-    "ExamId": 2
+    "ExamId": 42
   },
   {
     "score": 0,
     "StudentId": 23,
-    "ExamId": 2
+    "ExamId": 42
   },
   {
     "score": 0,
     "StudentId": 24,
-    "ExamId": 2
+    "ExamId": 42
   },
   {
     "score": 0,
     "StudentId": 25,
-    "ExamId": 2
+    "ExamId": 42
   },
   {
     "score": 0,
     "StudentId": 26,
-    "ExamId": 2
+    "ExamId": 42
   },
   {
     "score": 0,
     "StudentId": 27,
-    "ExamId": 2
+    "ExamId": 42
   },
   {
     "score": 0,
     "StudentId": 28,
-    "ExamId": 2
+    "ExamId": 42
   },
   {
     "score": 0,
     "StudentId": 29,
-    "ExamId": 2
+    "ExamId": 42
   },
   {
     "score": 0,
     "StudentId": 30,
-    "ExamId": 2
+    "ExamId": 42
   },
   {
     "score": 0,
     "StudentId": 21,
-    "ExamId": 3
+    "ExamId": 43
   },
   {
     "score": 0,
     "StudentId": 22,
-    "ExamId": 3
+    "ExamId": 43
   },
   {
     "score": 0,
     "StudentId": 23,
-    "ExamId": 3
+    "ExamId": 43
   },
   {
     "score": 0,
     "StudentId": 24,
-    "ExamId": 3
+    "ExamId": 43
   },
   {
     "score": 0,
     "StudentId": 25,
-    "ExamId": 3
+    "ExamId": 43
   },
   {
     "score": 0,
     "StudentId": 26,
-    "ExamId": 3
+    "ExamId": 43
   },
   {
     "score": 0,
     "StudentId": 27,
-    "ExamId": 3
+    "ExamId": 43
   },
   {
     "score": 0,
     "StudentId": 28,
-    "ExamId": 3
+    "ExamId": 43
   },
   {
     "score": 0,
     "StudentId": 29,
-    "ExamId": 3
+    "ExamId": 43
   },
   {
     "score": 0,
     "StudentId": 30,
-    "ExamId": 3
+    "ExamId": 43
   },
   {
     "score": 0,
     "StudentId": 21,
-    "ExamId": 4
+    "ExamId": 44
   },
   {
     "score": 0,
     "StudentId": 22,
-    "ExamId": 4
+    "ExamId": 44
   },
   {
     "score": 0,
     "StudentId": 23,
-    "ExamId": 4
+    "ExamId": 44
   },
   {
     "score": 0,
     "StudentId": 24,
-    "ExamId": 4
+    "ExamId": 44
   },
   {
     "score": 0,
     "StudentId": 25,
-    "ExamId": 4
+    "ExamId": 44
   },
   {
     "score": 0,
     "StudentId": 26,
-    "ExamId": 4
+    "ExamId": 44
   },
   {
     "score": 0,
     "StudentId": 27,
-    "ExamId": 4
+    "ExamId": 44
   },
   {
     "score": 0,
     "StudentId": 28,
-    "ExamId": 4
+    "ExamId": 44
   },
   {
     "score": 0,
     "StudentId": 29,
-    "ExamId": 4
+    "ExamId": 44
   },
   {
     "score": 0,
     "StudentId": 30,
-    "ExamId": 4
+    "ExamId": 44
+  },
+  {
+    "score": 0,
+    "StudentId": 21,
+    "ExamId": 45
+  },
+  {
+    "score": 0,
+    "StudentId": 22,
+    "ExamId": 45
+  },
+  {
+    "score": 0,
+    "StudentId": 23,
+    "ExamId": 45
+  },
+  {
+    "score": 0,
+    "StudentId": 24,
+    "ExamId": 45
+  },
+  {
+    "score": 0,
+    "StudentId": 25,
+    "ExamId": 45
+  },
+  {
+    "score": 0,
+    "StudentId": 26,
+    "ExamId": 45
+  },
+  {
+    "score": 0,
+    "StudentId": 27,
+    "ExamId": 45
+  },
+  {
+    "score": 0,
+    "StudentId": 28,
+    "ExamId": 45
+  },
+  {
+    "score": 0,
+    "StudentId": 29,
+    "ExamId": 45
+  },
+  {
+    "score": 0,
+    "StudentId": 30,
+    "ExamId": 45
+  },
+  {
+    "score": 0,
+    "StudentId": 21,
+    "ExamId": 46
+  },
+  {
+    "score": 0,
+    "StudentId": 22,
+    "ExamId": 46
+  },
+  {
+    "score": 0,
+    "StudentId": 23,
+    "ExamId": 46
+  },
+  {
+    "score": 0,
+    "StudentId": 24,
+    "ExamId": 46
+  },
+  {
+    "score": 0,
+    "StudentId": 25,
+    "ExamId": 46
+  },
+  {
+    "score": 0,
+    "StudentId": 26,
+    "ExamId": 46
+  },
+  {
+    "score": 0,
+    "StudentId": 27,
+    "ExamId": 46
+  },
+  {
+    "score": 0,
+    "StudentId": 28,
+    "ExamId": 46
+  },
+  {
+    "score": 0,
+    "StudentId": 29,
+    "ExamId": 46
+  },
+  {
+    "score": 0,
+    "StudentId": 30,
+    "ExamId": 46
+  },
+  {
+    "score": 0,
+    "StudentId": 21,
+    "ExamId": 47
+  },
+  {
+    "score": 0,
+    "StudentId": 22,
+    "ExamId": 47
+  },
+  {
+    "score": 0,
+    "StudentId": 23,
+    "ExamId": 47
+  },
+  {
+    "score": 0,
+    "StudentId": 24,
+    "ExamId": 47
+  },
+  {
+    "score": 0,
+    "StudentId": 25,
+    "ExamId": 47
+  },
+  {
+    "score": 0,
+    "StudentId": 26,
+    "ExamId": 47
+  },
+  {
+    "score": 0,
+    "StudentId": 27,
+    "ExamId": 47
+  },
+  {
+    "score": 0,
+    "StudentId": 28,
+    "ExamId": 47
+  },
+  {
+    "score": 0,
+    "StudentId": 29,
+    "ExamId": 47
+  },
+  {
+    "score": 0,
+    "StudentId": 30,
+    "ExamId": 47
+  },
+  {
+    "score": 0,
+    "StudentId": 21,
+    "ExamId": 48
+  },
+  {
+    "score": 0,
+    "StudentId": 22,
+    "ExamId": 48
+  },
+  {
+    "score": 0,
+    "StudentId": 23,
+    "ExamId": 48
+  },
+  {
+    "score": 0,
+    "StudentId": 24,
+    "ExamId": 48
+  },
+  {
+    "score": 0,
+    "StudentId": 25,
+    "ExamId": 48
+  },
+  {
+    "score": 0,
+    "StudentId": 26,
+    "ExamId": 48
+  },
+  {
+    "score": 0,
+    "StudentId": 27,
+    "ExamId": 48
+  },
+  {
+    "score": 0,
+    "StudentId": 28,
+    "ExamId": 48
+  },
+  {
+    "score": 0,
+    "StudentId": 29,
+    "ExamId": 48
+  },
+  {
+    "score": 0,
+    "StudentId": 30,
+    "ExamId": 48
+  },
+  {
+    "score": 0,
+    "StudentId": 21,
+    "ExamId": 49
+  },
+  {
+    "score": 0,
+    "StudentId": 22,
+    "ExamId": 49
+  },
+  {
+    "score": 0,
+    "StudentId": 23,
+    "ExamId": 49
+  },
+  {
+    "score": 0,
+    "StudentId": 24,
+    "ExamId": 49
+  },
+  {
+    "score": 0,
+    "StudentId": 25,
+    "ExamId": 49
+  },
+  {
+    "score": 0,
+    "StudentId": 26,
+    "ExamId": 49
+  },
+  {
+    "score": 0,
+    "StudentId": 27,
+    "ExamId": 49
+  },
+  {
+    "score": 0,
+    "StudentId": 28,
+    "ExamId": 49
+  },
+  {
+    "score": 0,
+    "StudentId": 29,
+    "ExamId": 49
+  },
+  {
+    "score": 0,
+    "StudentId": 30,
+    "ExamId": 49
+  },
+  {
+    "score": 0,
+    "StudentId": 21,
+    "ExamId": 50
+  },
+  {
+    "score": 0,
+    "StudentId": 22,
+    "ExamId": 50
+  },
+  {
+    "score": 0,
+    "StudentId": 23,
+    "ExamId": 50
+  },
+  {
+    "score": 0,
+    "StudentId": 24,
+    "ExamId": 50
+  },
+  {
+    "score": 0,
+    "StudentId": 25,
+    "ExamId": 50
+  },
+  {
+    "score": 0,
+    "StudentId": 26,
+    "ExamId": 50
+  },
+  {
+    "score": 0,
+    "StudentId": 27,
+    "ExamId": 50
+  },
+  {
+    "score": 0,
+    "StudentId": 28,
+    "ExamId": 50
+  },
+  {
+    "score": 0,
+    "StudentId": 29,
+    "ExamId": 50
+  },
+  {
+    "score": 0,
+    "StudentId": 30,
+    "ExamId": 50
+  },
+  {
+    "score": 0,
+    "StudentId": 21,
+    "ExamId": 51
+  },
+  {
+    "score": 0,
+    "StudentId": 22,
+    "ExamId": 51
+  },
+  {
+    "score": 0,
+    "StudentId": 23,
+    "ExamId": 51
+  },
+  {
+    "score": 0,
+    "StudentId": 24,
+    "ExamId": 51
+  },
+  {
+    "score": 0,
+    "StudentId": 25,
+    "ExamId": 51
+  },
+  {
+    "score": 0,
+    "StudentId": 26,
+    "ExamId": 51
+  },
+  {
+    "score": 0,
+    "StudentId": 27,
+    "ExamId": 51
+  },
+  {
+    "score": 0,
+    "StudentId": 28,
+    "ExamId": 51
+  },
+  {
+    "score": 0,
+    "StudentId": 29,
+    "ExamId": 51
+  },
+  {
+    "score": 0,
+    "StudentId": 30,
+    "ExamId": 51
+  },
+  {
+    "score": 0,
+    "StudentId": 21,
+    "ExamId": 52
+  },
+  {
+    "score": 0,
+    "StudentId": 22,
+    "ExamId": 52
+  },
+  {
+    "score": 0,
+    "StudentId": 23,
+    "ExamId": 52
+  },
+  {
+    "score": 0,
+    "StudentId": 24,
+    "ExamId": 52
+  },
+  {
+    "score": 0,
+    "StudentId": 25,
+    "ExamId": 52
+  },
+  {
+    "score": 0,
+    "StudentId": 26,
+    "ExamId": 52
+  },
+  {
+    "score": 0,
+    "StudentId": 27,
+    "ExamId": 52
+  },
+  {
+    "score": 0,
+    "StudentId": 28,
+    "ExamId": 52
+  },
+  {
+    "score": 0,
+    "StudentId": 29,
+    "ExamId": 52
+  },
+  {
+    "score": 0,
+    "StudentId": 30,
+    "ExamId": 52
+  },
+  {
+    "score": 0,
+    "StudentId": 21,
+    "ExamId": 53
+  },
+  {
+    "score": 0,
+    "StudentId": 22,
+    "ExamId": 53
+  },
+  {
+    "score": 0,
+    "StudentId": 23,
+    "ExamId": 53
+  },
+  {
+    "score": 0,
+    "StudentId": 24,
+    "ExamId": 53
+  },
+  {
+    "score": 0,
+    "StudentId": 25,
+    "ExamId": 53
+  },
+  {
+    "score": 0,
+    "StudentId": 26,
+    "ExamId": 53
+  },
+  {
+    "score": 0,
+    "StudentId": 27,
+    "ExamId": 53
+  },
+  {
+    "score": 0,
+    "StudentId": 28,
+    "ExamId": 53
+  },
+  {
+    "score": 0,
+    "StudentId": 29,
+    "ExamId": 53
+  },
+  {
+    "score": 0,
+    "StudentId": 30,
+    "ExamId": 53
+  },
+  {
+    "score": 0,
+    "StudentId": 21,
+    "ExamId": 54
+  },
+  {
+    "score": 0,
+    "StudentId": 22,
+    "ExamId": 54
+  },
+  {
+    "score": 0,
+    "StudentId": 23,
+    "ExamId": 54
+  },
+  {
+    "score": 0,
+    "StudentId": 24,
+    "ExamId": 54
+  },
+  {
+    "score": 0,
+    "StudentId": 25,
+    "ExamId": 54
+  },
+  {
+    "score": 0,
+    "StudentId": 26,
+    "ExamId": 54
+  },
+  {
+    "score": 0,
+    "StudentId": 27,
+    "ExamId": 54
+  },
+  {
+    "score": 0,
+    "StudentId": 28,
+    "ExamId": 54
+  },
+  {
+    "score": 0,
+    "StudentId": 29,
+    "ExamId": 54
+  },
+  {
+    "score": 0,
+    "StudentId": 30,
+    "ExamId": 54
+  },
+  {
+    "score": 0,
+    "StudentId": 21,
+    "ExamId": 55
+  },
+  {
+    "score": 0,
+    "StudentId": 22,
+    "ExamId": 55
+  },
+  {
+    "score": 0,
+    "StudentId": 23,
+    "ExamId": 55
+  },
+  {
+    "score": 0,
+    "StudentId": 24,
+    "ExamId": 55
+  },
+  {
+    "score": 0,
+    "StudentId": 25,
+    "ExamId": 55
+  },
+  {
+    "score": 0,
+    "StudentId": 26,
+    "ExamId": 55
+  },
+  {
+    "score": 0,
+    "StudentId": 27,
+    "ExamId": 55
+  },
+  {
+    "score": 0,
+    "StudentId": 28,
+    "ExamId": 55
+  },
+  {
+    "score": 0,
+    "StudentId": 29,
+    "ExamId": 55
+  },
+  {
+    "score": 0,
+    "StudentId": 30,
+    "ExamId": 55
+  },
+  {
+    "score": 0,
+    "StudentId": 21,
+    "ExamId": 56
+  },
+  {
+    "score": 0,
+    "StudentId": 22,
+    "ExamId": 56
+  },
+  {
+    "score": 0,
+    "StudentId": 23,
+    "ExamId": 56
+  },
+  {
+    "score": 0,
+    "StudentId": 24,
+    "ExamId": 56
+  },
+  {
+    "score": 0,
+    "StudentId": 25,
+    "ExamId": 56
+  },
+  {
+    "score": 0,
+    "StudentId": 26,
+    "ExamId": 56
+  },
+  {
+    "score": 0,
+    "StudentId": 27,
+    "ExamId": 56
+  },
+  {
+    "score": 0,
+    "StudentId": 28,
+    "ExamId": 56
+  },
+  {
+    "score": 0,
+    "StudentId": 29,
+    "ExamId": 56
+  },
+  {
+    "score": 0,
+    "StudentId": 30,
+    "ExamId": 56
+  },
+  {
+    "score": 0,
+    "StudentId": 21,
+    "ExamId": 57
+  },
+  {
+    "score": 0,
+    "StudentId": 22,
+    "ExamId": 57
+  },
+  {
+    "score": 0,
+    "StudentId": 23,
+    "ExamId": 57
+  },
+  {
+    "score": 0,
+    "StudentId": 24,
+    "ExamId": 57
+  },
+  {
+    "score": 0,
+    "StudentId": 25,
+    "ExamId": 57
+  },
+  {
+    "score": 0,
+    "StudentId": 26,
+    "ExamId": 57
+  },
+  {
+    "score": 0,
+    "StudentId": 27,
+    "ExamId": 57
+  },
+  {
+    "score": 0,
+    "StudentId": 28,
+    "ExamId": 57
+  },
+  {
+    "score": 0,
+    "StudentId": 29,
+    "ExamId": 57
+  },
+  {
+    "score": 0,
+    "StudentId": 30,
+    "ExamId": 57
+  },
+  {
+    "score": 0,
+    "StudentId": 21,
+    "ExamId": 58
+  },
+  {
+    "score": 0,
+    "StudentId": 22,
+    "ExamId": 58
+  },
+  {
+    "score": 0,
+    "StudentId": 23,
+    "ExamId": 58
+  },
+  {
+    "score": 0,
+    "StudentId": 24,
+    "ExamId": 58
+  },
+  {
+    "score": 0,
+    "StudentId": 25,
+    "ExamId": 58
+  },
+  {
+    "score": 0,
+    "StudentId": 26,
+    "ExamId": 58
+  },
+  {
+    "score": 0,
+    "StudentId": 27,
+    "ExamId": 58
+  },
+  {
+    "score": 0,
+    "StudentId": 28,
+    "ExamId": 58
+  },
+  {
+    "score": 0,
+    "StudentId": 29,
+    "ExamId": 58
+  },
+  {
+    "score": 0,
+    "StudentId": 30,
+    "ExamId": 58
+  },
+  {
+    "score": 0,
+    "StudentId": 21,
+    "ExamId": 59
+  },
+  {
+    "score": 0,
+    "StudentId": 22,
+    "ExamId": 59
+  },
+  {
+    "score": 0,
+    "StudentId": 23,
+    "ExamId": 59
+  },
+  {
+    "score": 0,
+    "StudentId": 24,
+    "ExamId": 59
+  },
+  {
+    "score": 0,
+    "StudentId": 25,
+    "ExamId": 59
+  },
+  {
+    "score": 0,
+    "StudentId": 26,
+    "ExamId": 59
+  },
+  {
+    "score": 0,
+    "StudentId": 27,
+    "ExamId": 59
+  },
+  {
+    "score": 0,
+    "StudentId": 28,
+    "ExamId": 59
+  },
+  {
+    "score": 0,
+    "StudentId": 29,
+    "ExamId": 59
+  },
+  {
+    "score": 0,
+    "StudentId": 30,
+    "ExamId": 59
+  },
+  {
+    "score": 0,
+    "StudentId": 21,
+    "ExamId": 60
+  },
+  {
+    "score": 0,
+    "StudentId": 22,
+    "ExamId": 60
+  },
+  {
+    "score": 0,
+    "StudentId": 23,
+    "ExamId": 60
+  },
+  {
+    "score": 0,
+    "StudentId": 24,
+    "ExamId": 60
+  },
+  {
+    "score": 0,
+    "StudentId": 25,
+    "ExamId": 60
+  },
+  {
+    "score": 0,
+    "StudentId": 26,
+    "ExamId": 60
+  },
+  {
+    "score": 0,
+    "StudentId": 27,
+    "ExamId": 60
+  },
+  {
+    "score": 0,
+    "StudentId": 28,
+    "ExamId": 60
+  },
+  {
+    "score": 0,
+    "StudentId": 29,
+    "ExamId": 60
+  },
+  {
+    "score": 0,
+    "StudentId": 30,
+    "ExamId": 60
   }
 ]
