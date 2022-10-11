@@ -56,7 +56,9 @@ class TeacherController {
       const loggedInName = findTeacher.fullName;
 
       // nanti tambahin photo, untuk di set di web
-      res.status(200).json({ access_token, loggedInName });
+      res
+        .status(200)
+        .json({ access_token, loggedInName, CourseId: findTeacher.CourseId });
     } catch (err) {
       console.log(err);
       next(err);
@@ -420,25 +422,27 @@ class TeacherController {
 
   static async examScoreBySubject(req, res, next) {
     try {
-      let { name } = req.query;
-      let courseTeacher = req.user.CourseId;
-      console.log(courseTeacher, "?????");
-      // console.log(name, "<<");
-      const data = await Student.findAll({
+      // let { name } = req.query;
+      let CourseId = req.user.CourseId;
+
+      const result = await Course.findAll({
+        where: { id: CourseId },
         include: [
           {
-            model: ExamGrades,
+            model: Exam,
             include: [
               {
-                model: Exam,
-                include: { model: Course, where: { id: courseTeacher } },
+                model: ExamGrades,
+                include: [
+                  { model: Student, attributes: { exclude: ["password"] } },
+                ],
               },
             ],
           },
         ],
-        order: [["fullName", "ASC"]],
       });
-      return res.status(201).json(data);
+
+      return res.status(201).json(result);
     } catch (err) {
       console.log(err);
       next(err);
