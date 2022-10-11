@@ -252,7 +252,7 @@ class StudentController {
             where: {
               className,
             },
-            // include: [{ model: ExamGrades, where: { StudentId } }],
+            include: [{ model: ExamGrades, where: { StudentId } }],
           },
         ],
       });

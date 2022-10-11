@@ -2,7 +2,7 @@
   "students": [
     {
       "fullName": "John Doe",
-      "className": "9",
+      "className": "7",
       "email": "johndoe@mail.com",
       "password": "johndoe",
       "photo": "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png",
@@ -12,7 +12,7 @@
     },
     {
       "fullName": "Jane Doe",
-      "className": "9",
+      "className": "7",
       "email": "janedoe@mail.com",
       "password": "janedoe",
       "photo": "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png",
@@ -22,7 +22,7 @@
     },
     {
       "fullName": "Vegeta",
-      "className": "9",
+      "className": "7",
       "email": "vegeta@mail.com",
       "password": "vegeta",
       "photo": "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png",
@@ -32,7 +32,7 @@
     },
     {
       "fullName": "Hamilton Mil",
-      "className": "9",
+      "className": "7",
       "email": "hmil0@sitemeter.com",
       "password": "hamiltonmil",
       "photo": "https://robohash.org/temporareprehenderitenim.png?size=75x75&set=set1",
@@ -42,7 +42,7 @@
     },
     {
       "fullName": "Ellette Gerauld",
-      "className": "9",
+      "className": "7",
       "email": "egerauld1@com.com",
       "password": "ellettegerauld",
       "photo": "https://robohash.org/autreprehenderitnon.png?size=75x75&set=set1",
@@ -52,7 +52,7 @@
     },
     {
       "fullName": "Dante Clamp",
-      "className": "9",
+      "className": "7",
       "email": "dclamp2@wikispaces.com",
       "password": "danteclamp",
       "photo": "https://robohash.org/quismagniea.png?size=75x75&set=set1",
@@ -62,7 +62,7 @@
     },
     {
       "fullName": "Cassondra Braunstein",
-      "className": "9",
+      "className": "7",
       "email": "cbraunstein3@wsj.com",
       "password": "cassondrabraunstein",
       "photo": "https://robohash.org/ipsamagnamautem.png?size=75x75&set=set1",
@@ -72,7 +72,7 @@
     },
     {
       "fullName": "Vladimir Hunnaball",
-      "className": "9",
+      "className": "7",
       "email": "vhunnaball4@bigcartel.com",
       "password": "ladimirhunnaball",
       "photo": "https://robohash.org/dolorumeaconsectetur.png?size=75x75&set=set1",
@@ -82,7 +82,7 @@
     },
     {
       "fullName": "Alleen Wankel",
-      "className": "9",
+      "className": "7",
       "email": "awankel5@ehow.com",
       "password": "alleenwankel",
       "photo": "https://robohash.org/aipsumdolores.png?size=75x75&set=set1",
@@ -92,7 +92,7 @@
     },
     {
       "fullName": "Felizio Whatman",
-      "className": "9",
+      "className": "7",
       "email": "fwhatman6@vk.com",
       "password": "feliziowhatman",
       "photo": "https://robohash.org/maximemodiqui.png?size=75x75&set=set1",
@@ -202,7 +202,7 @@
     },
     {
       "fullName": "Kathrine Gaines",
-      "className": "7",
+      "className": "9",
       "email": "kgainesh@mac.com",
       "password": "kathrinegaines",
       "photo": "https://robohash.org/dolorestsaepe.png?size=75x75&set=set1",
@@ -212,7 +212,7 @@
     },
     {
       "fullName": "Misty O'Giany",
-      "className": "7",
+      "className": "9",
       "email": "mogianyi@netlog.com",
       "password": "mistyogiany",
       "photo": "https://robohash.org/nobisutquod.png?size=75x75&set=set1",
@@ -222,7 +222,7 @@
     },
     {
       "fullName": "Lee Ellcome",
-      "className": "7",
+      "className": "9",
       "email": "lellcomej@hubpages.com",
       "password": "leeellcome",
       "photo": "https://robohash.org/maiorestenetursed.png?size=75x75&set=set1",
@@ -232,7 +232,7 @@
     },
     {
       "fullName": "Lucian Steptow",
-      "className": "7",
+      "className": "9",
       "email": "lsteptowk@chron.com",
       "password": "luciansteptow",
       "photo": "https://robohash.org/maximeperspiciatisalias.png?size=75x75&set=set1",
@@ -242,7 +242,7 @@
     },
     {
       "fullName": "Zelda Auletta",
-      "className": "7",
+      "className": "9",
       "email": "zaulettal@tamu.edu",
       "password": "zeldaauletta",
       "photo": "https://robohash.org/doloreeaqueminus.png?size=75x75&set=set1",
@@ -252,7 +252,7 @@
     },
     {
       "fullName": "Margret Minall",
-      "className": "7",
+      "className": "9",
       "email": "mminallm@hao123.com",
       "password": "margretminall",
       "photo": "https://robohash.org/mollitiaconsectetureius.png?size=75x75&set=set1",
@@ -262,7 +262,7 @@
     },
     {
       "fullName": "Kingsly Garthside",
-      "className": "7",
+      "className": "9",
       "email": "kgarthsiden@acquirethisname.com",
       "password": "kingslygarthside",
       "photo": "https://robohash.org/repellendusdoloreeius.png?size=75x75&set=set1",
@@ -272,7 +272,7 @@
     },
     {
       "fullName": "Scarface McCaighey",
-      "className": "7",
+      "className": "9",
       "email": "smccaigheyo@163.com",
       "password": "scarfacemccaighey",
       "photo": "https://robohash.org/etdoloremnobis.png?size=75x75&set=set1",
@@ -282,7 +282,7 @@
     },
     {
       "fullName": "Alistair Lammas",
-      "className": "7",
+      "className": "9",
       "email": "alammasp@angelfire.com",
       "password": "alistairlammas",
       "photo": "https://robohash.org/voluptasidquis.png?size=75x75&set=set1",
@@ -292,7 +292,7 @@
     },
     {
       "fullName": "Kipper Shillinglaw",
-      "className": "7",
+      "className": "9",
       "email": "kshillinglawq@china.com.cn",
       "password": "kippershillinglaw",
       "photo": "https://robohash.org/voluptatemconsecteturvoluptas.png?size=75x75&set=set1",
