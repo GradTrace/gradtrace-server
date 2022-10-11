@@ -423,21 +423,7 @@ class TeacherController {
       let { name } = req.query;
       let courseTeacher = req.user.CourseId;
       console.log(courseTeacher, "?????");
-      // console.log(name, "<<");
-      const data = await Student.findAll({
-        include: [
-          {
-            model: ExamGrades,
-            include: [
-              {
-                model: Exam,
-                include: { model: Course, where: { id: courseTeacher } },
-              },
-            ],
-          },
-        ],
-        order: [["fullName", "ASC"]],
-      });
+
       return res.status(201).json(data);
     } catch (err) {
       console.log(err);
