@@ -11,20 +11,20 @@ router.post("/scores", TeacherController.addScore);
 router.get("/exams/score", TeacherController.examScoreBySubject);
 router.post("/assignment", TeacherController.postAssignment);
 
-router.get("/assignment", TeacherController.getAssignment); //done
+router.get("/assignment", TeacherController.getAssignment);
 
-router.get("/assignment/score", TeacherController.assignmetScoreBySubject);//done
+router.get("/assignment/score", TeacherController.assignmetScoreBySubject);
 
-router.put("/assignment/score", TeacherController.assignmentScore);//done
-router.put("/exams/:id", TeacherController.editExam);//done
+router.put("/assignment/score", TeacherController.assignmentScore);
+router.put("/exams/:id", TeacherController.editExam);
 
-router.get("/assignment/grade/:id", TeacherController.getGradeAssignment);//done
+router.get("/assignment/grade/:id", TeacherController.getGradeAssignment);
 
-router.delete("/assignment/:id", TeacherController.deleteAssignment);//done
-router.put("/assignment/:id", TeacherController.editAssignment);//done
-router.get("/assignment/:id", TeacherController.getAssignmentById);//done
-router.put("/scores/:id", TeacherController.editScore);//done
+router.delete("/assignment/:id", TeacherController.deleteAssignment);
+router.put("/assignment/:id", TeacherController.editAssignment);
+router.get("/assignment/:id", TeacherController.getAssignmentById);
+router.put("/scores/:id", TeacherController.editScore);
 router.post("/scores/final", TeacherController.addFinalGrades); //?
-router.get("/attendances/:className", TeacherController.getStudentAttendance);//?
+router.get("/attendances/:className", TeacherController.getStudentAttendance);
 
 module.exports = router;

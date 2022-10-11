@@ -195,7 +195,7 @@ class StudentController {
       if (!url) throw { name: "url is required" };
 
       const findAssignment = await AssignmentGrades.findOne({
-        where: { StudentId, AssignmentId: taskId },
+        where: { StudentId, AssignmentId: +taskId },
       });
       if (!findAssignment) throw { name: "Assignment not found" };
 

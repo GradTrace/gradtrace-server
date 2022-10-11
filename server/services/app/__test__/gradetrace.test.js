@@ -154,15 +154,15 @@ beforeAll(async () => {
       updatedAt: new Date(),
     },
   ]);
-  // await queryInterface.bulkInsert("ExamGrades", [
-  //   {
-  //     score: 100,
-  //     StudentId: 1,
-  //     ExamId: 1,
-  //     createdAt: new Date(),
-  //     updatedAt: new Date(),
-  //   },
-  // ]);
+  await queryInterface.bulkInsert("ExamGrades", [
+    {
+      score: 100,
+      StudentId: 1,
+      ExamId: 1,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+  ]);
 
   await queryInterface.bulkInsert("Attendances", [
     {
@@ -204,11 +204,11 @@ afterAll(async () => {
     restartIdentity: true,
     cascade: true,
   });
-  // await queryInterface.bulkDelete("Attendances", null, {
-  //   truncate: true,
-  //   restartIdentity: true,
-  //   cascade: true,
-  // });
+  await queryInterface.bulkDelete("Attendances", null, {
+    truncate: true,
+    restartIdentity: true,
+    cascade: true,
+  });
 });
 
 describe("POST /teachers/register", () => {
@@ -1686,15 +1686,81 @@ describe("GET /students/tasks", () => {
       .set("access_token", access_token_student)
       .then((response) => {
         expect(response.status).toBe(200);
+        expect(response.body).toBeInstanceOf(Array);
         expect(response.body).toBeInstanceOf(Object);
+        expect(response.body[0]).toHaveProperty("id", expect.any(Number));
+        expect(response.body[0]).toHaveProperty("CourseId", expect.any(Number));
+        expect(response.body[0]).toHaveProperty(
+          "description",
+          expect.any(String)
+        );
+        expect(response.body[0]).toHaveProperty("deadline", expect.any(String));
+        expect(response.body[0]).toHaveProperty("name", expect.any(String));
+        expect(response.body[0]).toHaveProperty(
+          "className",
+          expect.any(String)
+        );
+        expect(response.body[0]).toHaveProperty("Course", expect.any(Object));
+        expect(response.body[0]).toHaveProperty(
+          "AssignmentGrades",
+          expect.any(Array)
+        );
+        expect(response.body[0].Course).toHaveProperty(
+          "name",
+          expect.any(String)
+        );
+        expect(response.body[0].Course).toHaveProperty(
+          "icon",
+          expect.any(String)
+        );
+        expect(response.body[0].AssignmentGrades[0]).toHaveProperty(
+          "score",
+          expect.any(String)
+        );
+        expect(response.body[0].AssignmentGrades[0]).toHaveProperty(
+          "url",
+          expect.any(String)
+        );
+        expect(response.body[0].AssignmentGrades[0]).toHaveProperty(
+          "StudentId",
+          expect.any(Number)
+        );
+      });
+  });
+});
+
+describe("PATCH /students/tasks/:id", () => {
+  test("PATCH /students/tasks/:id - success", () => {
+    return request(app)
+      .patch("/students/tasks/" + 2)
+      .set("access_token", access_token_student)
+      .send({
+        url: "www.test_url.com"
+      })
+      .then((response) => {
+        expect(response.status).toBe(200);
         expect(response.body).toBeInstanceOf(Object);
-        expect(response.body).toHaveProperty("id", expect.any(Number));
-        // expect(response.body).toHaveProperty("fullName", expect.any(String));
-        // expect(response.body).toHaveProperty("email", expect.any(String));
-        // expect(response.body).toHaveProperty("photo", expect.any(String));
-        // expect(response.body).toHaveProperty("address", expect.any(String));
-        // expect(response.body).toHaveProperty("phoneNumber", expect.any(String));
-        // expect(response.body).toHaveProperty("gender", expect.any(String));
+        expect(response.body).toHaveProperty(
+          "message",
+          "Assignment url collected: www.test_url.com"
+        );
+      });
+  });
+  test("PATCH /students/tasks/:id - failed - url is required", () => {
+    return request(app)
+      .patch("/students/tasks/" + 2)
+      .set("access_token", access_token_student)
+      .send({
+        url: ""
+      })
+      .then((response) => {
+        console.log(response.body,"<>")
+        expect(response.status).toBe(400);
+        expect(response.body).toBeInstanceOf(Object);
+        expect(response.body).toHaveProperty(
+          "message",
+          "Assignment url is required"
+        );
       });
   });
 });
