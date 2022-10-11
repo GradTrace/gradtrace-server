@@ -28,11 +28,85 @@ let teacher = {
   updatedAt: new Date(),
 };
 
+const student = [
+  {
+    fullName: "name_test",
+    className: "class_test",
+    email: "email_student_test@gmail.com",
+    password: hashPassword("password_test"),
+    photo:
+      "https://toppng.com//public/uploads/preview/black-widow-natasha-romanoff-infinity-war-11563164367lbcfuwdyt2.png",
+    address: "address_test",
+    phoneNumber: "phoneNumber_test",
+    gender: "gender_test",
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    fullName: "John Doe",
+    className: "9",
+    email: "johndoe@mail.com",
+    password: hashPassword("johndoe"),
+    photo:
+      "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png",
+    address: "Home sweet home",
+    phoneNumber: "0812345678",
+    gender: "Male",
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    fullName: "name1_test",
+    className: "9",
+    email: "email_student1_test@gmail.com",
+    password: hashPassword("password_test"),
+    photo:
+      "https://toppng.com//public/uploads/preview/black-widow-natasha-romanoff-infinity-war-11563164367lbcfuwdyt2.png",
+    address: "address_test1",
+    phoneNumber: "phoneNumber_test1",
+    gender: "gender_test1",
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    fullName: "name2_test",
+    className: "9",
+    email: "email_student2_test@gmail.com",
+    password: hashPassword("password_test"),
+    photo:
+      "https://toppng.com//public/uploads/preview/black-widow-natasha-romanoff-infinity-war-11563164367lbcfuwdyt2.png",
+    address: "address_test2",
+    phoneNumber: "phoneNumber_test2",
+    gender: "gender_test2",
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+];
+
 let access_token;
+let access_token_student;
 let teacherId = 0;
+let studentId = 0;
 let testId = 1;
 
 beforeAll(async () => {
+  await queryInterface
+    .bulkInsert("Students", student, {})
+    .then(() => {
+      return Student.findOne({
+        where: {
+          email: student[0].email,
+        },
+      });
+    })
+    .then((result) => {
+      studentId = result.id;
+      access_token_student = signToken({
+        id: result.id,
+        email: result.email,
+      });
+    });
+
   await queryInterface
     .bulkInsert("Teachers", [teacher], {})
     .then(() => {
@@ -80,21 +154,21 @@ beforeAll(async () => {
       updatedAt: new Date(),
     },
   ]);
-  await queryInterface.bulkInsert("ExamGrades", [
-    {
-      score: 100,
-      StudentId: 1,
-      ExamId: 1,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    },
-  ]);
+  // await queryInterface.bulkInsert("ExamGrades", [
+  //   {
+  //     score: 100,
+  //     StudentId: 1,
+  //     ExamId: 1,
+  //     createdAt: new Date(),
+  //     updatedAt: new Date(),
+  //   },
+  // ]);
 
   await queryInterface.bulkInsert("Attendances", [
     {
       dateAndTime: new Date(),
       StudentId: 1,
-      status: false,
+      status: true,
       lon: `106°50'07.1"E`,
       lat: `6°11'30.4"S`,
       createdAt: new Date(),
@@ -103,33 +177,38 @@ beforeAll(async () => {
   ]);
 });
 
-afterAll(async() => {
-  queryInterface.bulkDelete("Teachers", null, {
+afterAll(async () => {
+  await queryInterface.bulkDelete("Students", null, {
+    truncate: true,
+    restartIdentity: true,
+    cascade: true,
+  });
+  await queryInterface.bulkDelete("Teachers", null, {
     truncate: true,
     cascade: true,
     restartIdentity: true,
   });
 
-  queryInterface.bulkDelete("Assignments", null, {
+  await queryInterface.bulkDelete("Assignments", null, {
     truncate: true,
     restartIdentity: true,
     cascade: true,
   });
-  queryInterface.bulkDelete("AssignmentGrades", null, {
+  await queryInterface.bulkDelete("AssignmentGrades", null, {
     truncate: true,
     restartIdentity: true,
     cascade: true,
   });
-  queryInterface.bulkDelete("ExamGrades", null, {
+  await queryInterface.bulkDelete("ExamGrades", null, {
     truncate: true,
     restartIdentity: true,
     cascade: true,
   });
-  queryInterface.bulkDelete("Attendances", null, {
-    truncate: true,
-    restartIdentity: true,
-    cascade: true,
-  });
+  // await queryInterface.bulkDelete("Attendances", null, {
+  //   truncate: true,
+  //   restartIdentity: true,
+  //   cascade: true,
+  // });
 });
 
 describe("POST /teachers/register", () => {
@@ -1025,10 +1104,12 @@ describe("GET /teachers/assignment/:id", () => {
       .then((response) => {
         expect(response.status).toBe(403);
         expect(response.body).toBeInstanceOf(Object);
-        expect(response.body).toHaveProperty("message", "Unauthorized activity");
+        expect(response.body).toHaveProperty(
+          "message",
+          "Unauthorized activity"
+        );
       });
   });
-
 });
 
 describe("DELETE /teachers/assignment", () => {
@@ -1048,7 +1129,10 @@ describe("DELETE /teachers/assignment", () => {
       .then((response) => {
         expect(response.status).toBe(403);
         expect(response.body).toBeInstanceOf(Object);
-        expect(response.body).toHaveProperty("message", "Unauthorized activity");
+        expect(response.body).toHaveProperty(
+          "message",
+          "Unauthorized activity"
+        );
       });
   });
   test("DELETE /teachers/assignment - failed - id not found", () => {
@@ -1056,27 +1140,561 @@ describe("DELETE /teachers/assignment", () => {
       .delete("/teachers/assignment/" + 1000)
       .set("access_token", access_token)
       .then((response) => {
-          expect(response.status).toBe(404);
-          expect(response.body).toBeInstanceOf(Object);
-          expect(response.body).toHaveProperty("message", "not found");
-        });
-    });
-    
+        expect(response.status).toBe(404);
+        expect(response.body).toBeInstanceOf(Object);
+        expect(response.body).toHaveProperty("message", "not found");
+      });
+  });
 });
 
-// describe("GET /teachers/attendances/:className", () => {
-//       test("GET /teachers/attendances/:className - success", () => {
+describe("GET /teachers/attendances/:className", () => {
+  test("GET /teachers/attendances/:className - success", () => {
+    return request(app)
+      .get("/teachers/attendances/" + testId)
+      .set("access_token", access_token)
+      .then((response) => {
+        expect(response.status).toBe(200);
+        expect(response.body).toBeInstanceOf(Object);
+      });
+  });
+  test("GET /teachers/attendances/:className - failed - unauthorized", () => {
+    return request(app)
+      .get("/teachers/attendances/" + testId)
+      .then((response) => {
+        expect(response.status).toBe(403);
+        expect(response.body).toBeInstanceOf(Object);
+        expect(response.body).toHaveProperty(
+          "message",
+          "Unauthorized activity"
+        );
+      });
+  });
+});
+// describe("POST /teachers/scores/final", () => {
+//   test("POST /teachers/scores/final - success", () => {
 //     return request(app)
-//       .get("/teachers/attendances/" + )
+//       .post("/teachers/scores/final")
 //       .set("access_token", access_token)
+//       .send({
+//         score: 100,
+//         CourseId: 1,
+//         StudentId: 1,
+//       })
 //       .then((response) => {
-//         expect(response.status).toBe(201);
+//         console.log(response, "<<");
+//         expect(response.status).toBe(200);
 //         expect(response.body).toBeInstanceOf(Object);
-// expect(response.body[0]).toHaveProperty("score", expect.any(String));
-//         expect(response.body).toHaveProperty("message", "success Add Exam");
 //       });
 //   });
+//sequelize db error
+// test("POST /teachers/scores/final - failed - unauthorized", () => {
+//   return request(app)
+//     .post("/teachers/scores/final")
+//     .then((response) => {
+//       expect(response.status).toBe(403);
+//       expect(response.body).toBeInstanceOf(Object);
+//       expect(response.body).toHaveProperty(
+//         "message",
+//         "Unauthorized activity"
+//       );
+//     });
 // });
+// });
+describe("PUT /teachers/scores/:id", () => {
+  test("POST /teachers/scores/:id - success", () => {
+    return request(app)
+      .put("/teachers/scores/" + testId)
+      .set("access_token", access_token)
+      .send({
+        score: 100,
+        StudentId: 1,
+        ExamId: 1,
+      })
+      .then((response) => {
+        expect(response.status).toBe(200);
+        expect(response.body).toBeInstanceOf(Object);
+        expect(response.body).toHaveProperty("message", "success Edit score");
+      });
+  });
 
+  test("PUT /teachers/scores/:id - failed - unauthorized", () => {
+    return request(app)
+      .put("/teachers/scores/:id")
+      .then((response) => {
+        expect(response.status).toBe(403);
+        expect(response.body).toBeInstanceOf(Object);
+        expect(response.body).toHaveProperty(
+          "message",
+          "Unauthorized activity"
+        );
+      });
+  });
+});
+describe("PUT /teachers/assignment/:id", () => {
+  test("PUT /teachers/assignment/:id - success", () => {
+    return request(app)
+      .put("/teachers/assignment/" + testId)
+      .set("access_token", access_token)
+      .send({
+        description: "description_test",
+        CourseId: 1,
+        deadline: "2022-12-12 18:00",
+        name: "name_test",
+        className: "class_test",
+      })
+      .then((response) => {
+        expect(response.status).toBe(201);
+        expect(response.body).toBeInstanceOf(Object);
+        expect(response.body).toHaveProperty("message", "success edit");
+      });
+  });
 
+  test("PUT /teachers/assignment/:id - failed - description is required", () => {
+    return request(app)
+      .put("/teachers/assignment/" + testId)
+      .set("access_token", access_token)
+      .send({
+        description: "",
+        CourseId: 1,
+        deadline: "2022-12-12 18:00",
+        name: "name_test",
+        className: "class_test",
+      })
+      .then((response) => {
+        expect(response.status).toBe(400);
+        expect(response.body).toBeInstanceOf(Object);
+        expect(response.body).toHaveProperty(
+          "message",
+          "description is required"
+        );
+      });
+  });
+  test("PUT /teachers/assignment/:id - failed - deadline is required", () => {
+    return request(app)
+      .put("/teachers/assignment/" + testId)
+      .set("access_token", access_token)
+      .send({
+        description: "description_test",
+        CourseId: 1,
+        deadline: "",
+        name: "name_test",
+        className: "class_test",
+      })
+      .then((response) => {
+        expect(response.status).toBe(400);
+        expect(response.body).toBeInstanceOf(Object);
+        expect(response.body).toHaveProperty("message", "deadline is required");
+      });
+  });
+  test("PUT /teachers/assignment/:id - failed - name is required", () => {
+    return request(app)
+      .put("/teachers/assignment/" + testId)
+      .set("access_token", access_token)
+      .send({
+        description: "description_test",
+        CourseId: 1,
+        deadline: "2022-12-12 18:00",
+        name: "",
+        className: "class_test",
+      })
+      .then((response) => {
+        expect(response.status).toBe(400);
+        expect(response.body).toBeInstanceOf(Object);
+        expect(response.body).toHaveProperty("message", "name is required");
+      });
+  });
+  test("PUT /teachers/assignment/:id - failed - className is required", () => {
+    return request(app)
+      .put("/teachers/assignment/" + testId)
+      .set("access_token", access_token)
+      .send({
+        description: "description_test",
+        CourseId: 1,
+        deadline: "2022-12-12 18:00",
+        name: "name_test",
+        className: "",
+      })
+      .then((response) => {
+        expect(response.status).toBe(400);
+        expect(response.body).toBeInstanceOf(Object);
+        expect(response.body).toHaveProperty(
+          "message",
+          "className is required"
+        );
+      });
+  });
 
+  test("PUT /teachers/assignment/:id - failed - unauthorized", () => {
+    return request(app)
+      .put("/teachers/scores/:id")
+      .then((response) => {
+        expect(response.status).toBe(403);
+        expect(response.body).toBeInstanceOf(Object);
+        expect(response.body).toHaveProperty(
+          "message",
+          "Unauthorized activity"
+        );
+      });
+  });
+});
+
+//====================================================================================
+
+describe("POST /students/register", () => {
+  test("POST /students/register - success test", () => {
+    return request(app)
+      .post("/students/register")
+      .send({
+        fullName: "name_test",
+        className: "9",
+        email: "email_student_test_beda@gmail.com",
+        password: hashPassword("password_test"),
+        photo:
+          "https://toppng.com//public/uploads/preview/black-widow-natasha-romanoff-infinity-war-11563164367lbcfuwdyt2.png",
+        address: "address_test",
+        phoneNumber: "phoneNumber_test",
+        gender: "gender_test",
+      })
+      .then((response) => {
+        console.log(response.body, "body..");
+        expect(response.status).toBe(200);
+        expect(response.body).toBeInstanceOf(Object);
+
+        expect(response.body).toHaveProperty(
+          "access_token",
+          expect.any(String)
+        );
+        expect(response.body).toHaveProperty("loggedInName", "name_test");
+      });
+  });
+  test("POST /students/register - failed - fullName is required", () => {
+    return request(app)
+      .post("/students/register")
+      .send({
+        fullName: "",
+        className: "9",
+        email: "email_student_test_beda@gmail.com",
+        password: hashPassword("password_test"),
+        photo:
+          "https://toppng.com//public/uploads/preview/black-widow-natasha-romanoff-infinity-war-11563164367lbcfuwdyt2.png",
+        address: "address_test",
+        phoneNumber: "phoneNumber_test",
+        gender: "gender_test",
+      })
+      .then((response) => {
+        console.log(response.body, "body..");
+        expect(response.status).toBe(400);
+        expect(response.body).toBeInstanceOf(Object);
+
+        expect(response.body).toHaveProperty(
+          "message",
+          "Full name is required"
+        );
+      });
+  });
+
+  test("POST /students/register - failed - className is required", () => {
+    return request(app)
+      .post("/students/register")
+      .send({
+        fullName: "name_test",
+        className: "",
+        email: "email_student_test_beda@gmail.com",
+        password: hashPassword("password_test"),
+        photo:
+          "https://toppng.com//public/uploads/preview/black-widow-natasha-romanoff-infinity-war-11563164367lbcfuwdyt2.png",
+        address: "address_test",
+        phoneNumber: "phoneNumber_test",
+        gender: "gender_test",
+      })
+      .then((response) => {
+        console.log(response.body, "body..");
+        expect(response.status).toBe(400);
+        expect(response.body).toBeInstanceOf(Object);
+
+        expect(response.body).toHaveProperty(
+          "message",
+          "Class name is required"
+        );
+      });
+  });
+
+  test("POST /students/register - failed - email is required", () => {
+    return request(app)
+      .post("/students/register")
+      .send({
+        fullName: "name_test",
+        className: "9",
+        email: "",
+        password: hashPassword("password_test"),
+        photo:
+          "https://toppng.com//public/uploads/preview/black-widow-natasha-romanoff-infinity-war-11563164367lbcfuwdyt2.png",
+        address: "address_test",
+        phoneNumber: "phoneNumber_test",
+        gender: "gender_test",
+      })
+      .then((response) => {
+        console.log(response.body, "body..");
+        expect(response.status).toBe(400);
+        expect(response.body).toBeInstanceOf(Object);
+
+        expect(response.body).toHaveProperty("message", "Email is required");
+      });
+  });
+
+  test("POST /students/register - failed - password is required", () => {
+    return request(app)
+      .post("/students/register")
+      .send({
+        fullName: "name_test",
+        className: "9",
+        email: "email_student_test_beda@gmail.com",
+        password: "",
+        photo:
+          "https://toppng.com//public/uploads/preview/black-widow-natasha-romanoff-infinity-war-11563164367lbcfuwdyt2.png",
+        address: "address_test",
+        phoneNumber: "phoneNumber_test",
+        gender: "gender_test",
+      })
+      .then((response) => {
+        console.log(response.body, "body..");
+        expect(response.status).toBe(400);
+        expect(response.body).toBeInstanceOf(Object);
+
+        expect(response.body).toHaveProperty("message", "Password is required");
+      });
+  });
+
+  test("POST /students/register - failed - gender is required", () => {
+    return request(app)
+      .post("/students/register")
+      .send({
+        fullName: "name_test",
+        className: "9",
+        email: "email_student_test_beda@gmail.com",
+        password: hashPassword("password_test"),
+        photo:
+          "https://toppng.com//public/uploads/preview/black-widow-natasha-romanoff-infinity-war-11563164367lbcfuwdyt2.png",
+        address: "address_test",
+        phoneNumber: "phoneNumber_test",
+        gender: "",
+      })
+      .then((response) => {
+        console.log(response.body, "body..");
+        expect(response.status).toBe(400);
+        expect(response.body).toBeInstanceOf(Object);
+
+        expect(response.body).toHaveProperty("message", "Gender is required");
+      });
+  });
+
+  test("POST /students/register - failed test - email must be unique", () => {
+    return request(app)
+      .post("/students/register")
+      .send({
+        fullName: "name_test",
+        className: "9",
+        email: "email_student_test@gmail.com",
+        password: hashPassword("password_test"),
+        photo:
+          "https://toppng.com//public/uploads/preview/black-widow-natasha-romanoff-infinity-war-11563164367lbcfuwdyt2.png",
+        address: "address_test",
+        phoneNumber: "phoneNumber_test",
+        gender: "gender_test",
+      })
+      .then((response) => {
+        expect(response.status).toBe(400);
+        expect(response.body).toBeInstanceOf(Object);
+        expect(response.body).toHaveProperty("message", "email must be unique");
+      });
+  });
+});
+
+describe("POST /students/login", () => {
+  test("POST /students/login - success", () => {
+    return request(app)
+      .post("/students/login")
+      .send({
+        email: "email_student_test@gmail.com",
+        password: "password_test",
+      })
+      .then((response) => {
+        expect(response.status).toBe(200);
+        expect(response.body).toBeInstanceOf(Object);
+        expect(response.body).toHaveProperty(
+          "access_token",
+          expect.any(String)
+        );
+        expect(response.body).toHaveProperty(
+          "loggedInName",
+          expect.any(String)
+        );
+      });
+  });
+  test("POST /students/login - failed - email is required", () => {
+    return request(app)
+      .post("/students/login")
+      .send({
+        email: "",
+        password: "password_test",
+      })
+      .then((response) => {
+        expect(response.status).toBe(400);
+        expect(response.body).toBeInstanceOf(Object);
+        expect(response.body).toHaveProperty("message", "Email is required");
+      });
+  });
+
+  test("POST /students/login - failed - password is required", () => {
+    return request(app)
+      .post("/students/login")
+      .send({
+        email: "email_student_test@gmail.com",
+        password: "",
+      })
+      .then((response) => {
+        expect(response.status).toBe(400);
+        expect(response.body).toBeInstanceOf(Object);
+        expect(response.body).toHaveProperty("message", "Password is required");
+      });
+  });
+
+  test("POST /students/login - failed - wrong password", () => {
+    return request(app)
+      .post("/students/login")
+      .send({
+        email: "email_student_test@gmail.com",
+        password: "wrong",
+      })
+      .then((response) => {
+        expect(response.status).toBe(401);
+        expect(response.body).toBeInstanceOf(Object);
+        expect(response.body).toHaveProperty(
+          "message",
+          "Invalid email/password"
+        );
+      });
+  });
+
+  test("POST /students/login - failed - wrong email", () => {
+    return request(app)
+      .post("/students/login")
+      .send({
+        email: "wrong",
+        password: "password_test",
+      })
+      .then((response) => {
+        expect(response.status).toBe(401);
+        expect(response.body).toBeInstanceOf(Object);
+        expect(response.body).toHaveProperty(
+          "message",
+          "Invalid email/password"
+        );
+      });
+  });
+});
+
+describe("GET /students/profile", () => {
+  test("GET /students/profile - success", () => {
+    return request(app)
+      .get("/students/profile")
+      .set("access_token", access_token_student)
+      .then((response) => {
+        expect(response.status).toBe(200);
+        expect(response.body).toBeInstanceOf(Object);
+        expect(response.body).toHaveProperty("id", expect.any(Number));
+        expect(response.body).toHaveProperty("fullName", expect.any(String));
+        expect(response.body).toHaveProperty("email", expect.any(String));
+        expect(response.body).toHaveProperty("photo", expect.any(String));
+        expect(response.body).toHaveProperty("address", expect.any(String));
+        expect(response.body).toHaveProperty("phoneNumber", expect.any(String));
+        expect(response.body).toHaveProperty("gender", expect.any(String));
+      });
+  });
+});
+describe("GET /students/attendance", () => {
+  test("GET /students/attendance - success", () => {
+    return request(app)
+      .get("/students/attendance")
+      .set("access_token", access_token_student)
+      .then((response) => {
+        expect(response.status).toBe(200);
+        expect(response.body).toBeInstanceOf(Array);
+        expect(response.body[0]).toBeInstanceOf(Object);
+        expect(response.body[0]).toHaveProperty("id", expect.any(Number));
+        expect(response.body[0]).toHaveProperty(
+          "StudentId",
+          expect.any(Number)
+        );
+        expect(response.body[0]).toHaveProperty(
+          "dateAndTime",
+          expect.any(String)
+        );
+        expect(response.body[0]).toHaveProperty("status", expect.any(Boolean));
+        expect(response.body[0]).toHaveProperty("lon", expect.any(String));
+        expect(response.body[0]).toHaveProperty("lat", expect.any(String));
+      });
+  });
+});
+
+describe("POST /students/attendance", () => {
+  // test("POST /students/attendance - success", () => {
+  //   return request(app)
+  //     .post("/students/attendance")
+  //     .set("access_token", access_token_student)
+  //     .send({
+  //       lon: "106°50'07.1\"E",
+  //       lat: "6°11'30.4\"S",
+  //       dateAndTime: "2022-10-06 16:01:18.707",
+  //     })
+  //     .then((response) => {
+  //       console.log(response.body, "><");
+  //       expect(response.status).toBe(200);
+  //       expect(response.body).toBeInstanceOf(Object);
+  //       expect(response.body).toHaveProperty("StudentId", expect.any(Number));
+  //       expect(response.body).toHaveProperty("dateAndTime", expect.any(String));
+  //       expect(response.body).toHaveProperty("status", expect.any(Boolean));
+  //       expect(response.body).toHaveProperty("lon", expect.any(String));
+  //       expect(response.body).toHaveProperty("lat", expect.any(String));
+  //     });
+  // });
+  test("POST /students/attendance - failed - already recorded", () => {
+    return request(app)
+      .post("/students/attendance")
+      .set("access_token", access_token_student)
+      .send({
+        lon: "106°50'07.1\"E",
+        lat: "6°11'30.4\"S",
+        dateAndTime: "2022-10-06 16:01:18.707",
+      })
+      .then((response) => {
+        console.log(response.body, "><");
+        expect(response.status).toBe(400);
+        expect(response.body).toBeInstanceOf(Object);
+        expect(response.body).toHaveProperty(
+          "message",
+          "You have already recorded present today"
+        );
+      });
+  });
+});
+
+describe("GET /students/tasks", () => {
+  test("GET /students/tasks - success", () => {
+    return request(app)
+      .get("/students/tasks")
+      .set("access_token", access_token_student)
+      .then((response) => {
+        expect(response.status).toBe(200);
+        expect(response.body).toBeInstanceOf(Object);
+        expect(response.body).toBeInstanceOf(Object);
+        expect(response.body).toHaveProperty("id", expect.any(Number));
+        // expect(response.body).toHaveProperty("fullName", expect.any(String));
+        // expect(response.body).toHaveProperty("email", expect.any(String));
+        // expect(response.body).toHaveProperty("photo", expect.any(String));
+        // expect(response.body).toHaveProperty("address", expect.any(String));
+        // expect(response.body).toHaveProperty("phoneNumber", expect.any(String));
+        // expect(response.body).toHaveProperty("gender", expect.any(String));
+      });
+  });
+});

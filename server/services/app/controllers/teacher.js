@@ -57,7 +57,6 @@ class TeacherController {
       // nanti tambahin photo, untuk di set di web
       res.status(200).json({ access_token, loggedInName });
     } catch (err) {
-      console.log(err);
       next(err);
     }
   }
@@ -77,7 +76,6 @@ class TeacherController {
       await Exam.create({ name, CourseId, className });
       res.status(201).json({ message: "success Add Exam" });
     } catch (err) {
-      console.log(err);
       next(err);
     }
   }
@@ -95,11 +93,9 @@ class TeacherController {
         throw { name: "Class name is required" };
       }
       let { id } = req.params;
-      console.log(id);
       await Exam.update({ name, CourseId, className }, { where: { id } });
       res.status(200).json({ message: "success Edit Exam" });
     } catch (err) {
-      console.log(err);
       next(err);
     }
   }
@@ -116,11 +112,9 @@ class TeacherController {
       if (!ExamId) {
         throw { name: "ExamId is required" };
       }
-      console.log(req.body, "<<<<");
       await ExamGrades.create({ score, StudentId, ExamId });
       res.status(201).json({ message: "success Add score" });
     } catch (err) {
-      console.log(err);
       next(err);
     }
   }
@@ -138,12 +132,9 @@ class TeacherController {
         throw { name: "ExamId is required" };
       }
       let { id } = req.params;
-      console.log(id, "<<<<");
-      console.log(req.body, "<<<<");
       await ExamGrades.update({ score, StudentId, ExamId }, { where: { id } });
       res.status(200).json({ message: "success Edit score" });
     } catch (err) {
-      console.log(err);
       next(err);
     }
   }
@@ -161,7 +152,6 @@ class TeacherController {
       );
       res.status(201).json({ message: "success input assignment score" });
     } catch (err) {
-      console.log(err);
       next(err);
     }
   }
@@ -171,12 +161,10 @@ class TeacherController {
       //filter by name
 
       let { id } = req.params;
-      console.log(id);
       const data = await Assignment.findByPk(id);
 
       return res.status(200).json(data);
     } catch (err) {
-      console.log(err);
       next(err);
     }
   }
@@ -204,7 +192,6 @@ class TeacherController {
 
       return res.status(201).json(data);
     } catch (err) {
-      console.log(err);
       next(err);
     }
   }
@@ -222,7 +209,6 @@ class TeacherController {
 
       return res.status(201).json(data);
     } catch (err) {
-      console.log(err);
       next(err);
     }
   }
@@ -284,7 +270,6 @@ class TeacherController {
         .json({ message: `Success create new ${data.name} assignment` });
     } catch (err) {
       await transaction.rollback();
-      console.log(err);
       next(err);
     }
   }
@@ -310,12 +295,14 @@ class TeacherController {
           className,
           createById,
         },
-        { where: { id } }
+        { where: { id } },
+        
+        
+        
       );
 
-      return res.status(201).json(data);
+      return res.status(201).json({ message: "success edit" });
     } catch (err) {
-      console.log(err);
       next(err);
     }
   }
@@ -329,7 +316,6 @@ class TeacherController {
       }
       return res.status(200).json({ message: "success deleted" });
     } catch (err) {
-      console.log(err);
       next(err);
     }
   }
@@ -339,7 +325,6 @@ class TeacherController {
       const data = await Course.findAll();
       return res.status(201).json(data);
     } catch (err) {
-      console.log(err);
       next(err);
     }
   }
@@ -347,7 +332,6 @@ class TeacherController {
   static async examScoreBySubject(req, res, next) {
     try {
       let { name } = req.query;
-      console.log(name, "<<");
       const data = await ExamGrades.findAll({
         include: [
           {
@@ -365,7 +349,6 @@ class TeacherController {
       });
       return res.status(201).json(data);
     } catch (err) {
-      console.log(err);
       next(err);
     }
   }
@@ -374,11 +357,10 @@ class TeacherController {
     try {
       let { StudentId, CourseId } = req.body;
       let nilai = await ExamGrades.findOne({ where: { StudentId } });
-      console.log(nilai, "<<<");
       await FinalGrades.create({ score: nilai, StudentId, CourseId });
       res.status(201).json({ message: "success Add score FinalGrades" });
     } catch (err) {
-      console.log(err);
+      console.log(err)
       next(err);
     }
   }
@@ -403,7 +385,7 @@ class TeacherController {
       });
       return res.status(201).json(data);
     } catch (err) {
-      console.log(err);
+      next(err);
     }
   }
 

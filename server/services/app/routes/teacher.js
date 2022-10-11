@@ -21,10 +21,10 @@ router.put("/exams/:id", TeacherController.editExam);//done
 router.get("/assignment/grade/:id", TeacherController.getGradeAssignment);//done
 
 router.delete("/assignment/:id", TeacherController.deleteAssignment);//done
-router.put("/assignment/:id", TeacherController.editAssignment);
+router.put("/assignment/:id", TeacherController.editAssignment);//done
 router.get("/assignment/:id", TeacherController.getAssignmentById);//done
-router.put("/scores/:id", TeacherController.editScore);
-router.post("/scores/final", TeacherController.addFinalGrades);
-router.get("/attendances/:className", TeacherController.getStudentAttendance);
+router.put("/scores/:id", TeacherController.editScore);//done
+router.post("/scores/final", TeacherController.addFinalGrades); //?
+router.get("/attendances/:className", TeacherController.getStudentAttendance);//?
 
 module.exports = router;
