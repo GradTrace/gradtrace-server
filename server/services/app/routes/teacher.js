@@ -8,6 +8,10 @@ router.get("/courses", TeacherController.getCourses);
 router.use(authc);
 router.post("/exams", TeacherController.addExam);
 router.get("/exams/score", TeacherController.examScoreBySubject);
+router.get("/exams/score/:id", TeacherController.examScoreById);
+
+router.put("/exams/score", TeacherController.editScoreById);
+
 router.post("/scores", TeacherController.addScore);
 router.put("/assignment/score", TeacherController.assignmentScore);
 router.get("/assignment/score", TeacherController.assignmetScoreBySubject);
@@ -16,6 +20,7 @@ router.post("/scores", TeacherController.addScore);
 router.put("/assignment/score", TeacherController.assignmentScore);
 router.get("/assignment", TeacherController.getAssignment);
 router.get("/assignments", TeacherController.getAssignmented);
+router.get("/assignment/paginate", TeacherController.getAssignmentPagination);
 router.patch("/assignmentGrades/:id", TeacherController.editAssignmentGrades);
 router.get("/assignmentGrades/:id", TeacherController.getAssignmentGradesById);
 router.get("/assignmentGrades", TeacherController.getAssignmentGrades);
@@ -32,5 +37,6 @@ router.post("/assignment", TeacherController.postAssignment);
 router.get("/courses", TeacherController.getCourses);
 router.post("/scores/final", TeacherController.addFinalGrades);
 router.get("/attendances/:className", TeacherController.getStudentAttendance);
+
 
 module.exports = router;

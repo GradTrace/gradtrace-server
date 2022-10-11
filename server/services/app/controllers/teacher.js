@@ -1,6 +1,7 @@
 const { Op } = require("sequelize");
 const { comparePassword } = require("../helpers/bcrypt");
 const { signToken } = require("../helpers/jwt");
+const { getPagination } = require("../helpers/pagination");
 
 const {
   Teacher,
@@ -138,8 +139,8 @@ class TeacherController {
         throw { name: "ExamId is required" };
       }
       let { id } = req.params;
-      console.log(id, "<<<<");
-      console.log(req.body, "<<<<");
+      // console.log(id, "<<<<");
+      // console.log(req.body, "<<<<");
       await ExamGrades.update({ score, StudentId, ExamId }, { where: { id } });
       res.status(200).json({ message: "success Edit score" });
     } catch (err) {
@@ -225,6 +226,7 @@ class TeacherController {
       next(err);
     }
   }
+
   static async getAssignmented(req, res, next) {
     try {
       //filter by name
@@ -419,23 +421,62 @@ class TeacherController {
   static async examScoreBySubject(req, res, next) {
     try {
       let { name } = req.query;
-      console.log(name, "<<");
-      const data = await ExamGrades.findAll({
+      // console.log(name, "<<");
+      const data = await Student.findAll({
         include: [
           {
-            model: Exam,
+            model: ExamGrades,
             include: [
               {
-                model: Course,
+                model: Exam,
+                include: Course,
               },
             ],
-          },
-          {
-            model: Student,
           },
         ],
       });
       return res.status(201).json(data);
+    } catch (err) {
+      console.log(err);
+      next(err);
+    }
+  }
+
+  static async examScoreById(req, res, next) {
+    try {
+      let id = req.params.id;
+      const data = await Student.findAll({
+        include: [
+          {
+            model: ExamGrades,
+            include: [
+              {
+                model: Exam,
+                include: Course,
+              },
+            ],
+          },
+        ],
+        where: { id },
+      });
+      return res.status(201).json(data);
+    } catch (err) {
+      console.log(err);
+      next(err);
+    }
+  }
+
+  static async editScoreById(req, res, next) {
+    let data = req.body.data;
+
+    console.log(data, "data hoho 2");
+    try {
+      const dataInput = await ExamGrades.bulkCreate(data, {
+        updateOnDuplicate: ["score"],
+      });
+      console.log(dataInput, "ini data input");
+
+      return res.status(201).json(dataInput);
     } catch (err) {
       console.log(err);
       next(err);
@@ -545,6 +586,59 @@ class TeacherController {
       let { id } = req.params;
       const data = await AssignmentGrades.findByPk(id);
       return res.status(200).json(data);
+    } catch (err) {
+      console.log(err);
+      next(err);
+    }
+  }
+
+  static async getAssignmentPagination(req, res, next) {
+    try {
+      //filter by name
+
+
+      const { name, className, page, size } = req.query;
+
+      const { limit, offset } = getPagination(page - 1, size);
+
+      const option = {
+        where: {
+          createById: `${req.user.id}`,
+        },
+        include: [
+          {
+            model: AssignmentGrades,
+            include: [
+              {
+                model: Student,
+              },
+            ],
+          },
+        ],
+        limit,
+        offset,
+        order: [["createdAt", "DESC"]],
+      };
+
+      if (!!name) {
+        option.where = {
+          ...option.where,
+          name: { [Op.iLike]: `%${name}%` },
+        };
+      }
+
+      if (!!className) {
+        option.where = {
+          ...option.where,
+          className: { [Op.iLike]: `%${className}%` },
+        };
+      }
+
+
+      const data = await Assignment.findAndCountAll(option);
+      
+
+      return res.status(201).json(data);
     } catch (err) {
       console.log(err);
       next(err);
