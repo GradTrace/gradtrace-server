@@ -244,8 +244,7 @@ class StudentController {
       let ulangan = [];
       let tugas = [];
 
-      // TODO: 1. Find List of nilai tugas
-      let resultTugas = await Course.findAll({
+      let resultExam = await Course.findAll({
         include: [
           {
             model: Exam,
@@ -256,18 +255,21 @@ class StudentController {
           },
         ],
       });
-      // tugas = resultTugas.map(item => { return item.score })
 
-      // TODO: 2. Find list of nilai ulangan harian doang. Asumsi isi exam grade , cmn ulangan harian doang
 
-      // let resultExam = await ExamGrades.findAll({ where: StudentId })
-      // ulangan = resultExam.map(item => { return item.score })
+      let resultTask = await Course.findAll({
+        include: [
+          {
+            model: Assignment,
+            where: {
+              className,
+            },
+            include: [{ model: AssignmentGrades, where: { StudentId } }],
+          },
+        ],
+      });
 
-      // TODO: 3. Find kumulatif skor.
-
-      // TODO : 4. MASOKIN SEMUA 1 1 DALAM OBJEK, BIAR GA BINGUNG BOS
-
-      res.status(200).json(resultTugas);
+      res.status(200).json({ resultExam, resultTask });
     } catch (err) {
       console.log(err);
       next(err);
