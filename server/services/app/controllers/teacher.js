@@ -220,7 +220,6 @@ class TeacherController {
 
       return res.status(200).json(data);
     } catch (err) {
-      console.log(err);
       next(err);
     }
   }
@@ -272,7 +271,7 @@ class TeacherController {
         .status(201)
         .json({ message: `Success create new ${data.name} assignment` });
     } catch (err) {
-      await transaction.rollback();
+      // await transaction.rollback();
       next(err);
     }
   }
@@ -363,7 +362,7 @@ class TeacherController {
       await FinalGrades.create({ score: nilai, StudentId, CourseId });
       res.status(201).json({ message: "success Add score FinalGrades" });
     } catch (err) {
-      console.log(err)
+      console.log(err,">>>>>>>")
       next(err);
     }
   }
@@ -444,7 +443,6 @@ class TeacherController {
       const data = await AssignmentGrades.findAll();
       return res.status(200).json(data);
     } catch (err) {
-      console.log(err);
       next(err);
     }
   }
@@ -454,7 +452,6 @@ class TeacherController {
       const data = await AssignmentGrades.findByPk(id);
       return res.status(200).json(data);
     } catch (err) {
-      console.log(err);
       next(err);
     }
   }

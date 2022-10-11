@@ -85,8 +85,6 @@ const student = [
 
 let access_token;
 let access_token_student;
-let teacherId = 0;
-let studentId = 0;
 let testId = 1;
 
 beforeAll(async () => {
@@ -135,19 +133,21 @@ beforeAll(async () => {
       createdAt: new Date(),
       updatedAt: new Date(),
     },
+    {
+      description: "description_test_1",
+      CourseId: 1,
+      deadline: "2022-12-12 18:00:00",
+      name: "name_test",
+      className: "class_test",
+      createById: 1,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
   ]);
   await queryInterface.bulkInsert("AssignmentGrades", [
     {
       score: 100,
       StudentId: 1,
-      AssignmentId: 1,
-      url: "www.google.com",
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    },
-    {
-      score: 90,
-      StudentId: 2,
       AssignmentId: 1,
       url: "www.google.com",
       createdAt: new Date(),
@@ -164,6 +164,9 @@ beforeAll(async () => {
     },
   ]);
 
+  const d = new Date();
+  d.setDate(d.getDate() - 2);
+
   await queryInterface.bulkInsert("Attendances", [
     {
       dateAndTime: new Date(),
@@ -171,8 +174,8 @@ beforeAll(async () => {
       status: true,
       lon: `106°50'07.1"E`,
       lat: `6°11'30.4"S`,
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      createdAt: d,
+      updatedAt: d,
     },
   ]);
 });
@@ -695,10 +698,90 @@ describe("GET /teachers/assignment", () => {
         );
       });
   });
+  test("GET /teachers/assignment - success", () => {
+    return request(app)
+      .get("/teachers/assignment?name=&className=class_test")
+      .set("access_token", access_token)
+      .then((response) => {
+        console.log(response, "<<>>");
+        expect(response.status).toBe(201);
+        expect(response.body).toBeInstanceOf(Array);
+        expect(response.body[0]).toBeInstanceOf(Object);
+        expect(response.body[0]).toHaveProperty("id", expect.any(Number));
+        expect(response.body[0]).toHaveProperty(
+          "description",
+          expect.any(String)
+        );
+        expect(response.body[0]).toHaveProperty("CourseId", expect.any(Number));
+        expect(response.body[0]).toHaveProperty("deadline", expect.any(String));
+        expect(response.body[0]).toHaveProperty("name", expect.any(String));
+        expect(response.body[0]).toHaveProperty(
+          "className",
+          expect.any(String)
+        );
+        expect(response.body[0]).toHaveProperty(
+          "createById",
+          expect.any(Number)
+        );
+      });
+  });
 
   test("GET /teachers/assignment - failed - unauthorized", () => {
     return request(app)
       .get("/teachers/assignment")
+      .then((response) => {
+        expect(response.status).toBe(403);
+        expect(response.body).toBeInstanceOf(Object);
+        expect(response.body).toHaveProperty(
+          "message",
+          "Unauthorized activity"
+        );
+      });
+  });
+});
+
+describe("GET /teachers/assignments", () => {
+  test("GET /teachers/assignments - success", () => {
+    return request(app)
+      .get("/teachers/assignments")
+      .set("access_token", access_token)
+      .then((response) => {
+        expect(response.status).toBe(200);
+        expect(response.body).toBeInstanceOf(Array);
+        expect(response.body[0]).toBeInstanceOf(Object);
+        expect(response.body[0]).toHaveProperty("id", expect.any(Number));
+        expect(response.body[0]).toHaveProperty(
+          "description",
+          expect.any(String)
+        );
+        expect(response.body[0]).toHaveProperty("CourseId", expect.any(Number));
+        expect(response.body[0]).toHaveProperty("deadline", expect.any(String));
+        expect(response.body[0]).toHaveProperty("name", expect.any(String));
+        expect(response.body[0]).toHaveProperty(
+          "className",
+          expect.any(String)
+        );
+        expect(response.body[0]).toHaveProperty(
+          "createById",
+          expect.any(Number)
+        );
+      });
+  });
+
+  test("GET /teachers/assignments - invalid token", () => {
+    return request(app)
+      .get("/teachers/assignments")
+      .set("access_token", "invalid_token")
+      .then((response) => {
+        expect(response.status).toBe(401);
+        expect(response.body).toBeInstanceOf(Object);
+        expect(response.body).toHaveProperty("message", "Invalid token");
+      });
+  });
+
+  test("GET /teachers/assignments - failed - unauthorized", () => {
+    return request(app)
+      .get("/teachers/assignments")
       .then((response) => {
         expect(response.status).toBe(403);
         expect(response.body).toBeInstanceOf(Object);
@@ -1098,7 +1181,7 @@ describe("GET /teachers/assignment/:id", () => {
         expect(response.body).toHaveProperty("createById", expect.any(Number));
       });
   });
-  test("GET /teachers/assignment - failed - unauthorized", () => {
+  test("GET /teachers/assignment/:id - failed - unauthorized", () => {
     return request(app)
       .get("/teachers/assignment/" + testId)
       .then((response) => {
@@ -1181,24 +1264,24 @@ describe("GET /teachers/attendances/:className", () => {
 //         StudentId: 1,
 //       })
 //       .then((response) => {
-//         console.log(response, "<<");
+//         console.log(response, "<<>>");
 //         expect(response.status).toBe(200);
 //         expect(response.body).toBeInstanceOf(Object);
 //       });
 //   });
-//sequelize db error
-// test("POST /teachers/scores/final - failed - unauthorized", () => {
-//   return request(app)
-//     .post("/teachers/scores/final")
-//     .then((response) => {
-//       expect(response.status).toBe(403);
-//       expect(response.body).toBeInstanceOf(Object);
-//       expect(response.body).toHaveProperty(
-//         "message",
-//         "Unauthorized activity"
-//       );
-//     });
-// });
+  //sequelize db error
+  // test("POST /teachers/scores/final - failed - unauthorized", () => {
+  //   return request(app)
+  //     .post("/teachers/scores/final")
+  //     .then((response) => {
+  //       expect(response.status).toBe(403);
+  //       expect(response.body).toBeInstanceOf(Object);
+  //       expect(response.body).toHaveProperty(
+  //         "message",
+  //         "Unauthorized activity"
+  //       );
+  //     });
+  // });
 // });
 describe("PUT /teachers/scores/:id", () => {
   test("POST /teachers/scores/:id - success", () => {
@@ -1214,6 +1297,57 @@ describe("PUT /teachers/scores/:id", () => {
         expect(response.status).toBe(200);
         expect(response.body).toBeInstanceOf(Object);
         expect(response.body).toHaveProperty("message", "success Edit score");
+      });
+  });
+  test("POST /teachers/scores/:id - failed - Score is required", () => {
+    return request(app)
+      .put("/teachers/scores/" + testId)
+      .set("access_token", access_token)
+      .send({
+        score: "",
+        StudentId: 1,
+        ExamId: 1,
+      })
+      .then((response) => {
+        expect(response.status).toBe(400);
+        expect(response.body).toBeInstanceOf(Object);
+        expect(response.body).toHaveProperty(
+          "message",
+          "Score name is required"
+        );
+      });
+  });
+  test("POST /teachers/scores/:id - failed - StudentId is required", () => {
+    return request(app)
+      .put("/teachers/scores/" + testId)
+      .set("access_token", access_token)
+      .send({
+        score: 100,
+        StudentId: "",
+        ExamId: 1,
+      })
+      .then((response) => {
+        expect(response.status).toBe(400);
+        expect(response.body).toBeInstanceOf(Object);
+        expect(response.body).toHaveProperty(
+          "message",
+          "StudentId name is required"
+        );
+      });
+  });
+  test("POST /teachers/scores/:id - failed - ExamId is required", () => {
+    return request(app)
+      .put("/teachers/scores/" + testId)
+      .set("access_token", access_token)
+      .send({
+        score: 100,
+        StudentId: 1,
+        ExamId: "",
+      })
+      .then((response) => {
+        expect(response.status).toBe(400);
+        expect(response.body).toBeInstanceOf(Object);
+        expect(response.body).toHaveProperty("message", "ExamId is required");
       });
   });
 
@@ -1337,6 +1471,37 @@ describe("PUT /teachers/assignment/:id", () => {
       });
   });
 });
+describe("GET /teachers/assignmentGrades", () => {
+  test("GET /teachers/assignmentGrades - success", () => {
+    return request(app)
+      .get("/teachers/assignmentGrades")
+      .set("access_token", access_token)
+      .then((response) => {
+        expect(response.status).toBe(200);
+        expect(response.body).toBeInstanceOf(Object);
+        // expect(response.body).toHaveProperty("id", expect.any(Number));
+        // expect(response.body).toHaveProperty("score", expect.any(String));
+        // expect(response.body).toHaveProperty("StudentId", expect.any(Number));
+        // expect(response.body).toHaveProperty("AssignmentId", expect.any(Number));
+        // expect(response.body).toHaveProperty("url", expect.any(String));
+      });
+  });
+});
+describe("GET /teachers/assignmentGrades/:id", () => {
+  test("GET /teachers/assignmentGrades - success", () => {
+    return request(app)
+      .get("/teachers/assignmentGrades/" + testId)
+      .set("access_token", access_token)
+      .then((response) => {
+        expect(response.status).toBe(200);
+        // expect(response.body).toHaveProperty("id", expect.any(Number));
+        // expect(response.body).toHaveProperty("score", expect.any(String));
+        // expect(response.body).toHaveProperty("StudentId", expect.any(Number));
+        // expect(response.body).toHaveProperty("AssignmentId", expect.any(Number));
+        // expect(response.body).toHaveProperty("url", expect.any(String));
+      });
+  });
+});
 
 //====================================================================================
 
@@ -1356,7 +1521,6 @@ describe("POST /students/register", () => {
         gender: "gender_test",
       })
       .then((response) => {
-        console.log(response.body, "body..");
         expect(response.status).toBe(200);
         expect(response.body).toBeInstanceOf(Object);
 
@@ -1382,7 +1546,6 @@ describe("POST /students/register", () => {
         gender: "gender_test",
       })
       .then((response) => {
-        console.log(response.body, "body..");
         expect(response.status).toBe(400);
         expect(response.body).toBeInstanceOf(Object);
 
@@ -1408,7 +1571,6 @@ describe("POST /students/register", () => {
         gender: "gender_test",
       })
       .then((response) => {
-        console.log(response.body, "body..");
         expect(response.status).toBe(400);
         expect(response.body).toBeInstanceOf(Object);
 
@@ -1434,7 +1596,6 @@ describe("POST /students/register", () => {
         gender: "gender_test",
       })
       .then((response) => {
-        console.log(response.body, "body..");
         expect(response.status).toBe(400);
         expect(response.body).toBeInstanceOf(Object);
 
@@ -1457,7 +1618,6 @@ describe("POST /students/register", () => {
         gender: "gender_test",
       })
       .then((response) => {
-        console.log(response.body, "body..");
         expect(response.status).toBe(400);
         expect(response.body).toBeInstanceOf(Object);
 
@@ -1480,7 +1640,6 @@ describe("POST /students/register", () => {
         gender: "",
       })
       .then((response) => {
-        console.log(response.body, "body..");
         expect(response.status).toBe(400);
         expect(response.body).toBeInstanceOf(Object);
 
@@ -1611,6 +1770,31 @@ describe("GET /students/profile", () => {
         expect(response.body).toHaveProperty("gender", expect.any(String));
       });
   });
+  test("GET /students/profile - invalid token", () => {
+    return request(app)
+      .get("/students/profile")
+      .set("access_token", "invalid")
+      .then((response) => {
+        expect(response.status).toBe(401);
+        expect(response.body).toBeInstanceOf(Object);
+        expect(response.body).toHaveProperty(
+          "message",
+          "Invalid token"
+        );
+      });
+  });
+  test("GET /students/profile - unathorized", () => {
+    return request(app)
+      .get("/students/profile")
+      .then((response) => {
+        expect(response.status).toBe(403);
+        expect(response.body).toBeInstanceOf(Object);
+        expect(response.body).toHaveProperty(
+          "message",
+          "Unauthorized activity"
+        );
+      });
+  });
 });
 describe("GET /students/attendance", () => {
   test("GET /students/attendance - success", () => {
@@ -1635,40 +1819,66 @@ describe("GET /students/attendance", () => {
         expect(response.body[0]).toHaveProperty("lat", expect.any(String));
       });
   });
+
+  test("GET /students/attendance - invalid token", () => {
+    return request(app)
+      .get("/students/attendance")
+      .set("access_token", "invalidtoken")
+      .then((response) => {
+        expect(response.status).toBe(401);
+        expect(response.body).toBeInstanceOf(Object);
+        expect(response.body).toHaveProperty("message", "Invalid token");
+      });
+  });
 });
 
 describe("POST /students/attendance", () => {
-  // test("POST /students/attendance - success", () => {
-  //   return request(app)
-  //     .post("/students/attendance")
-  //     .set("access_token", access_token_student)
-  //     .send({
-  //       lon: "106°50'07.1\"E",
-  //       lat: "6°11'30.4\"S",
-  //       dateAndTime: "2022-10-06 16:01:18.707",
-  //     })
-  //     .then((response) => {
-  //       console.log(response.body, "><");
-  //       expect(response.status).toBe(200);
-  //       expect(response.body).toBeInstanceOf(Object);
-  //       expect(response.body).toHaveProperty("StudentId", expect.any(Number));
-  //       expect(response.body).toHaveProperty("dateAndTime", expect.any(String));
-  //       expect(response.body).toHaveProperty("status", expect.any(Boolean));
-  //       expect(response.body).toHaveProperty("lon", expect.any(String));
-  //       expect(response.body).toHaveProperty("lat", expect.any(String));
-  //     });
-  // });
-  test("POST /students/attendance - failed - already recorded", () => {
+  test("POST /students/attendance - success", () => {
     return request(app)
       .post("/students/attendance")
       .set("access_token", access_token_student)
       .send({
         lon: "106°50'07.1\"E",
         lat: "6°11'30.4\"S",
-        dateAndTime: "2022-10-06 16:01:18.707",
+        dateAndTime: new Date(),
       })
       .then((response) => {
         console.log(response.body, "><");
+        expect(response.status).toBe(200);
+        expect(response.body).toBeInstanceOf(Object);
+        expect(response.body).toHaveProperty("StudentId", expect.any(Number));
+        expect(response.body).toHaveProperty("dateAndTime", expect.any(String));
+        expect(response.body).toHaveProperty("status", expect.any(Boolean));
+        expect(response.body).toHaveProperty("lon", expect.any(String));
+        expect(response.body).toHaveProperty("lat", expect.any(String));
+      });
+  });
+  // test("POST /students/attendance - failed - location is required", () => {
+  //   return request(app)
+  //     .post("/students/attendance")
+  //     .set("access_token", access_token_student)
+  //     .send({
+  //       dateAndTime: new Date(),
+  //     })
+  //     .then((response) => {
+  //       expect(response.status).toBe(400);
+  //       expect(response.body).toBeInstanceOf(Object);
+  //       expect(response.body).toHaveProperty(
+  //         "message",
+  //         "You have already recorded present today"
+  //       );
+  //     });
+  // });
+  test("POST /students/attendance - failed - already recorded", () => {
+    return request(app)
+      .post("/students/attendance")
+      .set("access_token", access_token)
+      .send({
+        lon: "106°50'07.1\"E",
+        lat: "6°11'30.4\"S",
+        dateAndTime: "2022-10-06 16:01:18.707",
+      })
+      .then((response) => {
         expect(response.status).toBe(400);
         expect(response.body).toBeInstanceOf(Object);
         expect(response.body).toHaveProperty(
@@ -1713,18 +1923,6 @@ describe("GET /students/tasks", () => {
           "icon",
           expect.any(String)
         );
-        expect(response.body[0].AssignmentGrades[0]).toHaveProperty(
-          "score",
-          expect.any(String)
-        );
-        expect(response.body[0].AssignmentGrades[0]).toHaveProperty(
-          "url",
-          expect.any(String)
-        );
-        expect(response.body[0].AssignmentGrades[0]).toHaveProperty(
-          "StudentId",
-          expect.any(Number)
-        );
       });
   });
 });
@@ -1735,9 +1933,42 @@ describe("PATCH /students/tasks/:id", () => {
       .patch("/students/tasks/" + 2)
       .set("access_token", access_token_student)
       .send({
-        url: "www.test_url.com"
+        url: "www.test_url.com",
       })
       .then((response) => {
+        expect(response.status).toBe(200);
+        expect(response.body).toBeInstanceOf(Object);
+        expect(response.body).toHaveProperty(
+          "message",
+          "Assignment url collected: www.test_url.com"
+        );
+      });
+  });
+  test("PATCH /students/tasks/:id - success", () => {
+    return request(app)
+      .patch("/students/tasks/" + 2)
+      .send({
+        url: "www.test_url.com",
+      })
+      .then((response) => {
+        expect(response.status).toBe(403);
+        expect(response.body).toBeInstanceOf(Object);
+        expect(response.body).toHaveProperty(
+          "message",
+          "Unauthorized activity"
+        );
+      });
+  });
+
+  test("PATCH /students/tasks/:id - success", () => {
+    return request(app)
+      .patch("/students/tasks/" + 3)
+      .set("access_token", access_token_student)
+      .send({
+        url: "www.test_url.com",
+      })
+      .then((response) => {
+        console.log(response, "????");
         expect(response.status).toBe(200);
         expect(response.body).toBeInstanceOf(Object);
         expect(response.body).toHaveProperty(
@@ -1751,10 +1982,9 @@ describe("PATCH /students/tasks/:id", () => {
       .patch("/students/tasks/" + 2)
       .set("access_token", access_token_student)
       .send({
-        url: ""
+        url: "",
       })
       .then((response) => {
-        console.log(response.body,"<>")
         expect(response.status).toBe(400);
         expect(response.body).toBeInstanceOf(Object);
         expect(response.body).toHaveProperty(
