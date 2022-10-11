@@ -1,4 +1,5 @@
 const { comparePassword } = require("../helpers/bcrypt");
+const nilaiAkhir = require("../helpers/hitungNilaiAkhir");
 const { signToken } = require("../helpers/jwt");
 const {
   Student,
@@ -225,6 +226,38 @@ class StudentController {
       res.status(200).json({ message: `Assignment url collected: ${url}` });
     } catch (err) {
       next(err);
+    }
+  }
+
+  static async showStudentScore(req, res, next) {
+    try {
+      const StudentId = req.user.id;
+      let uas = 0;
+      let uts = 0;
+      let ulangan = [];
+      let tugas = [];
+
+      // TODO: 1. Find List of nilai tugas
+      let resultTugas = await AssignmentGrades.findAll({ where: StudentId })
+      tugas = resultTugas.map(item => { return item.score })
+
+      // TODO: 2. Find list of nilai ulangan harian doang. Asumsi isi exam grade , cmn ulangan harian doang
+
+      // let resultExam = await ExamGrades.findAll({ where: StudentId })
+      // ulangan = resultExam.map(item => { return item.score })
+
+
+      // TODO: 3. Find kumulatif skor.
+
+
+
+      // TODO : 4. MASOKIN SEMUA 1 1 DALAM OBJEK, BIAR GA BINGUNG BOS
+
+
+      res.status(200).json({ message: `masih beloman nih` })
+    } catch (err) {
+      console.log(err)
+      next(err)
     }
   }
 }
