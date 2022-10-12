@@ -468,10 +468,12 @@ class TeacherController {
                 where: {
                   CourseId,
                 },
+                order: [["id", "ASC"]],
               },
             ],
           },
         ],
+        order: [["fullName", "ASC"]],
       });
 
       return res.status(201).json(result);
