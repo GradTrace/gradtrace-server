@@ -624,14 +624,14 @@ class TeacherController {
   }
   static async getAssignmentGrades(req, res, next) {
     try {
-      const { page, size, className } = req.query;
+      const { page, size, className, search} = req.query;
 
       const { limit, offset } = getPagination(page - 1, size);
 
       //====
       const CourseId = req.user.CourseId;
 
-      const option = {
+      let option = {
         include: [
           { model: Assignment, where: { CourseId } },
           { model: Student },
@@ -645,6 +645,13 @@ class TeacherController {
         option.include[1].where = {
           className: { [Op.iLike]: `%${className}%` },
         };
+      }
+
+      if(!!search){
+        option.include[0].where = {
+          CourseId,
+          name : { [Op.iLike]: `%${search}%` }
+        }
       }
 
       const data = await AssignmentGrades.findAndCountAll(option);
