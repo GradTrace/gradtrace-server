@@ -596,77 +596,67 @@ describe("GET /teachers/exams/score", () => {
         expect(response.status).toBe(201);
         expect(response.body).toBeInstanceOf(Array);
         expect(response.body[0]).toBeInstanceOf(Object);
-        expect(response.body[0].Exam).toBeInstanceOf(Object);
-        expect(response.body[0].Exam.Course).toBeInstanceOf(Object);
-        expect(response.body[0].Student).toBeInstanceOf(Object);
         expect(response.body[0]).toHaveProperty("id", expect.any(Number));
-        expect(response.body[0]).toHaveProperty("score", expect.any(String));
         expect(response.body[0]).toHaveProperty(
-          "StudentId",
-          expect.any(Number)
-        );
-        expect(response.body[0]).toHaveProperty("ExamId", expect.any(Number));
-        expect(response.body[0].Exam).toHaveProperty("id", expect.any(Number));
-        expect(response.body[0].Exam).toHaveProperty(
-          "name",
-          expect.any(String)
-        );
-        expect(response.body[0].Exam).toHaveProperty(
-          "CourseId",
-          expect.any(Number)
-        );
-        expect(response.body[0].Exam).toHaveProperty(
           "className",
           expect.any(String)
         );
-        expect(response.body[0].Exam.Course).toHaveProperty(
-          "id",
-          expect.any(Number)
-        );
-        expect(response.body[0].Exam.Course).toHaveProperty(
-          "name",
-          expect.any(String)
-        );
-        expect(response.body[0].Exam.Course).toHaveProperty(
-          "icon",
-          expect.any(String)
-        );
-        expect(response.body[0].Student).toHaveProperty(
-          "id",
-          expect.any(Number)
-        );
-        expect(response.body[0].Student).toHaveProperty(
-          "fullName",
-          expect.any(String)
-        );
-        expect(response.body[0].Student).toHaveProperty(
+        expect(response.body[0]).toHaveProperty("fullName", expect.any(String));
+        expect(response.body[0]).toHaveProperty("email", expect.any(String));
+        expect(response.body[0]).toHaveProperty("photo", expect.any(String));
+        expect(response.body[0]).toHaveProperty("address", expect.any(String));
+        expect(response.body[0]).toHaveProperty("phoneNumber", expect.any(String));
+        expect(response.body[0]).toHaveProperty("gender", expect.any(String));
+      });
+  });
+});
+
+describe("GET /teachers/exams/score/:id", () => {
+  test("GET /teachers/exams/score/:id - success", () => {
+    return request(app)
+      .get("/teachers/exams/score/" + testId)
+      .set("access_token", access_token)
+      .then((response) => {
+        expect(response.status).toBe(201);
+        expect(response.body).toBeInstanceOf(Array);
+        expect(response.body[0]).toBeInstanceOf(Object);
+        expect(response.body[0]).toHaveProperty("id", expect.any(Number));
+        expect(response.body[0]).toHaveProperty(
           "className",
           expect.any(String)
         );
-        expect(response.body[0].Student).toHaveProperty(
-          "email",
-          expect.any(String)
-        );
-        expect(response.body[0].Student).toHaveProperty(
-          "password",
-          expect.any(String)
-        );
-        expect(response.body[0].Student).toHaveProperty(
-          "photo",
-          expect.any(String)
-        );
-        expect(response.body[0].Student).toHaveProperty(
-          "address",
-          expect.any(String)
-        );
-        expect(response.body[0].Student).toHaveProperty(
-          "phoneNumber",
-          expect.any(String)
-        );
-        expect(response.body[0].Student).toHaveProperty(
-          "gender",
-          expect.any(String)
-        );
+        expect(response.body[0]).toHaveProperty("fullName", expect.any(String));
+        expect(response.body[0]).toHaveProperty("email", expect.any(String));
+        expect(response.body[0]).toHaveProperty("photo", expect.any(String));
+        expect(response.body[0]).toHaveProperty("address", expect.any(String));
+        expect(response.body[0]).toHaveProperty("phoneNumber", expect.any(String));
+        expect(response.body[0]).toHaveProperty("gender", expect.any(String));
+      });
+  });
+});
+
+describe("PUT /teachers/exams/score", () => {
+  test("PUT /teachers/exams/score - success", () => {
+    return request(app)
+      .put("/teachers/exams/score/")
+      .set("access_token", access_token)
+      .send({
+        "data": [
+            {
+                "score": 10,
+                "StudentId": 1,
+                "ExamId": 1
+            }
+        ]
+    })
+      .then((response) => {
+        expect(response.status).toBe(201);
+        expect(response.body).toBeInstanceOf(Array);
+        expect(response.body[0]).toBeInstanceOf(Object);
+        expect(response.body[0]).toHaveProperty("id",expect.any(Number));
+        expect(response.body[0]).toHaveProperty("score",expect.any(String));
+        expect(response.body[0]).toHaveProperty("StudentId",expect.any(Number));
+        expect(response.body[0]).toHaveProperty("ExamId",expect.any(Number));
       });
   });
 });
@@ -747,24 +737,16 @@ describe("GET /teachers/assignments", () => {
       .set("access_token", access_token)
       .then((response) => {
         expect(response.status).toBe(200);
-        expect(response.body).toBeInstanceOf(Array);
-        expect(response.body[0]).toBeInstanceOf(Object);
-        expect(response.body[0]).toHaveProperty("id", expect.any(Number));
-        expect(response.body[0]).toHaveProperty(
-          "description",
-          expect.any(String)
-        );
-        expect(response.body[0]).toHaveProperty("CourseId", expect.any(Number));
-        expect(response.body[0]).toHaveProperty("deadline", expect.any(String));
-        expect(response.body[0]).toHaveProperty("name", expect.any(String));
-        expect(response.body[0]).toHaveProperty(
-          "className",
-          expect.any(String)
-        );
-        expect(response.body[0]).toHaveProperty(
-          "createById",
-          expect.any(Number)
-        );
+        expect(response.body).toBeInstanceOf(Object);
+        expect(response.body).toHaveProperty("count",expect.any(Number));
+        expect(response.body).toHaveProperty("rows",expect.any(Array));
+        expect(response.body.rows[0]).toHaveProperty("id",expect.any(Number));
+        expect(response.body.rows[0]).toHaveProperty("description",expect.any(String));
+        expect(response.body.rows[0]).toHaveProperty("CourseId",expect.any(Number));
+        expect(response.body.rows[0]).toHaveProperty("deadline",expect.any(String));
+        expect(response.body.rows[0]).toHaveProperty("name",expect.any(String));
+        expect(response.body.rows[0]).toHaveProperty("className",expect.any(String));
+ 
       });
   });
 
@@ -1201,6 +1183,7 @@ describe("DELETE /teachers/assignment", () => {
       .delete("/teachers/assignment/" + testId)
       .set("access_token", access_token)
       .then((response) => {
+        console.log(response.body,"<<<")
         expect(response.status).toBe(200);
         expect(response.body).toBeInstanceOf(Object);
         expect(response.body).toHaveProperty("message", "success deleted");
@@ -1269,19 +1252,19 @@ describe("GET /teachers/attendances/:className", () => {
 //         expect(response.body).toBeInstanceOf(Object);
 //       });
 //   });
-  //sequelize db error
-  // test("POST /teachers/scores/final - failed - unauthorized", () => {
-  //   return request(app)
-  //     .post("/teachers/scores/final")
-  //     .then((response) => {
-  //       expect(response.status).toBe(403);
-  //       expect(response.body).toBeInstanceOf(Object);
-  //       expect(response.body).toHaveProperty(
-  //         "message",
-  //         "Unauthorized activity"
-  //       );
-  //     });
-  // });
+//sequelize db error
+// test("POST /teachers/scores/final - failed - unauthorized", () => {
+//   return request(app)
+//     .post("/teachers/scores/final")
+//     .then((response) => {
+//       expect(response.status).toBe(403);
+//       expect(response.body).toBeInstanceOf(Object);
+//       expect(response.body).toHaveProperty(
+//         "message",
+//         "Unauthorized activity"
+//       );
+//     });
+// });
 // });
 describe("PUT /teachers/scores/:id", () => {
   test("POST /teachers/scores/:id - success", () => {
@@ -1479,9 +1462,9 @@ describe("GET /teachers/assignmentGrades", () => {
       .then((response) => {
         expect(response.status).toBe(200);
         expect(response.body).toBeInstanceOf(Object);
-        // expect(response.body).toHaveProperty("id", expect.any(Number));
-        // expect(response.body).toHaveProperty("score", expect.any(String));
-        // expect(response.body).toHaveProperty("StudentId", expect.any(Number));
+        expect(response.body).toHaveProperty("count", expect.any(Number));
+        expect(response.body).toHaveProperty("rows", expect.any(Array));
+        // expect(response.body.rows[0]).toHaveProperty("id", expect.any(Number));
         // expect(response.body).toHaveProperty("AssignmentId", expect.any(Number));
         // expect(response.body).toHaveProperty("url", expect.any(String));
       });
@@ -1499,6 +1482,33 @@ describe("GET /teachers/assignmentGrades/:id", () => {
         // expect(response.body).toHaveProperty("StudentId", expect.any(Number));
         // expect(response.body).toHaveProperty("AssignmentId", expect.any(Number));
         // expect(response.body).toHaveProperty("url", expect.any(String));
+      });
+  });
+});
+
+describe("PATCH /teachers/assignmentGrades/:id", () => {
+  test("PATCH /teachers/assignmentGrades - success", () => {
+    return request(app)
+      .patch("/teachers/assignmentGrades/" + testId)
+      .set("access_token", access_token)
+      .send({
+        score : 100
+      })
+      .then((response) => {
+        expect(response.status).toBe(200);
+        expect(response.body).toHaveProperty("message", "success edit score");
+      });
+  });
+  test("PATCH /teachers/assignmentGrades - failed - score is required", () => {
+    return request(app)
+      .patch("/teachers/assignmentGrades/" + testId)
+      .set("access_token", access_token)
+      .send({
+        score : ""
+      })
+      .then((response) => {
+        expect(response.status).toBe(400);
+        expect(response.body).toHaveProperty("message", "Score is required");
       });
   });
 });
@@ -1777,10 +1787,7 @@ describe("GET /students/profile", () => {
       .then((response) => {
         expect(response.status).toBe(401);
         expect(response.body).toBeInstanceOf(Object);
-        expect(response.body).toHaveProperty(
-          "message",
-          "Invalid token"
-        );
+        expect(response.body).toHaveProperty("message", "Invalid token");
       });
   });
   test("GET /students/profile - unathorized", () => {
@@ -1927,6 +1934,7 @@ describe("GET /students/tasks", () => {
   });
 });
 
+
 describe("PATCH /students/tasks/:id", () => {
   test("PATCH /students/tasks/:id - success", () => {
     return request(app)
@@ -1941,7 +1949,7 @@ describe("PATCH /students/tasks/:id", () => {
         expect(response.body).toHaveProperty(
           "message",
           "Assignment url collected: www.test_url.com"
-        );
+          );
       });
   });
   test("PATCH /students/tasks/:id - success", () => {
@@ -1958,10 +1966,10 @@ describe("PATCH /students/tasks/:id", () => {
           "Unauthorized activity"
         );
       });
-  });
+    });
 
-  test("PATCH /students/tasks/:id - success", () => {
-    return request(app)
+    test("PATCH /students/tasks/:id - success", () => {
+      return request(app)
       .patch("/students/tasks/" + 3)
       .set("access_token", access_token_student)
       .send({
@@ -1974,9 +1982,9 @@ describe("PATCH /students/tasks/:id", () => {
         expect(response.body).toHaveProperty(
           "message",
           "Assignment url collected: www.test_url.com"
-        );
+          );
       });
-  });
+    });
   test("PATCH /students/tasks/:id - failed - url is required", () => {
     return request(app)
       .patch("/students/tasks/" + 2)
@@ -1991,6 +1999,18 @@ describe("PATCH /students/tasks/:id", () => {
           "message",
           "Assignment url is required"
         );
+      });
+  });
+});
+
+describe("GET /students/scores", () => {
+  test("GET /students/scores - success", () => {
+    return request(app)
+      .get("/students/scores")
+      .set("access_token", access_token_student)
+      .then((response) => {
+        expect(response.status).toBe(200);
+        expect(response.body).toBeInstanceOf(Array);
       });
   });
 });

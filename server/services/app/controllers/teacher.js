@@ -1,6 +1,7 @@
 const { Op } = require("sequelize");
 const { comparePassword } = require("../helpers/bcrypt");
 const { signToken } = require("../helpers/jwt");
+const { getPagination } = require("../helpers/pagination");
 
 const {
   Teacher,
@@ -55,7 +56,9 @@ class TeacherController {
       const loggedInName = findTeacher.fullName;
 
       // nanti tambahin photo, untuk di set di web
-      res.status(200).json({ access_token, loggedInName });
+      res
+        .status(200)
+        .json({ access_token, loggedInName, CourseId: findTeacher.CourseId });
     } catch (err) {
       next(err);
     }
@@ -212,11 +215,21 @@ class TeacherController {
       next(err);
     }
   }
+
   static async getAssignmented(req, res, next) {
     try {
       //filter by name
 
-      const data = await Assignment.findAll();
+      const { page, size } = req.query;
+
+      const { limit, offset } = getPagination(page - 1, size);
+
+      const option = {
+        limit,
+        offset
+      }
+
+      const data = await Assignment.findAndCountAll(option);
 
       return res.status(200).json(data);
     } catch (err) {
@@ -266,7 +279,15 @@ class TeacherController {
       );
 
       if (!data) throw { name: "Failed to add new assignment" };
+      // kalo mau pake socket (opsional) kerjain di akhir, kelarin dulu main function
+      // jalanin fungsi send notification ke mobile (emit)
+      // server
+      // - emit("kelas-9", data)
 
+      // client
+      // - on("kelas-9", (data) => {
+      //   logic
+      // })
       res
         .status(201)
         .json({ message: `Success create new ${data.name} assignment` });
@@ -333,21 +354,82 @@ class TeacherController {
 
   static async examScoreBySubject(req, res, next) {
     try {
-      let { name } = req.query;
-      const data = await ExamGrades.findAll({
+      // let { name } = req.query;
+      let CourseId = req.user.CourseId;
+
+      // const result = await Course.findAll({
+      //   where: { id: CourseId },
+      //   include: [
+      //     {
+      //       model: Exam,
+      //       include: [
+      //         {
+      //           model: ExamGrades,
+      //           include: [
+      //             { model: Student, attributes: { exclude: ["password"] } },
+      //           ],
+      //         },
+      //       ],
+      //     },
+      //   ],
+      // });
+
+      // const result = await Exam.findAll({
+      //   where: { CourseId },
+      //   include: [
+      //     {
+      //       model: ExamGrades,
+      //       include: [
+      //         {
+      //           model: Student,
+      //           attributes: { exclude: ["password"] },
+      //         },
+      //       ],
+      //     },
+      //   ],
+      // });
+
+      const result = await Student.findAll({
+        attributes: { exclude: ["password"] },
         include: [
           {
-            model: Exam,
+            model: ExamGrades,
             include: [
               {
-                model: Course,
+                model: Exam,
+                where: {
+                  CourseId,
+                },
+                order: [["id", "ASC"]],
               },
             ],
           },
+        ],
+        order: [["fullName", "ASC"]],
+      });
+
+      return res.status(201).json(result);
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  static async examScoreById(req, res, next) {
+    try {
+      let id = req.params.id;
+      const data = await Student.findAll({
+        include: [
           {
-            model: Student,
+            model: ExamGrades,
+            include: [
+              {
+                model: Exam,
+                include: Course,
+              },
+            ],
           },
         ],
+        where: { id },
       });
       return res.status(201).json(data);
     } catch (err) {
@@ -355,17 +437,32 @@ class TeacherController {
     }
   }
 
-  static async addFinalGrades(req, res, next) {
+  static async editScoreById(req, res, next) {
+    let data = req.body.data;
+
     try {
-      let { StudentId, CourseId } = req.body;
-      let nilai = await ExamGrades.findOne({ where: { StudentId } });
-      await FinalGrades.create({ score: nilai, StudentId, CourseId });
-      res.status(201).json({ message: "success Add score FinalGrades" });
+      const dataInput = await ExamGrades.bulkCreate(data, {
+        updateOnDuplicate: ["score"],
+      });
+      console.log(dataInput)
+
+      return res.status(201).json(dataInput);
     } catch (err) {
-      console.log(err,">>>>>>>")
       next(err);
     }
   }
+
+  // static async addFinalGrades(req, res, next) {
+  //   try {
+  //     let { StudentId, CourseId } = req.body;
+  //     let nilai = await ExamGrades.findOne({ where: { StudentId } });
+  //     await FinalGrades.create({ score: nilai, StudentId, CourseId });
+  //     res.status(201).json({ message: "success Add score FinalGrades" });
+  //   } catch (err) {
+  //     console.log(err,">>>>>>>")
+  //     next(err);
+  //   }
+  // }
 
   static async assignmetScoreBySubject(req, res, next) {
     try {
@@ -440,7 +537,31 @@ class TeacherController {
   }
   static async getAssignmentGrades(req, res, next) {
     try {
-      const data = await AssignmentGrades.findAll();
+      const { page, size, className } = req.query;
+
+      const { limit, offset } = getPagination(page - 1, size);
+
+      //====
+      const CourseId = req.user.CourseId;
+
+      const option = {
+        include: [
+          { model: Assignment, where: { CourseId } },
+          { model: Student },
+        ],
+        order: [["updatedAt", "ASC"]],
+        limit,
+        offset,
+      };
+
+      if (!!className) {
+        option.include[1].where = {
+          className: { [Op.iLike]: `%${className}%` },
+        };
+      }
+
+      const data = await AssignmentGrades.findAndCountAll(option);
+
       return res.status(200).json(data);
     } catch (err) {
       next(err);
@@ -452,6 +573,56 @@ class TeacherController {
       const data = await AssignmentGrades.findByPk(id);
       return res.status(200).json(data);
     } catch (err) {
+      next(err);
+    }
+  }
+
+  static async getAssignmentPagination(req, res, next) {
+    try {
+      //filter by name
+
+      const { name, className, page, size } = req.query;
+
+      const { limit, offset } = getPagination(page - 1, size);
+
+      const option = {
+        where: {
+          createById: `${req.user.id}`,
+        },
+        include: [
+          {
+            model: AssignmentGrades,
+            include: [
+              {
+                model: Student,
+              },
+            ],
+          },
+        ],
+        limit,
+        offset,
+        order: [["createdAt", "DESC"]],
+      };
+
+      if (!!name) {
+        option.where = {
+          ...option.where,
+          name: { [Op.iLike]: `%${name}%` },
+        };
+      }
+
+      if (!!className) {
+        option.where = {
+          ...option.where,
+          className: { [Op.iLike]: `%${className}%` },
+        };
+      }
+
+      const data = await Assignment.findAndCountAll(option);
+
+      return res.status(201).json(data);
+    } catch (err) {
+      console.log(err);
       next(err);
     }
   }
