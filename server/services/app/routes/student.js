@@ -6,11 +6,11 @@ const { studentAuthz } = require("../middlewares/authz");
 router.post("/register", StudentController.register);
 router.post("/login", StudentController.login);
 
-// User authentication
+// User student authentication
 router.use(authc);
 
 router.get("/profile", studentAuthz, StudentController.showProfile);
-router.post("/attendance", studentAuthz, StudentController.newAttendance);//?
+router.post("/attendance", studentAuthz, StudentController.newAttendance);
 router.get("/attendance", studentAuthz, StudentController.getAttendances);
 router.get("/tasks", studentAuthz, StudentController.getTasks);
 router.patch("/tasks/:taskId", studentAuthz, StudentController.submitTaskUrl);

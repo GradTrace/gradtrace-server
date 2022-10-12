@@ -394,7 +394,6 @@ class TeacherController {
     }
   }
 
-
   static async assignmetScoreBySubject(req, res, next) {
     try {
       let subject = req.query.subject;

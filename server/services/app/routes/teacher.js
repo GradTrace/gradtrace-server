@@ -7,11 +7,8 @@ router.post("/register", TeacherController.register);
 router.post("/login", TeacherController.login);
 router.get("/courses", TeacherController.getCourses);
 
-// User authentication
+// User teacher authentication
 router.use(autht);
-
-// User authentication
-router.use(authc);
 
 // Exams
 router.post("/exams", TeacherController.addExam);
@@ -30,11 +27,11 @@ router.get("/assignment", TeacherController.getAssignment);
 router.post("/assignment", TeacherController.postAssignment);
 router.put("/assignment/score", TeacherController.assignmentScore);
 router.get("/assignment/score", TeacherController.assignmetScoreBySubject);
-// router.get("/assignment/paginate", TeacherController.getAssignmentPagination);
 router.get("/assignment/grade/:id", TeacherController.getGradeAssignment);
 router.get("/assignment/:id", TeacherController.getAssignmentById);
 router.put("/assignment/:id", TeacherController.editAssignment);
 router.delete("/assignment/:id", TeacherController.deleteAssignment);
+
 // Assignments
 router.get("/assignments", TeacherController.getAssignmented);
 

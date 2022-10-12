@@ -46,7 +46,11 @@ class StudentController {
       const findStudent = await Student.findOne({ where: { email } });
 
       // Login
-      const payload = { id: findStudent.id, className: findStudent.className , role : 'Student'};
+      const payload = {
+        id: findStudent.id,
+        className: findStudent.className,
+        role: "Student",
+      };
       res.status(200).json({
         access_token: signToken(payload),
         loggedInName: findStudent.fullName,
@@ -69,7 +73,11 @@ class StudentController {
       const validatePassword = comparePassword(password, findStudent.password);
       if (!validatePassword) throw { name: "Invalid email/password" };
 
-      const payload = { id: findStudent.id, className: findStudent.className };
+      const payload = {
+        id: findStudent.id,
+        className: findStudent.className,
+        role: "Student",
+      };
       const access_token = signToken(payload);
       const loggedInName = findStudent.fullName;
 
