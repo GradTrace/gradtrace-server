@@ -46,7 +46,7 @@ class StudentController {
       const findStudent = await Student.findOne({ where: { email } });
 
       // Login
-      const payload = { id: findStudent.id, className: findStudent.className };
+      const payload = { id: findStudent.id, className: findStudent.className , role : 'Student'};
       res.status(200).json({
         access_token: signToken(payload),
         loggedInName: findStudent.fullName,
@@ -191,7 +191,7 @@ class StudentController {
       if (!url) throw { name: "url is required" };
 
       const findAssignment = await AssignmentGrades.findOne({
-        where: { StudentId, AssignmentId: taskId },
+        where: { StudentId, AssignmentId: +taskId },
       });
 
       // If assignment already present, then it will update the current asignment url

@@ -1,10 +1,14 @@
 const router = require("express").Router();
 const TeacherController = require("../controllers/teacher");
 const authc = require("../middlewares/authc");
+const autht = require("../middlewares/autht");
 
 router.post("/register", TeacherController.register);
 router.post("/login", TeacherController.login);
 router.get("/courses", TeacherController.getCourses);
+
+// User authentication
+router.use(autht);
 
 // User authentication
 router.use(authc);

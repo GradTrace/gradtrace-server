@@ -50,7 +50,7 @@ class TeacherController {
       const validatePassword = comparePassword(password, findTeacher.password);
       if (!validatePassword) throw { name: "Invalid email/password" };
 
-      const payload = { id: findTeacher.id };
+      const payload = { id: findTeacher.id, role: "Teacher" };
       const access_token = signToken(payload);
       const loggedInName = findTeacher.fullName;
 
@@ -267,6 +267,7 @@ class TeacherController {
         .status(201)
         .json({ message: `Success create new ${data.name} assignment` });
     } catch (err) {
+      // await transaction.rollback();
       next(err);
     }
   }
@@ -294,7 +295,7 @@ class TeacherController {
         { where: { id } }
       );
 
-      return res.status(201).json(data);
+      return res.status(201).json({ message: "success edit" });
     } catch (err) {
       next(err);
     }
@@ -373,6 +374,7 @@ class TeacherController {
         ],
         where: { id },
       });
+
       return res.status(201).json(data);
     } catch (err) {
       next(err);
@@ -391,6 +393,7 @@ class TeacherController {
       next(err);
     }
   }
+
 
   static async assignmetScoreBySubject(req, res, next) {
     try {
@@ -503,52 +506,6 @@ class TeacherController {
       let { id } = req.params;
       const data = await AssignmentGrades.findByPk(id);
       return res.status(200).json(data);
-    } catch (err) {
-      next(err);
-    }
-  }
-
-  static async getAssignmentPagination(req, res, next) {
-    try {
-      //filter by name
-      const { name, className, page, size } = req.query;
-      const { limit, offset } = getPagination(page - 1, size);
-
-      const option = {
-        where: {
-          createById: `${req.user.id}`,
-        },
-        include: [
-          {
-            model: AssignmentGrades,
-            include: [
-              {
-                model: Student,
-              },
-            ],
-          },
-        ],
-        limit,
-        offset,
-        order: [["createdAt", "DESC"]],
-      };
-
-      if (!!name) {
-        option.where = {
-          ...option.where,
-          name: { [Op.iLike]: `%${name}%` },
-        };
-      }
-
-      if (!!className) {
-        option.where = {
-          ...option.where,
-          className: { [Op.iLike]: `%${className}%` },
-        };
-      }
-
-      const data = await Assignment.findAndCountAll(option);
-      return res.status(201).json(data);
     } catch (err) {
       next(err);
     }
