@@ -107,6 +107,20 @@ class TeacherController {
     }
   }
 
+  static async getExamByClass(req, res, next) {
+    try {
+      let courseId = req.user.CourseId;
+      let params = req.params.className;
+
+      let findExamId = await Exam.findAll({
+        where: { CourseId: courseId, className: params },
+      });
+      res.status(201).json({ findExamId });
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  }
   static async addScore(req, res, next) {
     try {
       let { score, StudentId, ExamId } = req.body;
@@ -120,6 +134,7 @@ class TeacherController {
         throw { name: "ExamId is required" };
       }
       console.log(req.body, "<<<<");
+
       await ExamGrades.create({ score, StudentId, ExamId });
       res.status(201).json({ message: "success Add score" });
     } catch (err) {
@@ -425,38 +440,6 @@ class TeacherController {
       // let { name } = req.query;
       let CourseId = req.user.CourseId;
       console.log(CourseId);
-      // const result = await Course.findAll({
-      //   where: { id: CourseId },
-      //   include: [
-      //     {
-      //       model: Exam,
-      //       include: [
-      //         {
-      //           model: ExamGrades,
-      //           include: [
-      //             { model: Student, attributes: { exclude: ["password"] } },
-      //           ],
-      //         },
-      //       ],
-      //     },
-      //   ],
-      // });
-
-      // const result = await Exam.findAll({
-      //   where: { CourseId },
-      //   include: [
-      //     {
-      //       model: ExamGrades,
-      //       include: [
-      //         {
-      //           model: Student,
-      //           attributes: { exclude: ["password"] },
-      //         },
-      //       ],
-      //     },
-      //   ],
-      // });
-
       const result = await Student.findAll({
         attributes: { exclude: ["password"] },
         include: [
