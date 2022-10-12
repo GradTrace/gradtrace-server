@@ -615,14 +615,14 @@ class TeacherController {
   }
   static async getAssignmentGrades(req, res, next) {
     try {
-      const { page, size } = req.query;
+      const { page, size, className } = req.query;
 
       const { limit, offset } = getPagination(page - 1, size);
 
       //====
       const CourseId = req.user.CourseId;
 
-      const data = await AssignmentGrades.findAndCountAll({
+      const option = {
         include: [
           { model: Assignment, where: { CourseId } },
           { model: Student },
@@ -630,7 +630,15 @@ class TeacherController {
         order: [["updatedAt", "ASC"]],
         limit,
         offset,
-      });
+      };
+
+      if (!!className) {
+        option.include[1].where = {
+          className: { [Op.iLike]: `%${className}%` },
+        };
+      }
+
+      const data = await AssignmentGrades.findAndCountAll(option);
 
       return res.status(200).json(data);
     } catch (err) {
