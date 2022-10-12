@@ -45,7 +45,7 @@ class StudentController {
 
       const findStudent = await Student.findOne({ where: { email } });
 
-      // login
+      // Login
       const payload = { id: findStudent.id, className: findStudent.className };
       res.status(200).json({
         access_token: signToken(payload),
@@ -107,7 +107,7 @@ class StudentController {
       const StudentId = +req.user.id;
       const { lon, lat, dateAndTime } = req.body;
 
-      // checking if student had already present today :
+      // Check if student had already create attendance today:
       const checkAttendanceDayStud = await Attendance.findOne(
         {
           where: {
@@ -221,7 +221,7 @@ class StudentController {
       const StudentId = req.user.id;
       const className = req.user.className;
 
-      //! Belum handle nilai tugas
+      // Find all exam scores
       let resultExam = await Course.findAll({
         include: [
           {
@@ -234,7 +234,7 @@ class StudentController {
         ],
       });
 
-      //! Find Task Nya siswa kumpul tugas brapa banyak
+      // Find all assignment scores
       let resultTask = await Course.findAll({
         include: [
           {
@@ -247,10 +247,7 @@ class StudentController {
         ],
       });
 
-      // console.log(resultTask, `<< ini result task nya`)
-      // loop menampilkan seluruh assigment yang udah dikerjain sama muridnya dari result task
-
-      //! terus kelompokin
+      // Group assignment by course name
       const assignmentGrouping = {};
 
       resultTask.forEach((element) => {
@@ -270,14 +267,8 @@ class StudentController {
       });
 
       const submittedAssignment = Object.keys(assignmentGrouping);
-      // console.log(submittedAssignment);
 
-      // console.log(
-      //   assignmentGrouping["Physical Education"],
-      //   "<<< ini nilai Physical Education"
-      // );
-
-      //! cari total semua course assignment
+      // Find all course assignment
       let totalCourseAssignment = await sequelize.query(
         `SELECT
           "Course"."id",
@@ -294,9 +285,8 @@ class StudentController {
           type: sequelize.QueryTypes.SELECT,
         }
       );
-      // console.log(totalCourseAssignment, `<< ni total course assignment`);
 
-      //! TODO : NYOCOKIN, KALO ASSIGMENT GROUPINGNYA GAADA, KASIH NILAI O, KALO ADA, BAGI AJA DGN TOTAL ASSIGNMENT NYA
+      // Group assignment by course name
       let totalAssignmentScore = 0;
 
       totalCourseAssignment.forEach((item) => {
@@ -314,11 +304,8 @@ class StudentController {
         });
       });
 
-      //! ini hasilnya score sisanya nolin aja
-      // console.log(totalCourseAssignment, `<< change`);
+      const finalScore = [];
 
-      const hasilAkhir = [];
-      //! tampung hasil exam
       resultExam.map((course) => {
         let scores = [];
         course.Exams.map((score) => {
@@ -332,19 +319,15 @@ class StudentController {
             score: +x,
           });
         });
-        hasilAkhir.push({
+        finalScore.push({
           name: course.name,
           id: course.id,
           scores,
         });
       });
-      // console.log(hasilAkhir.map(item), `<< ini belom di pembobotan`)
 
-      // hasilAkhir.forEach(item => {
-      //   console.log(item.scores, `MMM`)
-      // })
-      //! mencoba push hasil tugas ke hasil akhir
-      hasilAkhir.forEach((el) => {
+      // Push assignment score to final score array
+      finalScore.forEach((el) => {
         totalCourseAssignment.forEach((tugas) => {
           if (el.name === tugas.name) {
             el.scores.push({
@@ -356,45 +339,38 @@ class StudentController {
         });
       });
 
-      //! pembobotan
-      hasilAkhir.forEach((el) => {
-        // 0. bikin penampung final score  dalam bentuk angka
-        let trayOfFinalScore = 0
-        // 1. looping el.scores
-        let trayOfUlangan = 0
-        el.scores.forEach(nilai => {
-          // console.log(nilai.name, `<< ni lop el scores`)
-          // 2. melakukan pengecekan dari tiap name dari el.scores.
-          // 3. cek kalo uas, dikali 0,4, uts * 0,3, ulangan digabung dulu dibagi 2 terus dikali 0,2, tugas dikali 0,1
-          if (nilai.name === 'UAS') {
-            trayOfFinalScore += +nilai.score * 0.4
+      // Create weighted grades for student
+      finalScore.forEach((el) => {
+        // 0. Create tray store final score and exam score
+        let trayOfFinalScore = 0;
+        let trayOfExam = 0;
+        el.scores.forEach((nilai) => {
+          // 1. Check score name
+          // 2. Weighting = (0.4 * UAS) + (0.3 * UTS) + (0.2 * avg daily exam) + (0.1 * avg assignment score)
+          if (nilai.name === "UAS") {
+            trayOfFinalScore += +nilai.score * 0.4;
+          } else if (nilai.name === "UTS") {
+            trayOfFinalScore += +nilai.score * 0.3;
+          } else if (nilai.name.includes("Ulangan")) {
+            trayOfExam += +nilai.score;
+          } else if (nilai.name === "Nilai Tugas") {
+            trayOfFinalScore += +nilai.score * 0.1;
           }
-          else if (nilai.name === 'UTS') {
-            trayOfFinalScore += +nilai.score * 0.3
-          }
-          else if (nilai.name.includes('Ulangan')) {
-            trayOfUlangan += +nilai.score
-          }
-          else if (nilai.name === 'Nilai Tugas') {
-            trayOfFinalScore += +nilai.score * 0.1
-          }
-        })
-        // khsus ujian, karna ada 2 data, diginiin harusnya biar dipisah, kata hardim
-        trayOfFinalScore += (+trayOfUlangan / 2) * 0.2
-
+        });
+        // For exam, there are 2 data
+        trayOfFinalScore += (+trayOfExam / 2) * 0.2;
 
         el.scores.push({
           course: el.name,
           name: "Final Score",
-          // 4. masukin nilai yang udah di ccek dan dikaliin tadi , ke penampung final score
-          // 5. el.scores nya di push dgn final scores.
-          score: trayOfFinalScore
+          // 3. Push matched score and weighted to final score tray
+          // 4. Push final score tray to final score object
+          score: trayOfFinalScore,
         });
       });
 
-      res.status(200).json(hasilAkhir);
+      res.status(200).json(finalScore);
     } catch (err) {
-      console.log(err);
       next(err);
     }
   }
