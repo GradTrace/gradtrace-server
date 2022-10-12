@@ -420,7 +420,7 @@ class TeacherController {
     }
   }
 
- static async examScoreBySubject(req, res, next) {
+  static async examScoreBySubject(req, res, next) {
     try {
       // let { name } = req.query;
       let CourseId = req.user.CourseId;
@@ -468,10 +468,12 @@ class TeacherController {
                 where: {
                   CourseId,
                 },
+                order: [["id", "ASC"]],
               },
             ],
           },
         ],
+        order: [["fullName", "ASC"]],
       });
 
       return res.status(201).json(result);
