@@ -1,5 +1,4 @@
 const { comparePassword } = require("../helpers/bcrypt");
-const nilaiAkhir = require("../helpers/hitungNilaiAkhir");
 const { signToken } = require("../helpers/jwt");
 const {
   Student,
@@ -33,10 +32,6 @@ class StudentController {
       if (!password) throw { name: "Password is required" };
       if (!gender) throw { name: "Gender is required" };
 
-      // sudah dihandle di model
-      // const emailCheck = await Student.findOne({ where: { email } });
-      // if (emailCheck) throw { name: "Email must be unique" };
-
       await Student.create({
         fullName,
         className,
@@ -50,7 +45,7 @@ class StudentController {
 
       const findStudent = await Student.findOne({ where: { email } });
 
-      // login
+      // Login
       const payload = { id: findStudent.id, className: findStudent.className };
       res.status(200).json({
         access_token: signToken(payload),
@@ -78,7 +73,6 @@ class StudentController {
       const access_token = signToken(payload);
       const loggedInName = findStudent.fullName;
 
-      // nanti tambahin photo, untuk di set di web
       res.status(200).json({
         access_token,
         loggedInName,
@@ -105,20 +99,15 @@ class StudentController {
   }
 
   static async newAttendance(req, res, next) {
-    // bikin dolo variabel utk cek cekan
     const transaction = await sequelize.transaction();
     const Op = Sequelize.Op;
     const TODAY_START = new Date().setHours(0, 0, 0, 0);
     const NOW = new Date();
     try {
       const StudentId = +req.user.id;
-      // const dateAndTime = new Date();
-
       const { lon, lat, dateAndTime } = req.body;
-      // console.log(lon, lat, " <<< ini coyy");
-      // console.log(StudentId, dateAndTime, "data dari server");
 
-      // checking if student had already present today :
+      // Check if student had already create attendance today:
       const checkAttendanceDayStud = await Attendance.findOne(
         {
           where: {
@@ -174,7 +163,6 @@ class StudentController {
 
   static async getTasks(req, res, next) {
     try {
-      // const StudentId = req.user.id;
       const className = req.user.className;
       const data = await Assignment.findAll({
         where: { className },
@@ -183,8 +171,6 @@ class StudentController {
           { model: Course, attributes: ["name", "icon"] },
           {
             model: AssignmentGrades,
-            // attributes: ["StudentId", "score", "url"],
-            // where: { StudentId },
           },
         ],
       });
@@ -207,8 +193,9 @@ class StudentController {
       const findAssignment = await AssignmentGrades.findOne({
         where: { StudentId, AssignmentId: taskId },
       });
-      // if (!findAssignment) throw { name: "Assignment not found" }; // bisa create
 
+      // If assignment already present, then it will update the current asignment url
+      // If there isn't any assignment submission, then it will create new data row
       if (findAssignment) {
         await AssignmentGrades.update(
           { url },
@@ -223,12 +210,6 @@ class StudentController {
         });
       }
 
-      //! bikin jadi create atau createOrUpdate, dibuat saat murid submit
-      // await AssignmentGrades.update(
-      //   { url },
-      //   { where: { StudentId, AssignmentId: taskId } }
-      // )
-
       res.status(200).json({ message: `Assignment url collected: ${url}` });
     } catch (err) {
       next(err);
@@ -239,11 +220,8 @@ class StudentController {
     try {
       const StudentId = req.user.id;
       const className = req.user.className;
-      let uas = 0;
-      let uts = 0;
-      let ulangan = [];
-      let tugas = [];
 
+      // Find all exam scores
       let resultExam = await Course.findAll({
         include: [
           {
@@ -256,7 +234,7 @@ class StudentController {
         ],
       });
 
-
+      // Find all assignment scores
       let resultTask = await Course.findAll({
         include: [
           {
@@ -269,9 +247,130 @@ class StudentController {
         ],
       });
 
-      res.status(200).json({ resultExam, resultTask });
+      // Group assignment by course name
+      const assignmentGrouping = {};
+
+      resultTask.forEach((element) => {
+        const trayOfCourseAssignments = [];
+        const courseName = element.dataValues.name;
+        const assignments = element.dataValues.Assignments;
+        assignments.forEach((assignment) => {
+          const assignmentName = assignment.dataValues.name;
+          let assignmentScores = 0;
+          const assignmentGrades = assignment.dataValues.AssignmentGrades;
+          assignmentGrades.forEach((grades) => {
+            assignmentScores = grades.dataValues.score;
+          });
+          trayOfCourseAssignments.push({ assignmentName, assignmentScores });
+        });
+        assignmentGrouping[courseName] = trayOfCourseAssignments;
+      });
+
+      const submittedAssignment = Object.keys(assignmentGrouping);
+
+      // Find all course assignment
+      let totalCourseAssignment = await sequelize.query(
+        `SELECT
+          "Course"."id",
+          "Course"."name",
+          COUNT("Assignments"."id") AS "totalAssignment"
+        FROM
+          "Courses" AS "Course"
+        INNER JOIN "Assignments" AS "Assignments" ON
+          "Course"."id" = "Assignments"."CourseId"
+          AND "Assignments"."className" = '${className}'
+        GROUP BY
+          "Course"."id";`,
+        {
+          type: sequelize.QueryTypes.SELECT,
+        }
+      );
+
+      // Group assignment by course name
+      let totalAssignmentScore = 0;
+
+      totalCourseAssignment.forEach((item) => {
+        delete item.id;
+        submittedAssignment.forEach((el) => {
+          if (el === item.name) {
+            assignmentGrouping[item.name].forEach((score) => {
+              totalAssignmentScore += +score.assignmentScores;
+            });
+            item.score = totalAssignmentScore / item.totalAssignment;
+            totalAssignmentScore = 0;
+          } else {
+            item.score = 0;
+          }
+        });
+      });
+
+      const finalScore = [];
+
+      resultExam.map((course) => {
+        let scores = [];
+        course.Exams.map((score) => {
+          let x = "";
+          score.ExamGrades.map((el) => {
+            x = el.score;
+          });
+          scores.push({
+            course: course.name,
+            name: score.name,
+            score: +x,
+          });
+        });
+        finalScore.push({
+          name: course.name,
+          id: course.id,
+          scores,
+        });
+      });
+
+      // Push assignment score to final score array
+      finalScore.forEach((el) => {
+        totalCourseAssignment.forEach((tugas) => {
+          if (el.name === tugas.name) {
+            el.scores.push({
+              course: el.name,
+              name: "Nilai Tugas",
+              score: +tugas.score,
+            });
+          }
+        });
+      });
+
+      // Create weighted grades for student
+      finalScore.forEach((el) => {
+        // 0. Create tray store final score and exam score
+        let trayOfFinalScore = 0;
+        let trayOfExam = 0;
+        el.scores.forEach((nilai) => {
+          // 1. Check score name
+          // 2. Weighting = (0.4 * UAS) + (0.3 * UTS) + (0.2 * avg daily exam) + (0.1 * avg assignment score)
+          if (nilai.name === "UAS") {
+            trayOfFinalScore += +nilai.score * 0.4;
+          } else if (nilai.name === "UTS") {
+            trayOfFinalScore += +nilai.score * 0.3;
+          } else if (nilai.name.includes("Ulangan")) {
+            trayOfExam += +nilai.score;
+          } else if (nilai.name === "Nilai Tugas") {
+            trayOfFinalScore += +nilai.score * 0.1;
+          }
+        });
+        // For exam, there are 2 data
+        trayOfFinalScore += (+trayOfExam / 2) * 0.2;
+
+        el.scores.push({
+          course: el.name,
+          name: "Final Score",
+          // 3. Push matched score and weighted to final score tray
+          // 4. Push final score tray to final score object
+          score: trayOfFinalScore,
+        });
+      });
+
+      res.status(200).json(finalScore);
     } catch (err) {
-      console.log(err);
       next(err);
     }
   }
