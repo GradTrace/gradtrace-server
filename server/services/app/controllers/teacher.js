@@ -233,7 +233,16 @@ class TeacherController {
     try {
       //filter by name
 
-      const data = await Assignment.findAll();
+      const { page, size } = req.query;
+
+      const { limit, offset } = getPagination(page - 1, size);
+
+      const option = {
+        limit,
+        offset
+      }
+
+      const data = await Assignment.findAndCountAll(option);
 
       return res.status(200).json(data);
     } catch (err) {
