@@ -236,6 +236,7 @@ class StudentController {
   }
 
   static async showStudentScore(req, res, next) {
+
     try {
       const StudentId = req.user.id;
       const className = req.user.className;
@@ -253,17 +254,77 @@ class StudentController {
         ],
       });
 
-      // let resultTask = await Course.findAll({
-      //   include: [
-      //     {
-      //       model: Assignment,
-      //       where: {
-      //         className,
-      //       },
-      //       include: [{ model: AssignmentGrades, where: { StudentId } }],
-      //     },
-      //   ],
-      // });
+      //! Find Task Nya siswa kumpul tugas brapa banyak
+      let resultTask = await Course.findAll({
+        include: [
+          {
+            model: Assignment,
+            where: {
+              className,
+            },
+            include: [{ model: AssignmentGrades, where: { StudentId } }],
+          },
+        ],
+      });
+
+      // console.log(resultTask, `<< ini result task nya`)
+      // loop menampilkan seluruh assigment yang udah dikerjain sama muridnya dari result task
+
+      //! terus kelompokin
+      const assignmentGrouping = {}
+
+      resultTask.forEach(element => {
+        const trayOfCourseAssignments = []
+        const courseName = element.dataValues.name
+        // console.log(element.dataValues.name)
+        const assignments = element.dataValues.Assignments
+        assignments.forEach(assignment => {
+          const assignmentName = assignment.dataValues.name
+          // console.log(assignmentName, `<< ini assignment nya`)
+          let assignmentScores = 0
+          const assignmentGrades = assignment.dataValues.AssignmentGrades
+          assignmentGrades.forEach((grades => {
+            assignmentScores = grades.dataValues.score
+            // console.log(grades.dataValues, ` << MM ini gradesnya`)
+          }))
+          trayOfCourseAssignments.push({ assignmentName, assignmentScores })
+        })
+        // console.log(trayOfCourseAssignments, `<< ini masokin`)
+        assignmentGrouping[courseName] = trayOfCourseAssignments
+      });
+      console.log(assignmentGrouping, `<< nih grouoing assigment`)
+      console.log(assignmentGrouping['Physics'].length, `<< nih length`)
+      console.log(assignmentGrouping['Physics'].assignmentScores, `<< nih skornya`)
+
+      //! cari total semua course assignment
+      let totalCourseAssignment = await sequelize.query(
+        `SELECT
+          "Course"."id",
+          "Course"."name",
+          COUNT("Assignments"."id") AS "totalAssignment"
+        FROM
+          "Courses" AS "Course"
+        INNER JOIN "Assignments" AS "Assignments" ON
+          "Course"."id" = "Assignments"."CourseId"
+          AND "Assignments"."className" = '${className}'
+        GROUP BY
+          "Course"."id";`,
+        {
+          type:
+            sequelize.QueryTypes.SELECT
+        }
+      );
+      console.log(totalCourseAssignment, `<< ni total course assignmenr`)
+
+      //! TODO : NYOCOKIN, KALO ASSIGMENT GROUPINGNYA GAADA, KASIH NILAI O, KALO ADA, BAGI AJA DGN TOTAL ASSIGNMENT NYA
+      totalCourseAssignment.forEach(item => {
+        delete item.id
+        console.log(item.name, `<< nama nya nama`)
+        item.score = 0
+      })
+
+      console.log(totalCourseAssignment, `<< change`)
+
 
       const hasilAkhir = [];
       resultExam.map((course) => {
@@ -281,6 +342,7 @@ class StudentController {
         });
         hasilAkhir.push(scores);
       });
+      // console.log(hasilAkhir, `<< ini belom di pembobotan`)
 
       //! Baru memperhitungkan nilai ulangan aja
       hasilAkhir.map((el) => {
@@ -294,7 +356,8 @@ class StudentController {
           ).toFixed(2),
         });
       });
-      res.status(200).json(hasilAkhir);
+      // res.status(200).json(hasilAkhir);
+      res.status(200).json(totalCourseAssignment)
     } catch (err) {
       console.log(err);
       next(err);
