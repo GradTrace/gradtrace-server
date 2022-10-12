@@ -338,7 +338,11 @@ class StudentController {
           scores,
         });
       });
-      // console.log(hasilAkhir, `<< ini belom di pembobotan`)
+      // console.log(hasilAkhir.map(item), `<< ini belom di pembobotan`)
+
+      // hasilAkhir.forEach(item => {
+      //   console.log(item.scores, `MMM`)
+      // })
       //! mencoba push hasil tugas ke hasil akhir
       hasilAkhir.forEach((el) => {
         totalCourseAssignment.forEach((tugas) => {
@@ -354,17 +358,40 @@ class StudentController {
 
       //! pembobotan
       hasilAkhir.forEach((el) => {
+        // 0. bikin penampung final score  dalam bentuk angka
+        let trayOfFinalScore = 0
+        // 1. looping el.scores
+        let trayOfUlangan = 0
+        el.scores.forEach(nilai => {
+          // console.log(nilai.name, `<< ni lop el scores`)
+          // 2. melakukan pengecekan dari tiap name dari el.scores.
+          // 3. cek kalo uas, dikali 0,4, uts * 0,3, ulangan digabung dulu dibagi 2 terus dikali 0,2, tugas dikali 0,1
+          if (nilai.name === 'UAS') {
+            trayOfFinalScore += +nilai.score * 0.4
+          }
+          else if (nilai.name === 'UTS') {
+            trayOfFinalScore += +nilai.score * 0.3
+          }
+          else if (nilai.name.includes('Ulangan')) {
+            trayOfUlangan += +nilai.score
+          }
+          else if (nilai.name === 'Nilai Tugas') {
+            trayOfFinalScore += +nilai.score * 0.1
+          }
+        })
+        // khsus ujian, karna ada 2 data, diginiin harusnya biar dipisah, kata hardim
+        trayOfFinalScore += (+trayOfUlangan / 2) * 0.2
+
+
         el.scores.push({
           course: el.name,
           name: "Final Score",
-          score: (
-            0.4 * el.scores[0].score +
-            0.3 * el.scores[1].score +
-            0.2 * ((el.scores[2].score + el.scores[3].score) / 2) +
-            0.1 * el.scores[4].score
-          ),
+          // 4. masukin nilai yang udah di ccek dan dikaliin tadi , ke penampung final score
+          // 5. el.scores nya di push dgn final scores.
+          score: trayOfFinalScore
         });
       });
+
       res.status(200).json(hasilAkhir);
     } catch (err) {
       console.log(err);
