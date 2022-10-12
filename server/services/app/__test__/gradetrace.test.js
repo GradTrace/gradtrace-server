@@ -127,6 +127,36 @@ beforeAll(async () => {
       description: "description_test",
       CourseId: 1,
       deadline: "2022-12-12 18:00:00",
+      name: "name_test1",
+      className: "class_test",
+      createById: 1,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      description: "description_test_1",
+      CourseId: 1,
+      deadline: "2022-12-12 18:00:00",
+      name: "name_test",
+      className: "class_test",
+      createById: 1,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      description: "description_test_1",
+      CourseId: 1,
+      deadline: "2022-12-12 18:00:00",
+      name: "name_test",
+      className: "class",
+      createById: 1,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      description: "description_test_1",
+      CourseId: 1,
+      deadline: "2022-12-12 18:00:00",
       name: "name_test",
       className: "class_test",
       createById: 1,
@@ -143,12 +173,80 @@ beforeAll(async () => {
       createdAt: new Date(),
       updatedAt: new Date(),
     },
+    {
+      description: "description_test_1",
+      CourseId: 1,
+      deadline: "2022-12-12 18:00:00",
+      name: "name_test",
+      className: "class_test",
+      createById: 1,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      description: "description_test_1",
+      CourseId: 1,
+      deadline: "2022-12-12 18:00:00",
+      name: "name_test",
+      className: "class_test1",
+      createById: 1,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
   ]);
   await queryInterface.bulkInsert("AssignmentGrades", [
     {
       score: 100,
       StudentId: 1,
       AssignmentId: 1,
+      url: "www.google.com",
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      score: 99,
+      StudentId: 1,
+      AssignmentId: 2,
+      url: "www.google.com",
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      score: 99,
+      StudentId: 1,
+      AssignmentId: 3,
+      url: "www.google.com",
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      score: 99,
+      StudentId: 1,
+      AssignmentId: 4,
+      url: "www.google.com",
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      score: 99,
+      StudentId: 1,
+      AssignmentId: 5,
+      url: "www.google.com",
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      score: 99,
+      StudentId: 2,
+      AssignmentId: 6,
+      url: "www.google.com",
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      score: 99,
+      StudentId: 1,
+      AssignmentId: 7,
       url: "www.google.com",
       createdAt: new Date(),
       updatedAt: new Date(),
@@ -1464,24 +1562,163 @@ describe("GET /teachers/assignmentGrades", () => {
         expect(response.body).toBeInstanceOf(Object);
         expect(response.body).toHaveProperty("count", expect.any(Number));
         expect(response.body).toHaveProperty("rows", expect.any(Array));
-        // expect(response.body.rows[0]).toHaveProperty("id", expect.any(Number));
-        // expect(response.body).toHaveProperty("AssignmentId", expect.any(Number));
-        // expect(response.body).toHaveProperty("url", expect.any(String));
+        expect(response.body.rows[0]).toHaveProperty("id", expect.any(Number));
+        expect(response.body.rows[0]).toHaveProperty("score", expect.any(String));
+        expect(response.body.rows[0]).toHaveProperty("StudentId", expect.any(Number));
+        expect(response.body.rows[0]).toHaveProperty("AssignmentId", expect.any(Number));
+        expect(response.body.rows[0]).toHaveProperty("url", expect.any(String));
+        expect(response.body.rows[0]).toHaveProperty("Assignment", expect.any(Object));
+        expect(response.body.rows[0]).toHaveProperty("Student", expect.any(Object));
+        expect(response.body.rows[0].Assignment).toHaveProperty("id", expect.any(Number));
+        expect(response.body.rows[0].Assignment).toHaveProperty("description", expect.any(String));
+        expect(response.body.rows[0].Assignment).toHaveProperty("CourseId", expect.any(Number));
+        expect(response.body.rows[0].Assignment).toHaveProperty("deadline", expect.any(String));
+        expect(response.body.rows[0].Assignment).toHaveProperty("name", expect.any(String));
+        expect(response.body.rows[0].Assignment).toHaveProperty("className", expect.any(String));
+        expect(response.body.rows[0].Assignment).toHaveProperty("createById", expect.any(Number));
+        expect(response.body.rows[0].Student).toHaveProperty("id", expect.any(Number));
+        expect(response.body.rows[0].Student).toHaveProperty("fullName", expect.any(String));
+        expect(response.body.rows[0].Student).toHaveProperty("className", expect.any(String));
+        expect(response.body.rows[0].Student).toHaveProperty("email", expect.any(String));
+        expect(response.body.rows[0].Student).toHaveProperty("password", expect.any(String));
+        expect(response.body.rows[0].Student).toHaveProperty("photo", expect.any(String));
+        expect(response.body.rows[0].Student).toHaveProperty("address", expect.any(String));
+        expect(response.body.rows[0].Student).toHaveProperty("phoneNumber", expect.any(String));
+        expect(response.body.rows[0].Student).toHaveProperty("gender", expect.any(String));
+      });
+  });
+  
+  test("GET /teachers/assignmentGrades?size=5&page=2&className=&search= - success - pagination", () => {
+    return request(app)
+      .get("/teachers/assignmentGrades?size=5&page=2&className=&search=")
+      .set("access_token", access_token)
+      .then((response) => {
+        console.log(response.body)
+        expect(response.status).toBe(200);
+        expect(response.body).toBeInstanceOf(Object);
+        expect(response.body).toHaveProperty("count", expect.any(Number));
+        expect(response.body).toHaveProperty("rows", expect.any(Array));
+        expect(response.body.rows[0]).toHaveProperty("id", expect.any(Number));
+        expect(response.body.rows[0]).toHaveProperty("score", expect.any(String));
+        expect(response.body.rows[0]).toHaveProperty("StudentId", expect.any(Number));
+        expect(response.body.rows[0]).toHaveProperty("AssignmentId", expect.any(Number));
+        expect(response.body.rows[0]).toHaveProperty("url", expect.any(String));
+        expect(response.body.rows[0]).toHaveProperty("Assignment", expect.any(Object));
+        expect(response.body.rows[0]).toHaveProperty("Student", expect.any(Object));
+        expect(response.body.rows[0].Assignment).toHaveProperty("id", expect.any(Number));
+        expect(response.body.rows[0].Assignment).toHaveProperty("description", expect.any(String));
+        expect(response.body.rows[0].Assignment).toHaveProperty("CourseId", expect.any(Number));
+        expect(response.body.rows[0].Assignment).toHaveProperty("deadline", expect.any(String));
+        expect(response.body.rows[0].Assignment).toHaveProperty("name", expect.any(String));
+        expect(response.body.rows[0].Assignment).toHaveProperty("className", expect.any(String));
+        expect(response.body.rows[0].Assignment).toHaveProperty("createById", expect.any(Number));
+        expect(response.body.rows[0].Student).toHaveProperty("id", expect.any(Number));
+        expect(response.body.rows[0].Student).toHaveProperty("fullName", expect.any(String));
+        expect(response.body.rows[0].Student).toHaveProperty("className", expect.any(String));
+        expect(response.body.rows[0].Student).toHaveProperty("email", expect.any(String));
+        expect(response.body.rows[0].Student).toHaveProperty("password", expect.any(String));
+        expect(response.body.rows[0].Student).toHaveProperty("photo", expect.any(String));
+        expect(response.body.rows[0].Student).toHaveProperty("address", expect.any(String));
+        expect(response.body.rows[0].Student).toHaveProperty("phoneNumber", expect.any(String));
+        expect(response.body.rows[0].Student).toHaveProperty("gender", expect.any(String));
+      });
+  });
+  test("GET /teachers/assignmentGrades?size=5&page=1&className=class&search= - success - filter by className", () => {
+    return request(app)
+      .get("/teachers/assignmentGrades?size=5&page=1&className=9&search=")
+      .set("access_token", access_token)
+      .then((response) => {
+        console.log(response.body)
+        expect(response.status).toBe(200);
+        expect(response.body).toBeInstanceOf(Object);
+        expect(response.body).toHaveProperty("count", expect.any(Number));
+        expect(response.body).toHaveProperty("rows", expect.any(Array));
+        expect(response.body.rows[0]).toHaveProperty("id", expect.any(Number));
+        expect(response.body.rows[0]).toHaveProperty("score", expect.any(String));
+        expect(response.body.rows[0]).toHaveProperty("StudentId", expect.any(Number));
+        expect(response.body.rows[0]).toHaveProperty("AssignmentId", expect.any(Number));
+        expect(response.body.rows[0]).toHaveProperty("url", expect.any(String));
+        expect(response.body.rows[0]).toHaveProperty("Assignment", expect.any(Object));
+        expect(response.body.rows[0]).toHaveProperty("Student", expect.any(Object));
+        expect(response.body.rows[0].Assignment).toHaveProperty("id", expect.any(Number));
+        expect(response.body.rows[0].Assignment).toHaveProperty("description", expect.any(String));
+        expect(response.body.rows[0].Assignment).toHaveProperty("CourseId", expect.any(Number));
+        expect(response.body.rows[0].Assignment).toHaveProperty("deadline", expect.any(String));
+        expect(response.body.rows[0].Assignment).toHaveProperty("name", expect.any(String));
+        expect(response.body.rows[0].Assignment).toHaveProperty("className", expect.any(String));
+        expect(response.body.rows[0].Assignment).toHaveProperty("createById", expect.any(Number));
+        expect(response.body.rows[0].Student).toHaveProperty("id", expect.any(Number));
+        expect(response.body.rows[0].Student).toHaveProperty("fullName", expect.any(String));
+        expect(response.body.rows[0].Student).toHaveProperty("className", expect.any(String));
+        expect(response.body.rows[0].Student).toHaveProperty("email", expect.any(String));
+        expect(response.body.rows[0].Student).toHaveProperty("password", expect.any(String));
+        expect(response.body.rows[0].Student).toHaveProperty("photo", expect.any(String));
+        expect(response.body.rows[0].Student).toHaveProperty("address", expect.any(String));
+        expect(response.body.rows[0].Student).toHaveProperty("phoneNumber", expect.any(String));
+        expect(response.body.rows[0].Student).toHaveProperty("gender", expect.any(String));
+      });
+  });
+  test("GET /teachers/assignmentGrades?size=5&page=1&className=&search=name_test - success - search by assignmet Name", () => {
+    return request(app)
+      .get("/teachers/assignmentGrades?size=5&page=2&className=&search=name_test")
+      .set("access_token", access_token)
+      .then((response) => {
+        console.log(response.body)
+        expect(response.status).toBe(200);
+        expect(response.body).toBeInstanceOf(Object);
+        expect(response.body).toHaveProperty("count", expect.any(Number));
+        expect(response.body).toHaveProperty("rows", expect.any(Array));
+        expect(response.body.rows[0]).toHaveProperty("id", expect.any(Number));
+        expect(response.body.rows[0]).toHaveProperty("score", expect.any(String));
+        expect(response.body.rows[0]).toHaveProperty("StudentId", expect.any(Number));
+        expect(response.body.rows[0]).toHaveProperty("AssignmentId", expect.any(Number));
+        expect(response.body.rows[0]).toHaveProperty("url", expect.any(String));
+        expect(response.body.rows[0]).toHaveProperty("Assignment", expect.any(Object));
+        expect(response.body.rows[0]).toHaveProperty("Student", expect.any(Object));
+        expect(response.body.rows[0].Assignment).toHaveProperty("id", expect.any(Number));
+        expect(response.body.rows[0].Assignment).toHaveProperty("description", expect.any(String));
+        expect(response.body.rows[0].Assignment).toHaveProperty("CourseId", expect.any(Number));
+        expect(response.body.rows[0].Assignment).toHaveProperty("deadline", expect.any(String));
+        expect(response.body.rows[0].Assignment).toHaveProperty("name", expect.any(String));
+        expect(response.body.rows[0].Assignment).toHaveProperty("className", expect.any(String));
+        expect(response.body.rows[0].Assignment).toHaveProperty("createById", expect.any(Number));
+        expect(response.body.rows[0].Student).toHaveProperty("id", expect.any(Number));
+        expect(response.body.rows[0].Student).toHaveProperty("fullName", expect.any(String));
+        expect(response.body.rows[0].Student).toHaveProperty("className", expect.any(String));
+        expect(response.body.rows[0].Student).toHaveProperty("email", expect.any(String));
+        expect(response.body.rows[0].Student).toHaveProperty("password", expect.any(String));
+        expect(response.body.rows[0].Student).toHaveProperty("photo", expect.any(String));
+        expect(response.body.rows[0].Student).toHaveProperty("address", expect.any(String));
+        expect(response.body.rows[0].Student).toHaveProperty("phoneNumber", expect.any(String));
+        expect(response.body.rows[0].Student).toHaveProperty("gender", expect.any(String));
       });
   });
 });
 describe("GET /teachers/assignmentGrades/:id", () => {
   test("GET /teachers/assignmentGrades - success", () => {
     return request(app)
-      .get("/teachers/assignmentGrades/" + testId)
+      .get("/teachers/assignmentGrades/" + 2)
       .set("access_token", access_token)
       .then((response) => {
+        console.log(response.body,"asasas")
         expect(response.status).toBe(200);
-        // expect(response.body).toHaveProperty("id", expect.any(Number));
-        // expect(response.body).toHaveProperty("score", expect.any(String));
-        // expect(response.body).toHaveProperty("StudentId", expect.any(Number));
-        // expect(response.body).toHaveProperty("AssignmentId", expect.any(Number));
-        // expect(response.body).toHaveProperty("url", expect.any(String));
+        expect(response.body).toBeInstanceOf(Object);
+        expect(response.body).toHaveProperty("id",expect.any(Number));
+        expect(response.body).toHaveProperty("score",expect.any(String));
+        expect(response.body).toHaveProperty("StudentId",expect.any(Number));
+        expect(response.body).toHaveProperty("AssignmentId",expect.any(Number));
+        expect(response.body).toHaveProperty("url",expect.any(String));
+      });
+  });
+
+  test("GET /teachers/assignmentGrades - failed", () => {
+    return request(app)
+      .get("/teachers/assignmentGrades/asd")
+      .set("access_token", access_token)
+      .then((response) => {
+        expect(response.status).toBe(400);
+        expect(response.body).toBeInstanceOf(Object);
+        expect(response.body).toHaveProperty("message",expect.any(String));
       });
   });
 });
@@ -1971,6 +2208,23 @@ describe("PATCH /students/tasks/:id", () => {
     test("PATCH /students/tasks/:id - success", () => {
       return request(app)
       .patch("/students/tasks/" + 3)
+      .set("access_token", access_token_student)
+      .send({
+        url: "www.test_url.com",
+      })
+      .then((response) => {
+        console.log(response, "????");
+        expect(response.status).toBe(200);
+        expect(response.body).toBeInstanceOf(Object);
+        expect(response.body).toHaveProperty(
+          "message",
+          "Assignment url collected: www.test_url.com"
+          );
+      });
+    });
+    test("PATCH /students/tasks/:id - success create new submission", () => {
+      return request(app)
+      .patch("/students/tasks/" + 6)
       .set("access_token", access_token_student)
       .send({
         url: "www.test_url.com",
