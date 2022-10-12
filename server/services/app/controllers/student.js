@@ -387,7 +387,7 @@ class StudentController {
             0.2 * ((el.scores[2].score + el.scores[3].score) / 2
             ) +
             0.1 * el.scores[4].score
-          ).toFixed(2),
+          ),
         });
       });
       // res.status(200).json(resultExam)
