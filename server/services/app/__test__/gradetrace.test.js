@@ -2263,8 +2263,53 @@ describe("GET /students/scores", () => {
       .get("/students/scores")
       .set("access_token", access_token_student)
       .then((response) => {
+        console.log(response.body[0].scores,"<<<")
         expect(response.status).toBe(200);
         expect(response.body).toBeInstanceOf(Array);
+        expect(response.body[0]).toBeInstanceOf(Object);
+        expect(response.body[0]).toHaveProperty(
+          "id",
+          expect.any(Number)
+        );
+        expect(response.body[0]).toHaveProperty(
+          "scores",
+          expect.any(Array)
+        );
+        expect(response.body[0].scores[0]).toHaveProperty(
+          "course",
+          expect.any(String)
+        );
+        expect(response.body[0].scores[0]).toHaveProperty(
+          "name",
+          expect.any(String)
+        );
+        expect(response.body[0].scores[0]).toHaveProperty(
+          "score",
+          expect.any(Number)
+        );
+      });
+  });
+  test("GET /students/scores - failed - invalid token", () => {
+    return request(app)
+      .get("/students/scores")
+      .set("access_token", "sdsads")
+      .then((response) => {
+        expect(response.status).toBe(401);
+        expect(response.body).toHaveProperty(
+          "message",
+          "Invalid token"
+        );
+      });
+  });
+  test("GET /students/scores - failed - unauthorized", () => {
+    return request(app)
+      .get("/students/scores")
+      .then((response) => {
+        expect(response.status).toBe(403);
+        expect(response.body).toHaveProperty(
+          "message",
+          "Unauthorized activity"
+        );
       });
   });
 });
