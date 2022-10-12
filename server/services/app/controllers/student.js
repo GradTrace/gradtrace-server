@@ -1,5 +1,4 @@
 const { comparePassword } = require("../helpers/bcrypt");
-const nilaiAkhir = require("../helpers/hitungNilaiAkhir");
 const { signToken } = require("../helpers/jwt");
 const {
   Student,
@@ -32,10 +31,6 @@ class StudentController {
       if (!email) throw { name: "Email is required" };
       if (!password) throw { name: "Password is required" };
       if (!gender) throw { name: "Gender is required" };
-
-      // sudah dihandle di model
-      // const emailCheck = await Student.findOne({ where: { email } });
-      // if (emailCheck) throw { name: "Email must be unique" };
 
       await Student.create({
         fullName,
@@ -78,7 +73,6 @@ class StudentController {
       const access_token = signToken(payload);
       const loggedInName = findStudent.fullName;
 
-      // nanti tambahin photo, untuk di set di web
       res.status(200).json({
         access_token,
         loggedInName,
@@ -105,18 +99,13 @@ class StudentController {
   }
 
   static async newAttendance(req, res, next) {
-    // bikin dolo variabel utk cek cekan
     const transaction = await sequelize.transaction();
     const Op = Sequelize.Op;
     const TODAY_START = new Date().setHours(0, 0, 0, 0);
     const NOW = new Date();
     try {
       const StudentId = +req.user.id;
-      // const dateAndTime = new Date();
-
       const { lon, lat, dateAndTime } = req.body;
-      // console.log(lon, lat, " <<< ini coyy");
-      // console.log(StudentId, dateAndTime, "data dari server");
 
       // checking if student had already present today :
       const checkAttendanceDayStud = await Attendance.findOne(
@@ -174,7 +163,6 @@ class StudentController {
 
   static async getTasks(req, res, next) {
     try {
-      // const StudentId = req.user.id;
       const className = req.user.className;
       const data = await Assignment.findAll({
         where: { className },
@@ -183,8 +171,6 @@ class StudentController {
           { model: Course, attributes: ["name", "icon"] },
           {
             model: AssignmentGrades,
-            // attributes: ["StudentId", "score", "url"],
-            // where: { StudentId },
           },
         ],
       });
@@ -270,34 +256,25 @@ class StudentController {
       resultTask.forEach((element) => {
         const trayOfCourseAssignments = [];
         const courseName = element.dataValues.name;
-        // console.log(element.dataValues.name)
         const assignments = element.dataValues.Assignments;
         assignments.forEach((assignment) => {
           const assignmentName = assignment.dataValues.name;
-          // console.log(assignmentName, `<< ini assignment nya`)
           let assignmentScores = 0;
           const assignmentGrades = assignment.dataValues.AssignmentGrades;
           assignmentGrades.forEach((grades) => {
             assignmentScores = grades.dataValues.score;
-            // console.log(grades.dataValues, ` << MM ini gradesnya`)
           });
           trayOfCourseAssignments.push({ assignmentName, assignmentScores });
         });
-        // console.log(trayOfCourseAssignments, `<< ini masokin`)
         assignmentGrouping[courseName] = trayOfCourseAssignments;
       });
-      console.log(assignmentGrouping, `<< nih grouping assigment`);
 
       const submittedAssignment = Object.keys(assignmentGrouping);
       // console.log(submittedAssignment);
 
-      console.log(
-        assignmentGrouping["Physical Education"],
-        "<<< ini nilai Physical Education"
-      );
       // console.log(
-      //   assignmentGrouping["Physics"].assignmentScores,
-      //   `<< nih skornya`
+      //   assignmentGrouping["Physical Education"],
+      //   "<<< ini nilai Physical Education"
       // );
 
       //! cari total semua course assignment
@@ -317,7 +294,7 @@ class StudentController {
           type: sequelize.QueryTypes.SELECT,
         }
       );
-      console.log(totalCourseAssignment, `<< ni total course assignment`);
+      // console.log(totalCourseAssignment, `<< ni total course assignment`);
 
       //! TODO : NYOCOKIN, KALO ASSIGMENT GROUPINGNYA GAADA, KASIH NILAI O, KALO ADA, BAGI AJA DGN TOTAL ASSIGNMENT NYA
       let totalAssignmentScore = 0;
@@ -331,15 +308,14 @@ class StudentController {
             });
             item.score = totalAssignmentScore / item.totalAssignment;
             totalAssignmentScore = 0;
-          }
-          else {
-            item.score = 0
+          } else {
+            item.score = 0;
           }
         });
       });
 
       //! ini hasilnya score sisanya nolin aja
-      console.log(totalCourseAssignment, `<< change`);
+      // console.log(totalCourseAssignment, `<< change`);
 
       const hasilAkhir = [];
       //! tampung hasil exam
@@ -359,7 +335,7 @@ class StudentController {
         hasilAkhir.push({
           name: course.name,
           id: course.id,
-          scores
+          scores,
         });
       });
       // console.log(hasilAkhir, `<< ini belom di pembobotan`)
@@ -370,11 +346,11 @@ class StudentController {
             el.scores.push({
               course: el.name,
               name: "Nilai Tugas",
-              score: +tugas.score
-            })
+              score: +tugas.score,
+            });
           }
-        })
-      })
+        });
+      });
 
       //! pembobotan
       hasilAkhir.forEach((el) => {
@@ -384,16 +360,12 @@ class StudentController {
           score: (
             0.4 * el.scores[0].score +
             0.3 * el.scores[1].score +
-            0.2 * ((el.scores[2].score + el.scores[3].score) / 2
-            ) +
+            0.2 * ((el.scores[2].score + el.scores[3].score) / 2) +
             0.1 * el.scores[4].score
           ).toFixed(2),
         });
       });
-      // res.status(200).json(resultExam)
       res.status(200).json(hasilAkhir);
-      // res.status(200).json(totalCourseAssignment);
-      // res.status(200).json({ message: `beloman nih` })
     } catch (err) {
       console.log(err);
       next(err);
