@@ -424,7 +424,7 @@ class TeacherController {
     try {
       // let { name } = req.query;
       let CourseId = req.user.CourseId;
-
+      console.log(CourseId);
       // const result = await Course.findAll({
       //   where: { id: CourseId },
       //   include: [
@@ -468,12 +468,14 @@ class TeacherController {
                 where: {
                   CourseId,
                 },
-                order: [["id", "ASC"]],
               },
             ],
           },
         ],
-        order: [["fullName", "ASC"]],
+        order: [
+          ["fullName", "ASC"],
+          [ExamGrades, "id", "ASC"],
+        ],
       });
 
       return res.status(201).json(result);
@@ -486,6 +488,8 @@ class TeacherController {
   static async examScoreById(req, res, next) {
     try {
       let id = req.params.id;
+      let CourseId = req.user.CourseId;
+
       const data = await Student.findAll({
         include: [
           {
@@ -493,6 +497,9 @@ class TeacherController {
             include: [
               {
                 model: Exam,
+                where: {
+                  CourseId,
+                },
                 include: Course,
               },
             ],
