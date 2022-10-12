@@ -332,13 +332,17 @@ class StudentController {
             item.score = totalAssignmentScore / item.totalAssignment;
             totalAssignmentScore = 0;
           }
+          else {
+            item.score = 0
+          }
         });
       });
 
-      //! ini hasilnya
+      //! ini hasilnya score sisanya nolin aja
       console.log(totalCourseAssignment, `<< change`);
 
       const hasilAkhir = [];
+      //! tampung hasil exam
       resultExam.map((course) => {
         let scores = [];
         course.Exams.map((score) => {
@@ -352,24 +356,44 @@ class StudentController {
             score: +x,
           });
         });
-        hasilAkhir.push(scores);
+        hasilAkhir.push({
+          name: course.name,
+          id: course.id,
+          scores
+        });
       });
       // console.log(hasilAkhir, `<< ini belom di pembobotan`)
+      //! mencoba push hasil tugas ke hasil akhir
+      hasilAkhir.forEach((el) => {
+        totalCourseAssignment.forEach((tugas) => {
+          if (el.name === tugas.name) {
+            el.scores.push({
+              course: el.name,
+              name: "Nilai Tugas",
+              score: +tugas.score
+            })
+          }
+        })
+      })
 
-      //! Baru memperhitungkan nilai ulangan aja
-      hasilAkhir.map((el) => {
-        el.push({
-          course: el[0].course,
+      //! pembobotan
+      hasilAkhir.forEach((el) => {
+        el.scores.push({
+          course: el.name,
           name: "Final Score",
           score: (
-            0.4 * el[0].score +
-            0.3 * el[1].score +
-            0.3 * el[2].score
+            0.4 * el.scores[0].score +
+            0.3 * el.scores[1].score +
+            0.2 * ((el.scores[2].score + el.scores[3].score) / 2
+            ) +
+            0.1 * el.scores[4].score
           ).toFixed(2),
         });
       });
-      // res.status(200).json(hasilAkhir);
+      // res.status(200).json(resultExam)
+      res.status(200).json(hasilAkhir);
       // res.status(200).json(totalCourseAssignment);
+      // res.status(200).json({ message: `beloman nih` })
     } catch (err) {
       console.log(err);
       next(err);
