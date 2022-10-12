@@ -5,7 +5,7 @@ const teacherRouter = require("./teacher");
 
 router.get("/", (req, res) => {
   res.status(200).json({
-    message: "P3-Final-Project",
+    message: "GradeTrace - Server",
   });
 });
 

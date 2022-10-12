@@ -102,6 +102,7 @@ beforeAll(async () => {
       access_token_student = signToken({
         id: result.id,
         email: result.email,
+        role : 'Student'
       });
     });
 
@@ -119,6 +120,7 @@ beforeAll(async () => {
       access_token = signToken({
         id: result.id,
         email: result.email,
+        role : 'Teacher'
       });
     });
 
@@ -562,6 +564,25 @@ describe("POST /teachers/exams", () => {
         );
       });
   });
+  test("POST /teachers/exams - failed - invalid token", () => {
+    return request(app)
+      .post("/teachers/exams")
+      .set("access_token", access_token_student)
+      .send({
+        name: "name_test",
+        CourseId: 1,
+        className: "class_test",
+      })
+      .then((response) => {
+        console.log(response, "<<asd")
+        expect(response.status).toBe(403);
+        expect(response.body).toBeInstanceOf(Object);
+        expect(response.body).toHaveProperty(
+          "message",
+          "Unauthorized activity"
+        );
+      });
+  });
 
   test("POST /teachers/exams - failed - Full Name is required", () => {
     return request(app)
@@ -685,6 +706,22 @@ describe("POST /teachers/scores", () => {
   });
 });
 
+describe("GET /teachers/exams/:className", () => {
+  test("GET /teachers/exams/:className - success", () => {
+    return request(app)
+      .get("/teachers/exams/7")
+      .set("access_token", access_token)
+      .then((response) => {
+        expect(response.status).toBe(201);
+        expect(response.body).toBeInstanceOf(Object);
+        expect(response.body).toHaveProperty("findExamId", expect.any(Array));
+        expect(response.body.findExamId).toBeInstanceOf(Array);
+        expect(response.body.findExamId[0]).toHaveProperty("id", expect.any(Number));
+        expect(response.body.findExamId[0]).toHaveProperty("CourseId", expect.any(Number));
+        expect(response.body.findExamId[0]).toHaveProperty("name", expect.any(String));
+      });
+  });
+});
 describe("GET /teachers/exams/score", () => {
   test("GET /teachers/exams/score - success", () => {
     return request(app)
@@ -2116,7 +2153,7 @@ describe("POST /students/attendance", () => {
   test("POST /students/attendance - failed - already recorded", () => {
     return request(app)
       .post("/students/attendance")
-      .set("access_token", access_token)
+      .set("access_token", access_token_student)
       .send({
         lon: "106°50'07.1\"E",
         lat: "6°11'30.4\"S",

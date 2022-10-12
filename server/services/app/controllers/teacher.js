@@ -25,7 +25,6 @@ class TeacherController {
       if (!CourseId) throw { name: "Course ID is required" };
       if (!email) throw { name: "Email is required" };
       if (!password) throw { name: "Password is required" };
-
       const emailCheck = await Teacher.findOne({ where: { email } });
       if (emailCheck) throw { name: "Email must be unique" };
 
@@ -51,11 +50,10 @@ class TeacherController {
       const validatePassword = comparePassword(password, findTeacher.password);
       if (!validatePassword) throw { name: "Invalid email/password" };
 
-      const payload = { id: findTeacher.id };
+      const payload = { id: findTeacher.id, role: "Teacher" };
       const access_token = signToken(payload);
       const loggedInName = findTeacher.fullName;
 
-      // nanti tambahin photo, untuk di set di web
       res
         .status(200)
         .json({ access_token, loggedInName, CourseId: findTeacher.CourseId });
@@ -67,15 +65,10 @@ class TeacherController {
   static async addExam(req, res, next) {
     try {
       let { name, CourseId, className } = req.body;
-      if (!name) {
-        throw { name: "Fullname is required" };
-      }
-      if (!CourseId) {
-        throw { name: "CourseId is required" };
-      }
-      if (!className) {
-        throw { name: "Class name is required" };
-      }
+      if (!name) throw { name: "Fullname is required" };
+      if (!CourseId) throw { name: "CourseId is required" };
+      if (!className) throw { name: "Class name is required" };
+
       await Exam.create({ name, CourseId, className });
       res.status(201).json({ message: "success Add Exam" });
     } catch (err) {
@@ -86,15 +79,10 @@ class TeacherController {
   static async editExam(req, res, next) {
     try {
       let { name, CourseId, className } = req.body;
-      if (!name) {
-        throw { name: "Fullname is required" };
-      }
-      if (!CourseId) {
-        throw { name: "CourseId is required" };
-      }
-      if (!className) {
-        throw { name: "Class name is required" };
-      }
+      if (!name) throw { name: "Fullname is required" };
+      if (!CourseId) throw { name: "CourseId is required" };
+      if (!className) throw { name: "Class name is required" };
+
       let { id } = req.params;
       await Exam.update({ name, CourseId, className }, { where: { id } });
       res.status(200).json({ message: "success Edit Exam" });
@@ -103,18 +91,28 @@ class TeacherController {
     }
   }
 
+  static async getExamByClass(req, res, next) {
+    try {
+      let courseId = req.user.CourseId;
+      let params = req.params.className;
+
+      let findExamId = await Exam.findAll({
+        where: { CourseId: courseId, className: params },
+      });
+      res.status(201).json({ findExamId });
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  }
   static async addScore(req, res, next) {
     try {
       let { score, StudentId, ExamId } = req.body;
-      if (!score) {
-        throw { name: "Score is required" };
-      }
-      if (!StudentId) {
-        throw { name: "StudentId name is required" };
-      }
-      if (!ExamId) {
-        throw { name: "ExamId is required" };
-      }
+
+      if (!score) throw { name: "Score is required" };
+      if (!StudentId) throw { name: "StudentId name is required" };
+      if (!ExamId) throw { name: "ExamId is required" };
+
       await ExamGrades.create({ score, StudentId, ExamId });
       res.status(201).json({ message: "success Add score" });
     } catch (err) {
@@ -125,18 +123,11 @@ class TeacherController {
   static async editScore(req, res, next) {
     try {
       let { score, StudentId, ExamId } = req.body;
-      if (!score) {
-        throw { name: "Score is required" };
-      }
-      if (!StudentId) {
-        throw { name: "StudentId name is required" };
-      }
-      if (!ExamId) {
-        throw { name: "ExamId is required" };
-      }
+      if (!score) throw { name: "Score is required" };
+      if (!StudentId) throw { name: "StudentId name is required" };
+      if (!ExamId) throw { name: "ExamId is required" };
+
       let { id } = req.params;
-      // console.log(id, "<<<<");
-      // console.log(req.body, "<<<<");
       await ExamGrades.update({ score, StudentId, ExamId }, { where: { id } });
       res.status(200).json({ message: "success Edit score" });
     } catch (err) {
@@ -164,10 +155,8 @@ class TeacherController {
   static async getAssignmentById(req, res, next) {
     try {
       //filter by name
-
       let { id } = req.params;
       const data = await Assignment.findByPk(id);
-
       return res.status(200).json(data);
     } catch (err) {
       next(err);
@@ -221,15 +210,12 @@ class TeacherController {
   static async getAssignmented(req, res, next) {
     try {
       //filter by name
-
       const { page, size } = req.query;
-
       const { limit, offset } = getPagination(page - 1, size);
-
       const option = {
         limit,
-        offset
-      }
+        offset,
+      };
 
       const data = await Assignment.findAndCountAll(option);
 
@@ -249,7 +235,6 @@ class TeacherController {
       };
 
       const data = await AssignmentGrades.findAll(option);
-
       return res.status(201).json(data);
     } catch (err) {
       next(err);
@@ -268,28 +253,16 @@ class TeacherController {
       const CourseId = +req.user.CourseId;
 
       // Add assignment
-      const data = await Assignment.create(
-        {
-          description,
-          CourseId,
-          deadline,
-          name,
-          className,
-          createById,
-        }
-        // { transaction }
-      );
+      const data = await Assignment.create({
+        description,
+        CourseId,
+        deadline,
+        name,
+        className,
+        createById,
+      });
 
       if (!data) throw { name: "Failed to add new assignment" };
-      // kalo mau pake socket (opsional) kerjain di akhir, kelarin dulu main function
-      // jalanin fungsi send notification ke mobile (emit)
-      // server
-      // - emit("kelas-9", data)
-
-      // client
-      // - on("kelas-9", (data) => {
-      //   logic
-      // })
       res
         .status(201)
         .json({ message: `Success create new ${data.name} assignment` });
@@ -303,7 +276,6 @@ class TeacherController {
     try {
       const { description, deadline, name, className } = req.body;
       if (!description) throw { name: "description is required" };
-      // if (!CourseId) throw { name: "CourseId is required" };
       if (!deadline) throw { name: "deadline is required" };
       if (!name) throw { name: "name is required" };
       if (!className) throw { name: "className is required" };
@@ -320,10 +292,7 @@ class TeacherController {
           className,
           createById,
         },
-        { where: { id } },
-        
-        
-        
+        { where: { id } }
       );
 
       return res.status(201).json({ message: "success edit" });
@@ -336,9 +305,8 @@ class TeacherController {
     try {
       let { id } = req.params;
       const data = await Assignment.destroy({ where: { id } });
-      if (!data) {
-        throw { name: "not found" };
-      }
+      if (!data) throw { name: "not found" };
+
       return res.status(200).json({ message: "success deleted" });
     } catch (err) {
       next(err);
@@ -356,41 +324,7 @@ class TeacherController {
 
   static async examScoreBySubject(req, res, next) {
     try {
-      // let { name } = req.query;
       let CourseId = req.user.CourseId;
-
-      // const result = await Course.findAll({
-      //   where: { id: CourseId },
-      //   include: [
-      //     {
-      //       model: Exam,
-      //       include: [
-      //         {
-      //           model: ExamGrades,
-      //           include: [
-      //             { model: Student, attributes: { exclude: ["password"] } },
-      //           ],
-      //         },
-      //       ],
-      //     },
-      //   ],
-      // });
-
-      // const result = await Exam.findAll({
-      //   where: { CourseId },
-      //   include: [
-      //     {
-      //       model: ExamGrades,
-      //       include: [
-      //         {
-      //           model: Student,
-      //           attributes: { exclude: ["password"] },
-      //         },
-      //       ],
-      //     },
-      //   ],
-      // });
-
       const result = await Student.findAll({
         attributes: { exclude: ["password"] },
         include: [
@@ -402,12 +336,14 @@ class TeacherController {
                 where: {
                   CourseId,
                 },
-                order: [["id", "ASC"]],
               },
             ],
           },
         ],
-        order: [["fullName", "ASC"]],
+        order: [
+          ["fullName", "ASC"],
+          [ExamGrades, "id", "ASC"],
+        ],
       });
 
       return res.status(201).json(result);
@@ -419,6 +355,8 @@ class TeacherController {
   static async examScoreById(req, res, next) {
     try {
       let id = req.params.id;
+      let CourseId = req.user.CourseId;
+
       const data = await Student.findAll({
         include: [
           {
@@ -426,6 +364,9 @@ class TeacherController {
             include: [
               {
                 model: Exam,
+                where: {
+                  CourseId,
+                },
                 include: Course,
               },
             ],
@@ -441,52 +382,11 @@ class TeacherController {
   }
 
   static async editScoreById(req, res, next) {
-    let data = req.body.data;
-
-    console.log(data, "data hoho 2");
     try {
+      let data = req.body.data;
       const dataInput = await ExamGrades.bulkCreate(data, {
         updateOnDuplicate: ["score"],
       });
-      console.log(dataInput, "ini data input");
-
-      return res.status(201).json(dataInput);
-    } catch (err) {
-      next(err);
-    }
-  }
-
-  // static async addFinalGrades(req, res, next) {
-  //   try {
-  //     let id = req.params.id;
-  //     const data = await Student.findAll({
-  //       include: [
-  //         {
-  //           model: ExamGrades,
-  //           include: [
-  //             {
-  //               model: Exam,
-  //               include: Course,
-  //             },
-  //           ],
-  //         },
-  //       ],
-  //       where: { id },
-  //     });
-  //     return res.status(201).json(data);
-  //   } catch (err) {
-  //     next(err);
-  //   }
-  // }
-
-  static async editScoreById(req, res, next) {
-    let data = req.body.data;
-
-    try {
-      const dataInput = await ExamGrades.bulkCreate(data, {
-        updateOnDuplicate: ["score"],
-      });
-      console.log(dataInput)
 
       return res.status(201).json(dataInput);
     } catch (err) {
@@ -562,9 +462,8 @@ class TeacherController {
   static async editAssignmentGrades(req, res, next) {
     try {
       const { score } = req.body;
-
-      let { id } = req.params;
-      const data = await AssignmentGrades.update(
+      const { id } = req.params;
+      await AssignmentGrades.update(
         {
           score,
         },
@@ -573,17 +472,14 @@ class TeacherController {
 
       return res.status(200).json({ message: "success edit score" });
     } catch (err) {
-      console.log(err);
       next(err);
     }
   }
   static async getAssignmentGrades(req, res, next) {
     try {
-      const { page, size, className, search} = req.query;
-
+      const { page, size, className, search } = req.query;
       const { limit, offset } = getPagination(page - 1, size);
 
-      //====
       const CourseId = req.user.CourseId;
 
       let option = {
@@ -602,11 +498,11 @@ class TeacherController {
         };
       }
 
-      if(!!search){
+      if (!!search) {
         option.include[0].where = {
           CourseId,
-          name : { [Op.iLike]: `%${search}%` }
-        }
+          name: { [Op.iLike]: `%${search}%` },
+        };
       }
 
       const data = await AssignmentGrades.findAndCountAll(option);
@@ -628,9 +524,7 @@ class TeacherController {
   // static async getAssignmentPagination(req, res, next) {
   //   try {
   //     //filter by name
-
   //     const { name, className, page, size } = req.query;
-
   //     const { limit, offset } = getPagination(page - 1, size);
 
   //     const option = {
@@ -666,14 +560,12 @@ class TeacherController {
   //       };
   //     }
 
-  //     const data = await Assignment.findAndCountAll(option);
-
-  //     return res.status(201).json(data);
-  //   } catch (err) {
-  //     console.log(err);
-  //     next(err);
+  //       const data = await Assignment.findAndCountAll(option);
+  //       return res.status(201).json(data);
+  //     } catch (err) {
+  //       next(err);
+  //     }
   //   }
-  // }
 }
 
 module.exports = TeacherController;
