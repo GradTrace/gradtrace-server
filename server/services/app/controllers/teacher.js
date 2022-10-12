@@ -91,9 +91,24 @@ class TeacherController {
     }
   }
 
+  static async getExamByClass(req, res, next) {
+    try {
+      let courseId = req.user.CourseId;
+      let params = req.params.className;
+
+      let findExamId = await Exam.findAll({
+        where: { CourseId: courseId, className: params },
+      });
+      res.status(201).json({ findExamId });
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  }
   static async addScore(req, res, next) {
     try {
       let { score, StudentId, ExamId } = req.body;
+
       if (!score) throw { name: "Score is required" };
       if (!StudentId) throw { name: "StudentId name is required" };
       if (!ExamId) throw { name: "ExamId is required" };
@@ -309,7 +324,6 @@ class TeacherController {
   static async examScoreBySubject(req, res, next) {
     try {
       let CourseId = req.user.CourseId;
-
       const result = await Student.findAll({
         attributes: { exclude: ["password"] },
         include: [
@@ -321,12 +335,14 @@ class TeacherController {
                 where: {
                   CourseId,
                 },
-                order: [["id", "ASC"]],
               },
             ],
           },
         ],
-        order: [["fullName", "ASC"]],
+        order: [
+          ["fullName", "ASC"],
+          [ExamGrades, "id", "ASC"],
+        ],
       });
 
       return res.status(201).json(result);
@@ -338,6 +354,8 @@ class TeacherController {
   static async examScoreById(req, res, next) {
     try {
       let id = req.params.id;
+      let CourseId = req.user.CourseId;
+
       const data = await Student.findAll({
         include: [
           {
@@ -345,6 +363,9 @@ class TeacherController {
             include: [
               {
                 model: Exam,
+                where: {
+                  CourseId,
+                },
                 include: Course,
               },
             ],

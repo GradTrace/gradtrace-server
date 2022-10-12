@@ -15,6 +15,7 @@ router.get("/exams/score", TeacherController.examScoreBySubject);
 router.put("/exams/score", TeacherController.editScoreById);
 router.get("/exams/score/:id", TeacherController.examScoreById);
 router.put("/exams/:id", TeacherController.editExam);
+router.get("/exams/:className", TeacherController.getExamByClass);
 
 // Scores
 router.post("/scores", TeacherController.addScore);
@@ -25,12 +26,11 @@ router.get("/assignment", TeacherController.getAssignment);
 router.post("/assignment", TeacherController.postAssignment);
 router.put("/assignment/score", TeacherController.assignmentScore);
 router.get("/assignment/score", TeacherController.assignmetScoreBySubject);
-router.get("/assignment/paginate", TeacherController.getAssignmentPagination);
+// router.get("/assignment/paginate", TeacherController.getAssignmentPagination);
 router.get("/assignment/grade/:id", TeacherController.getGradeAssignment);
 router.get("/assignment/:id", TeacherController.getAssignmentById);
 router.put("/assignment/:id", TeacherController.editAssignment);
 router.delete("/assignment/:id", TeacherController.deleteAssignment);
-
 // Assignments
 router.get("/assignments", TeacherController.getAssignmented);
 
