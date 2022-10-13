@@ -54,6 +54,8 @@ class StudentController {
       res.status(200).json({
         access_token: signToken(payload),
         loggedInName: findStudent.fullName,
+        StudentId: findStudent.id,
+        className: findStudent.className,
       });
     } catch (err) {
       next(err);
