@@ -1,20 +1,19 @@
 const { Student, Teacher } = require("../models");
 const { verifyToken } = require("../helpers/jwt");
 
-async function authc(req, res, next) {
+async function autht(req, res, next) {
   try {
     const access_token = req.headers.access_token;
     if (!access_token) throw { name: "Unauthorized" };
     const decodeToken = verifyToken(access_token);
-    console.log(decodeToken, "<<<< ini decode");
-    if (decodeToken.role != "Student") throw { name: "Unauthorized" };
-    const findUser = await Student.findByPk(decodeToken.id);
-    if (!findUser) {
+    if (decodeToken.role != "Teacher") throw { name: "Unauthorized" };
+    const findTeacher = await Teacher.findByPk(decodeToken.id);
+    if (!findTeacher) {
       throw { name: "Invalid token" };
     } else {
       req.user = {
-        id: findUser.id,
-        className: findUser.className,
+        id: findTeacher.id,
+        CourseId: findTeacher.CourseId,
       };
     }
     next();
@@ -23,4 +22,4 @@ async function authc(req, res, next) {
   }
 }
 
-module.exports = authc;
+module.exports = autht;

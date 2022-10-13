@@ -20,6 +20,20 @@
       "email": "natasharomanoff@mail.com",
       "password": "natasharomanoff",
       "photo": "https://toppng.com//public/uploads/preview/black-widow-natasha-romanoff-infinity-war-11563164367lbcfuwdyt2.png"
+    },
+    {
+      "fullName": "Mr Hank Pym",
+      "CourseId": 4,
+      "email": "hankpym@mail.com",
+      "password": "hankpym",
+      "photo": "https://toppng.com/uploads/preview/ant-man-hank-pym-png-by-davidbksandrade-hot-toys-marvel-ant-man-16-scale-figure-11563370837xhffvachsk.png"
+    },
+    {
+      "fullName": "Mr Steve Rogers",
+      "CourseId": 5,
+      "email": "steverogers@mail.com",
+      "password": "steverogers",
+      "photo": "https://toppng.com/uploads/preview/captain-steve-rogers-nomad-america-avengers-infinity-avengers-infinity-war-promo-art-11563010815m624vbyrno.png"
     }
   ]
 }
