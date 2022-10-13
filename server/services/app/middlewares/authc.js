@@ -6,6 +6,7 @@ async function authc(req, res, next) {
     const access_token = req.headers.access_token;
     if (!access_token) throw { name: "Unauthorized" };
     const decodeToken = verifyToken(access_token);
+    console.log(decodeToken)
     if (decodeToken.role != "Student") throw { name: "Unauthorized" };
     const findUser = await Student.findByPk(decodeToken.id);
     if (!findUser) {
